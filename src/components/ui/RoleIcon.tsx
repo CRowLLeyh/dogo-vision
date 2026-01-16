@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getRoleInfo } from "@/lib/gameAssets";
-import rolePositionsSprite from "@/assets/role-positions-gold.png";
+
+import roleBottom from "@/assets/roles/position-bottom.svg";
+import roleJungle from "@/assets/roles/position-jungle.svg";
+import roleLane from "@/assets/roles/position-lane.svg";
+import roleMiddle from "@/assets/roles/position-middle.svg";
+import roleTop from "@/assets/roles/position-top.svg";
+import roleUtility from "@/assets/roles/position-utility.svg";
 
 interface RoleIconProps {
   role: string;
@@ -16,6 +22,12 @@ const sizeClasses = {
   lg: "w-10 h-10",
 };
 
+const imgSizeClasses = {
+  sm: "w-4 h-4",
+  md: "w-5 h-5",
+  lg: "w-7 h-7",
+};
+
 function normalizeRole(role: string) {
   const r = role?.toUpperCase?.() ?? "";
   if (r === "BOTTOM") return "ADC";
@@ -28,56 +40,57 @@ function normalizeRole(role: string) {
   return r;
 }
 
+function getRoleIconSrc(role: string) {
+  // Ícones oficiais do Champ Select (CommunityDragon - SVG)
+  switch (normalizeRole(role)) {
+    case "TOP":
+      return roleTop;
+    case "JNG":
+    case "JUNGLE":
+      return roleJungle;
+    case "MID":
+      return roleMiddle;
+    case "ADC":
+      return roleBottom;
+    case "SUP":
+    case "SUPPORT":
+      return roleUtility;
+    default:
+      return roleLane;
+  }
+}
+
 export function RoleIcon({ role, size = "md", showLabel = false, className }: RoleIconProps) {
   const roleInfo = getRoleInfo(role);
   const [imgOk, setImgOk] = useState(true);
 
-  const spriteIndex = useMemo(() => {
-    // Ordem no sprite (da esquerda para direita): Topo, Selva, Meio, Atirador, Suporte
-    switch (normalizeRole(role)) {
-      case "TOP":
-        return 0;
-      case "JNG":
-      case "JUNGLE":
-        return 1;
-      case "MID":
-        return 2;
-      case "ADC":
-        return 3;
-      case "SUP":
-      case "SUPPORT":
-        return 4;
-      default:
-        return null;
-    }
-  }, [role]);
+  const src = useMemo(() => getRoleIconSrc(role), [role]);
 
   useEffect(() => {
     setImgOk(true);
   }, [role]);
 
-  const showEmojiFallback = spriteIndex == null || !imgOk;
+  const showEmojiFallback = !imgOk;
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <div
         className={cn(
-          "relative flex items-center justify-center rounded-lg overflow-hidden",
+          "flex items-center justify-center rounded-lg overflow-hidden",
           "bg-muted/30 ring-1 ring-border/50",
           sizeClasses[size]
         )}
         aria-label={roleInfo.label}
         title={roleInfo.label}
       >
-        {spriteIndex != null && imgOk ? (
-          <div
-            className="h-full w-full bg-no-repeat"
-            style={{
-              backgroundImage: `url(${rolePositionsSprite})`,
-              backgroundSize: "500% 100%",
-              backgroundPosition: `${(spriteIndex / 4) * 100}% 0%`,
-            }}
-            onErrorCapture={() => setImgOk(false)}
+        {imgOk ? (
+          <img
+            src={src}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className={cn("object-contain", imgSizeClasses[size])}
+            onError={() => setImgOk(false)}
           />
         ) : null}
 
@@ -88,5 +101,6 @@ export function RoleIcon({ role, size = "md", showLabel = false, className }: Ro
     </div>
   );
 }
+
 
 
