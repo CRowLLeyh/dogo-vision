@@ -2,95 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dogo Stats Dark Gaming Theme */
+    --background: 220 20% 5%;
+    --foreground: 210 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 20% 8%;
+    --card-foreground: 210 20% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 20% 8%;
+    --popover-foreground: 210 20% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Gold/Amber Primary */
+    --primary: 42 71% 51%;
+    --primary-foreground: 220 20% 5%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Muted Navy */
+    --secondary: 220 20% 12%;
+    --secondary-foreground: 210 20% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 20% 15%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Neon Blue Accent */
+    --accent: 190 100% 50%;
+    --accent-foreground: 220 20% 5%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Victory Green */
+    --success: 142 76% 45%;
+    --success-foreground: 220 20% 5%;
 
-    --radius: 0.5rem;
+    --border: 220 20% 15%;
+    --input: 220 20% 12%;
+    --ring: 42 71% 51%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.75rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Custom Dogo Stats Colors */
+    --gold: 42 71% 51%;
+    --gold-glow: 42 100% 60%;
+    --neon-blue: 190 100% 50%;
+    --neon-blue-glow: 190 100% 65%;
+    --deep-navy: 220 30% 8%;
+    --glass: 220 20% 12%;
+    --glass-border: 220 20% 20%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Rank Colors */
+    --iron: 30 10% 45%;
+    --bronze: 25 60% 45%;
+    --silver: 210 10% 65%;
+    --gold-rank: 42 71% 51%;
+    --platinum: 180 30% 55%;
+    --emerald: 160 60% 45%;
+    --diamond: 200 80% 60%;
+    --master: 280 60% 55%;
+    --grandmaster: 0 70% 55%;
+    --challenger: 42 90% 55%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(42 71% 51%) 0%, hsl(35 80% 40%) 100%);
+    --gradient-blue: linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(200 100% 40%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(220 20% 12% / 0.8) 0%, hsl(220 20% 8% / 0.6) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(220 20% 10%) 0%, hsl(220 20% 6%) 100%);
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Shadows */
+    --shadow-gold: 0 0 20px hsl(42 71% 51% / 0.3);
+    --shadow-blue: 0 0 20px hsl(190 100% 50% / 0.3);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 220 20% 6%;
+    --sidebar-foreground: 210 20% 85%;
+    --sidebar-primary: 42 71% 51%;
+    --sidebar-primary-foreground: 220 20% 5%;
+    --sidebar-accent: 220 20% 12%;
+    --sidebar-accent-foreground: 210 20% 85%;
+    --sidebar-border: 220 20% 15%;
+    --sidebar-ring: 42 71% 51%;
   }
 }
 
@@ -100,6 +93,109 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+@layer components {
+  /* Glass Card Effect */
+  .glass-card {
+    @apply relative overflow-hidden rounded-xl;
+    background: linear-gradient(135deg, hsl(var(--glass) / 0.8) 0%, hsl(var(--glass) / 0.4) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, hsl(var(--gold) / 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Glow Border Effect */
+  .glow-border {
+    @apply relative;
+    box-shadow: 0 0 0 1px hsl(var(--gold) / 0.3),
+                0 0 20px -5px hsl(var(--gold) / 0.2);
+  }
+
+  .glow-border-blue {
+    box-shadow: 0 0 0 1px hsl(var(--neon-blue) / 0.3),
+                0 0 20px -5px hsl(var(--neon-blue) / 0.2);
+  }
+
+  /* Win/Loss Indicators */
+  .win-indicator {
+    @apply bg-success/20 border-success/50;
+  }
+
+  .loss-indicator {
+    @apply bg-destructive/20 border-destructive/50;
+  }
+
+  /* Animated Grid Background */
+  .grid-background {
+    background-image: 
+      linear-gradient(hsl(var(--gold) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--gold) / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+  }
+
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  /* Skeleton Loading */
+  .skeleton-pulse {
+    @apply animate-pulse bg-muted rounded;
+  }
+
+  /* Rank Badge Styles */
+  .rank-iron { @apply bg-[hsl(30,10%,45%)]/20 text-[hsl(30,10%,65%)] border-[hsl(30,10%,45%)]/50; }
+  .rank-bronze { @apply bg-[hsl(25,60%,45%)]/20 text-[hsl(25,60%,55%)] border-[hsl(25,60%,45%)]/50; }
+  .rank-silver { @apply bg-[hsl(210,10%,65%)]/20 text-[hsl(210,10%,75%)] border-[hsl(210,10%,65%)]/50; }
+  .rank-gold { @apply bg-primary/20 text-primary border-primary/50; }
+  .rank-platinum { @apply bg-[hsl(180,30%,55%)]/20 text-[hsl(180,30%,65%)] border-[hsl(180,30%,55%)]/50; }
+  .rank-emerald { @apply bg-[hsl(160,60%,45%)]/20 text-[hsl(160,60%,55%)] border-[hsl(160,60%,45%)]/50; }
+  .rank-diamond { @apply bg-[hsl(200,80%,60%)]/20 text-[hsl(200,80%,70%)] border-[hsl(200,80%,60%)]/50; }
+  .rank-master { @apply bg-[hsl(280,60%,55%)]/20 text-[hsl(280,60%,65%)] border-[hsl(280,60%,55%)]/50; }
+  .rank-grandmaster { @apply bg-destructive/20 text-destructive border-destructive/50; }
+  .rank-challenger { @apply bg-primary/30 text-primary border-primary/60; }
+}
+
+@layer utilities {
+  /* Text Gradient */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-glow)) 100%);
+  }
+
+  .text-gradient-blue {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--neon-blue)) 0%, hsl(var(--neon-blue-glow)) 100%);
+  }
+
+  /* Hover Glow */
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px -5px hsl(var(--gold) / 0.4);
+  }
+
+  /* KDA Colors */
+  .kda-excellent { @apply text-success; }
+  .kda-good { @apply text-primary; }
+  .kda-average { @apply text-muted-foreground; }
+  .kda-poor { @apply text-destructive; }
 }
