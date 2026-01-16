@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
+import { KEYSTONE_ICONS, RUNE_ICON_URL } from "@/lib/gameAssets";
 
 interface MatchHeaderProps {
   win: boolean;
@@ -155,7 +156,23 @@ export function MatchHeader({
                 ))}
               </div>
 
-              <p className="text-sm text-muted-foreground truncate">{keystone}</p>
+              {KEYSTONE_ICONS[keystone] ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <img
+                      src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
+                      alt={`Runa: ${keystone}`}
+                      loading="lazy"
+                      className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="start">
+                    <p className="text-xs">{keystone}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <p className="text-sm text-muted-foreground truncate">{keystone}</p>
+              )}
             </div>
           </div>
  
