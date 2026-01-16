@@ -9,63 +9,84 @@ export const SPELL_ICON_URL = `${DDRAGON_CDN}/img/spell/`;
 export const PROFILE_ICON_URL = `${DDRAGON_CDN}/img/profileicon/`;
 export const RUNE_ICON_URL = "https://ddragon.canisback.com/img/";
 
-// Game Mode Icons - Placeholders (will be replaced with official 2026 assets)
-export const GAME_MODE_ICONS: Record<string, { icon: string; label: string; color: string }> = {
+// Game Mode Icons - CDN + fallback
+// Using CommunityDragon for up-to-date League client assets.
+// If an iconUrl breaks, the UI falls back to the emoji icon.
+export const GAME_MODE_ICONS: Record<
+  string,
+  { icon: string; iconUrl?: string; label: string; color: string }
+> = {
   "Ranked Solo": {
     icon: "⚔️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/classic_sru/img/game-select-icon-default.png",
     label: "Ranked Solo/Duo",
-    color: "from-gold to-gold-glow"
+    color: "from-gold to-gold-glow",
   },
   "Ranked Flex": {
     icon: "👥",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/classic_sru/img/game-select-icon-default.png",
     label: "Ranked Flex",
-    color: "from-emerald-500 to-emerald-400"
+    color: "from-emerald-500 to-emerald-400",
   },
   "ARAM": {
     icon: "❄️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/howling_abyss/img/game-select-icon-default.png",
     label: "ARAM",
-    color: "from-blue-500 to-cyan-400"
+    color: "from-blue-500 to-cyan-400",
   },
   "Arena": {
     icon: "🏟️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/cherry/img/game-select-icon-default.png",
     label: "Arena 2v2v2v2",
-    color: "from-purple-500 to-pink-400"
+    color: "from-purple-500 to-pink-400",
   },
   "URF": {
     icon: "🐟",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/urf/img/game-select-icon-default.png",
     label: "Ultra Rapid Fire",
-    color: "from-yellow-500 to-orange-400"
+    color: "from-yellow-500 to-orange-400",
   },
   "Normal Draft": {
     icon: "📋",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/classic_sru/img/game-select-icon-default.png",
     label: "Normal Draft",
-    color: "from-slate-500 to-slate-400"
+    color: "from-slate-500 to-slate-400",
   },
   "Normal Blind": {
     icon: "👁️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/classic_sru/img/game-select-icon-default.png",
     label: "Normal Blind",
-    color: "from-slate-600 to-slate-500"
+    color: "from-slate-600 to-slate-500",
   },
   "Clash": {
     icon: "🏆",
     label: "Clash",
-    color: "from-red-500 to-orange-500"
+    color: "from-red-500 to-orange-500",
   },
   "One for All": {
     icon: "🎭",
     label: "One for All",
-    color: "from-indigo-500 to-purple-400"
+    color: "from-indigo-500 to-purple-400",
   },
   "Nexus Blitz": {
     icon: "⚡",
     label: "Nexus Blitz",
-    color: "from-teal-500 to-green-400"
+    color: "from-teal-500 to-green-400",
   },
   "TFT": {
     icon: "♟️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/content/src/leagueclient/gamemodeassets/tft/img/game-select-icon-active.png",
     label: "TFT Ranked",
-    color: "from-violet-500 to-indigo-400"
-  }
+    color: "from-violet-500 to-indigo-400",
+  },
 };
 
 // Summoner Spell mapping
