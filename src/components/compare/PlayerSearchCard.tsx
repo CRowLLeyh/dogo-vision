@@ -2,6 +2,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Search, User, X, RefreshCw } from "lucide-react";
 import { mockPlayerData } from "@/lib/mockData";
+import { RankBadge } from "@/components/ui/RankBadge";
 
 interface PlayerData {
   gameName: string;
@@ -10,6 +11,9 @@ interface PlayerData {
   profileIconUrl: string;
   tier: string;
   division: string;
+  lp: number;
+  wins: number;
+  losses: number;
 }
 
 interface PlayerSearchCardProps {
@@ -35,7 +39,10 @@ export function PlayerSearchCard({ side, player, onPlayerSelect, className }: Pl
         level: mockPlayerData.profile.level,
         profileIconUrl: mockPlayerData.profile.profileIconUrl,
         tier: mockPlayerData.ranks.solo.tier,
-        division: mockPlayerData.ranks.solo.division
+        division: mockPlayerData.ranks.solo.division,
+        lp: mockPlayerData.ranks.solo.lp,
+        wins: mockPlayerData.ranks.solo.wins,
+        losses: mockPlayerData.ranks.solo.losses,
       });
       setIsSearching(false);
       setSearchValue("");
@@ -83,12 +90,16 @@ export function PlayerSearchCard({ side, player, onPlayerSelect, className }: Pl
                     <span className="text-muted-foreground font-normal">#{player.tagLine}</span>
                   </h3>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className={cn(
-                      "px-2 py-0.5 rounded-md text-xs font-semibold",
-                      `rank-${player.tier.toLowerCase()}`
-                    )}>
-                      {player.tier} {player.division}
-                    </span>
+                    <RankBadge
+                      tier={player.tier}
+                      division={player.division}
+                      lp={player.lp}
+                      wins={player.wins}
+                      losses={player.losses}
+                      size="sm"
+                      showLp={false}
+                      className="border-border/50"
+                    />
                   </div>
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { RankBadge } from "@/components/ui/RankBadge";
 import type { TeamPlayer } from "@/lib/mockData";
 
 interface TeamStatsTableProps {
@@ -15,6 +16,28 @@ function formatNumber(num: number): string {
     return (num / 1000).toFixed(1) + "K";
   }
   return num.toString();
+}
+
+function parseRankString(rank: string): { tier: string; division?: string } {
+  // Examples from mock: "Gold IV", "Plat III", "Silver I"
+  const [rawTier, rawDivision] = rank.trim().split(/\s+/);
+
+  const tierMap: Record<string, string> = {
+    iron: "IRON",
+    bronze: "BRONZE",
+    silver: "SILVER",
+    gold: "GOLD",
+    plat: "PLATINUM",
+    platinum: "PLATINUM",
+    emerald: "EMERALD",
+    diamond: "DIAMOND",
+    master: "MASTER",
+    grandmaster: "GRANDMASTER",
+    challenger: "CHALLENGER",
+  };
+
+  const tier = tierMap[(rawTier || "").toLowerCase()] ?? rawTier?.toUpperCase() ?? "IRON";
+  return { tier, division: rawDivision };
 }
 
 export function TeamStatsTable({ team, teamColor, currentPlayer, className }: TeamStatsTableProps) {
@@ -77,9 +100,20 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
                 )}>
                   {player.summonerName}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  {player.rank}
-                </p>
+                <div className="mt-1">
+                  {(() => {
+                    const parsed = parseRankString(player.rank);
+                    return (
+                      <RankBadge
+                        tier={parsed.tier}
+                        division={parsed.division}
+                        size="sm"
+                        showLp={false}
+                        className="border-border/40"
+                      />
+                    );
+                  })()}
+                </div>
               </div>
 
               {/* KDA */}

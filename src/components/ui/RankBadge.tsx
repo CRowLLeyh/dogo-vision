@@ -1,9 +1,17 @@
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface RankBadgeProps {
   tier: string;
   division?: string;
   lp?: number;
+  wins?: number;
+  losses?: number;
   size?: "sm" | "md" | "lg";
   showLp?: boolean;
   className?: string;
@@ -48,7 +56,9 @@ const sizeClasses = {
 export function RankBadge({ 
   tier, 
   division, 
-  lp, 
+  lp,
+  wins,
+  losses,
   size = "md", 
   showLp = true,
   className 
@@ -66,13 +76,29 @@ export function RankBadge({
         className
       )}
     >
-      <div className={cn(sizes.icon, "overflow-hidden")}> 
-        <img 
-          src={getRankEmblemUrl(tier)} 
-          alt={`Emblema ${tier}`} 
-          className="w-full h-full object-cover scale-[1.78] origin-center"
-        />
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={cn(sizes.icon, "overflow-hidden cursor-default")}> 
+              <img 
+                src={getRankEmblemUrl(tier)} 
+                alt={`Emblema ${tier}`} 
+                className="w-full h-full object-cover scale-[1.78] origin-center"
+              />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="top" align="center">
+            <div className="space-y-0.5">
+              <p className="font-semibold">{tier}{division ? ` ${division}` : ""}</p>
+              {lp !== undefined && <p className="text-xs text-muted-foreground">{lp} LP</p>}
+              {wins !== undefined && losses !== undefined && (
+                <p className="text-xs text-muted-foreground">{wins}V {losses}D</p>
+              )}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <div className="flex flex-col">
         <span className={cn("font-bold font-display", sizes.text)}>
           {tier} {division}

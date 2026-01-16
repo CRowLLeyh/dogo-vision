@@ -4,6 +4,12 @@ import { mockPlayerData, mockTierListData } from "@/lib/mockData";
 import { ProfileSkeleton } from "@/components/SkeletonLoaders";
 import { cn } from "@/lib/utils";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   RefreshCw,
   Target,
   Crosshair,
@@ -167,21 +173,35 @@ export default function Profile() {
               <span className="text-xs text-accent">{ranks.solo.lp} LP</span>
             </div>
             <div className="flex items-center gap-3 mb-3">
-              <div
-                className={cn(
-                  "w-16 h-16 rounded-xl flex items-center justify-center",
-                  "bg-muted/30 border border-border/50"
-                )}
-              >
-                <div className="w-14 h-14 overflow-hidden">
-                  <img
-                    src={getRankEmblemUrl(ranks.solo.tier)}
-                    alt={`Emblema ${translateRank(ranks.solo.tier)}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover scale-[1.78] origin-center"
-                  />
-                </div>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={cn(
+                        "w-16 h-16 rounded-xl flex items-center justify-center",
+                        "bg-muted/30 border border-border/50"
+                      )}
+                    >
+                      <div className="w-14 h-14 overflow-hidden">
+                        <img
+                          src={getRankEmblemUrl(ranks.solo.tier)}
+                          alt={`Emblema ${translateRank(ranks.solo.tier)}`}
+                          loading="lazy"
+                          className="w-full h-full object-cover scale-[1.78] origin-center"
+                        />
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="center">
+                    <div className="space-y-0.5">
+                      <p className="font-semibold">{formatRank(ranks.solo.tier, ranks.solo.division)}</p>
+                      <p className="text-xs text-muted-foreground">{ranks.solo.lp} LP</p>
+                      <p className="text-xs text-muted-foreground">{ranks.solo.wins}V {ranks.solo.losses}D</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.solo.tier, ranks.solo.division)}</p>
                 <p className="text-xs text-muted-foreground">{ranks.solo.wins}V {ranks.solo.losses}D</p>
@@ -202,21 +222,35 @@ export default function Profile() {
               <span className="text-xs text-success">{ranks.flex.lp} LP</span>
             </div>
             <div className="flex items-center gap-3 mb-3">
-              <div
-                className={cn(
-                  "w-16 h-16 rounded-xl flex items-center justify-center",
-                  "bg-muted/30 border border-border/50"
-                )}
-              >
-                <div className="w-14 h-14 overflow-hidden">
-                  <img
-                    src={getRankEmblemUrl(ranks.flex.tier)}
-                    alt={`Emblema ${translateRank(ranks.flex.tier)}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover scale-[1.78] origin-center"
-                  />
-                </div>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={cn(
+                        "w-16 h-16 rounded-xl flex items-center justify-center",
+                        "bg-muted/30 border border-border/50"
+                      )}
+                    >
+                      <div className="w-14 h-14 overflow-hidden">
+                        <img
+                          src={getRankEmblemUrl(ranks.flex.tier)}
+                          alt={`Emblema ${translateRank(ranks.flex.tier)}`}
+                          loading="lazy"
+                          className="w-full h-full object-cover scale-[1.78] origin-center"
+                        />
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="center">
+                    <div className="space-y-0.5">
+                      <p className="font-semibold">{formatRank(ranks.flex.tier, ranks.flex.division)}</p>
+                      <p className="text-xs text-muted-foreground">{ranks.flex.lp} LP</p>
+                      <p className="text-xs text-muted-foreground">{ranks.flex.wins}V {ranks.flex.losses}D</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.flex.tier, ranks.flex.division)}</p>
                 <p className="text-xs text-muted-foreground">{ranks.flex.wins}V {ranks.flex.losses}D</p>
