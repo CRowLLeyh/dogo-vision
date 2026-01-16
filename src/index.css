@@ -2,88 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* Dogo Stats Dark Gaming Theme */
-    --background: 220 20% 5%;
-    --foreground: 210 20% 95%;
+    /* Dogo Stats Modern Dark Theme 2025 */
+    --background: 220 25% 4%;
+    --foreground: 210 20% 98%;
 
-    --card: 220 20% 8%;
-    --card-foreground: 210 20% 95%;
+    --card: 220 25% 7%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 220 20% 8%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 220 25% 7%;
+    --popover-foreground: 210 20% 98%;
 
-    /* Gold/Amber Primary */
-    --primary: 42 71% 51%;
-    --primary-foreground: 220 20% 5%;
+    /* Gold/Amber Primary - More vibrant */
+    --primary: 42 85% 55%;
+    --primary-foreground: 220 25% 4%;
 
     /* Muted Navy */
-    --secondary: 220 20% 12%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 220 25% 10%;
+    --secondary-foreground: 210 20% 90%;
 
-    --muted: 220 20% 15%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 220 20% 14%;
+    --muted-foreground: 215 15% 50%;
 
-    /* Neon Blue Accent */
-    --accent: 190 100% 50%;
-    --accent-foreground: 220 20% 5%;
+    /* Neon Cyan Accent */
+    --accent: 185 100% 55%;
+    --accent-foreground: 220 25% 4%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 80% 55%;
     --destructive-foreground: 210 40% 98%;
 
     /* Victory Green */
-    --success: 142 76% 45%;
-    --success-foreground: 220 20% 5%;
+    --success: 150 85% 45%;
+    --success-foreground: 220 25% 4%;
 
-    --border: 220 20% 15%;
-    --input: 220 20% 12%;
-    --ring: 42 71% 51%;
+    --border: 220 20% 12%;
+    --input: 220 25% 10%;
+    --ring: 42 85% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Custom Dogo Stats Colors */
-    --gold: 42 71% 51%;
-    --gold-glow: 42 100% 60%;
-    --neon-blue: 190 100% 50%;
-    --neon-blue-glow: 190 100% 65%;
-    --deep-navy: 220 30% 8%;
-    --glass: 220 20% 12%;
-    --glass-border: 220 20% 20%;
+    --gold: 42 85% 55%;
+    --gold-glow: 42 100% 65%;
+    --gold-dim: 42 60% 40%;
+    --neon-blue: 185 100% 55%;
+    --neon-blue-glow: 185 100% 70%;
+    --cyan: 185 100% 55%;
+    --deep-navy: 220 35% 6%;
+    --glass: 220 25% 10%;
+    --glass-border: 220 20% 18%;
 
     /* Rank Colors */
     --iron: 30 10% 45%;
-    --bronze: 25 60% 45%;
-    --silver: 210 10% 65%;
-    --gold-rank: 42 71% 51%;
-    --platinum: 180 30% 55%;
-    --emerald: 160 60% 45%;
-    --diamond: 200 80% 60%;
-    --master: 280 60% 55%;
-    --grandmaster: 0 70% 55%;
-    --challenger: 42 90% 55%;
+    --bronze: 25 65% 45%;
+    --silver: 210 12% 65%;
+    --gold-rank: 42 85% 55%;
+    --platinum: 175 40% 55%;
+    --emerald: 155 70% 45%;
+    --diamond: 195 90% 60%;
+    --master: 275 70% 55%;
+    --grandmaster: 0 75% 55%;
+    --challenger: 42 95% 58%;
 
-    /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(42 71% 51%) 0%, hsl(35 80% 40%) 100%);
-    --gradient-blue: linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(200 100% 40%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsl(220 20% 12% / 0.8) 0%, hsl(220 20% 8% / 0.6) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(220 20% 10%) 0%, hsl(220 20% 6%) 100%);
+    /* Modern Mesh Gradients */
+    --mesh-gradient-1: radial-gradient(at 0% 0%, hsl(42 85% 55% / 0.08) 0px, transparent 50%);
+    --mesh-gradient-2: radial-gradient(at 100% 0%, hsl(185 100% 55% / 0.06) 0px, transparent 50%);
+    --mesh-gradient-3: radial-gradient(at 50% 100%, hsl(275 70% 55% / 0.04) 0px, transparent 50%);
 
-    /* Shadows */
-    --shadow-gold: 0 0 20px hsl(42 71% 51% / 0.3);
-    --shadow-blue: 0 0 20px hsl(190 100% 50% / 0.3);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+    /* Modern Shadows */
+    --shadow-xs: 0 1px 2px hsl(0 0% 0% / 0.3);
+    --shadow-sm: 0 2px 8px -2px hsl(0 0% 0% / 0.4);
+    --shadow-md: 0 8px 24px -8px hsl(0 0% 0% / 0.5);
+    --shadow-lg: 0 16px 48px -16px hsl(0 0% 0% / 0.6);
+    --shadow-xl: 0 24px 64px -24px hsl(0 0% 0% / 0.7);
+    --shadow-glow-gold: 0 0 60px -15px hsl(42 85% 55% / 0.4);
+    --shadow-glow-cyan: 0 0 60px -15px hsl(185 100% 55% / 0.4);
 
-    --sidebar-background: 220 20% 6%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 42 71% 51%;
-    --sidebar-primary-foreground: 220 20% 5%;
-    --sidebar-accent: 220 20% 12%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 220 20% 15%;
-    --sidebar-ring: 42 71% 51%;
+    /* Sidebar */
+    --sidebar-background: 220 25% 5%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 42 85% 55%;
+    --sidebar-primary-foreground: 220 25% 4%;
+    --sidebar-accent: 220 25% 10%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 220 20% 12%;
+    --sidebar-ring: 42 85% 55%;
   }
 }
 
@@ -98,82 +104,288 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 @layer components {
-  /* Glass Card Effect */
+  /* Modern Glass Card - 2025 Style */
   .glass-card {
-    @apply relative overflow-hidden rounded-xl;
-    background: linear-gradient(135deg, hsl(var(--glass) / 0.8) 0%, hsl(var(--glass) / 0.4) 100%);
-    backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--glass-border) / 0.5);
+    @apply relative overflow-hidden rounded-2xl;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass) / 0.9) 0%,
+      hsl(var(--glass) / 0.6) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid hsl(var(--glass-border) / 0.4);
+    box-shadow: var(--shadow-md);
   }
 
   .glass-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, hsl(var(--gold) / 0.05) 0%, transparent 50%);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gold) / 0.03) 0%,
+      transparent 40%,
+      hsl(var(--neon-blue) / 0.02) 100%
+    );
     pointer-events: none;
   }
 
-  /* Glow Border Effect */
+  /* Modern Bento Card */
+  .bento-card {
+    @apply relative overflow-hidden rounded-3xl p-6;
+    background: linear-gradient(
+      145deg,
+      hsl(var(--card)) 0%,
+      hsl(var(--background)) 100%
+    );
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-4px);
+    border-color: hsl(var(--gold) / 0.3);
+    box-shadow: var(--shadow-xl), var(--shadow-glow-gold);
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: var(--mesh-gradient-1), var(--mesh-gradient-2);
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Floating Header */
+  .floating-header {
+    @apply fixed top-4 left-1/2 -translate-x-1/2 z-50;
+    @apply rounded-2xl px-2 py-2;
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Modern Glow Effects */
   .glow-border {
     @apply relative;
-    box-shadow: 0 0 0 1px hsl(var(--gold) / 0.3),
-                0 0 20px -5px hsl(var(--gold) / 0.2);
+    box-shadow: 
+      0 0 0 1px hsl(var(--gold) / 0.2),
+      var(--shadow-glow-gold);
   }
 
   .glow-border-blue {
-    box-shadow: 0 0 0 1px hsl(var(--neon-blue) / 0.3),
-                0 0 20px -5px hsl(var(--neon-blue) / 0.2);
+    box-shadow: 
+      0 0 0 1px hsl(var(--neon-blue) / 0.2),
+      var(--shadow-glow-cyan);
   }
 
   /* Win/Loss Indicators */
   .win-indicator {
-    @apply bg-success/20 border-success/50;
+    @apply bg-success/15 border-success/40;
   }
 
   .loss-indicator {
-    @apply bg-destructive/20 border-destructive/50;
+    @apply bg-destructive/15 border-destructive/40;
+  }
+
+  /* Modern Mesh Background */
+  .mesh-background {
+    background: 
+      var(--mesh-gradient-1),
+      var(--mesh-gradient-2),
+      var(--mesh-gradient-3),
+      hsl(var(--background));
+  }
+
+  /* Modern Grid Background */
+  .grid-background {
+    background-image: 
+      linear-gradient(hsl(var(--gold) / 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--gold) / 0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
   }
 
   /* Animated Grid Background */
-  .grid-background {
+  .grid-background-animated {
     background-image: 
-      linear-gradient(hsl(var(--gold) / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--gold) / 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridMove 20s linear infinite;
+      linear-gradient(hsl(var(--gold) / 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--gold) / 0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridMove 30s linear infinite;
   }
 
   @keyframes gridMove {
     0% { background-position: 0 0; }
-    100% { background-position: 60px 60px; }
+    100% { background-position: 80px 80px; }
   }
 
-  /* Skeleton Loading */
-  .skeleton-pulse {
-    @apply animate-pulse bg-muted rounded;
+  /* Modern Skeleton Shimmer */
+  .skeleton-shimmer {
+    @apply relative overflow-hidden bg-muted rounded-xl;
   }
 
-  /* Rank Badge Styles */
-  .rank-iron { @apply bg-[hsl(30,10%,45%)]/20 text-[hsl(30,10%,65%)] border-[hsl(30,10%,45%)]/50; }
-  .rank-bronze { @apply bg-[hsl(25,60%,45%)]/20 text-[hsl(25,60%,55%)] border-[hsl(25,60%,45%)]/50; }
-  .rank-silver { @apply bg-[hsl(210,10%,65%)]/20 text-[hsl(210,10%,75%)] border-[hsl(210,10%,65%)]/50; }
-  .rank-gold { @apply bg-primary/20 text-primary border-primary/50; }
-  .rank-platinum { @apply bg-[hsl(180,30%,55%)]/20 text-[hsl(180,30%,65%)] border-[hsl(180,30%,55%)]/50; }
-  .rank-emerald { @apply bg-[hsl(160,60%,45%)]/20 text-[hsl(160,60%,55%)] border-[hsl(160,60%,45%)]/50; }
-  .rank-diamond { @apply bg-[hsl(200,80%,60%)]/20 text-[hsl(200,80%,70%)] border-[hsl(200,80%,60%)]/50; }
-  .rank-master { @apply bg-[hsl(280,60%,55%)]/20 text-[hsl(280,60%,65%)] border-[hsl(280,60%,55%)]/50; }
-  .rank-grandmaster { @apply bg-destructive/20 text-destructive border-destructive/50; }
-  .rank-challenger { @apply bg-primary/30 text-primary border-primary/60; }
+  .skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--gold) / 0.05) 50%,
+      transparent 100%
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+
+  /* Rank Badge Styles - Enhanced */
+  .rank-iron { 
+    @apply bg-[hsl(30,10%,45%)]/15 text-[hsl(30,10%,70%)] border-[hsl(30,10%,45%)]/40; 
+  }
+  .rank-bronze { 
+    @apply bg-[hsl(25,65%,45%)]/15 text-[hsl(25,65%,60%)] border-[hsl(25,65%,45%)]/40; 
+  }
+  .rank-silver { 
+    @apply bg-[hsl(210,12%,65%)]/15 text-[hsl(210,12%,80%)] border-[hsl(210,12%,65%)]/40; 
+  }
+  .rank-gold { 
+    @apply bg-primary/15 text-primary border-primary/40; 
+  }
+  .rank-platinum { 
+    @apply bg-[hsl(175,40%,55%)]/15 text-[hsl(175,40%,70%)] border-[hsl(175,40%,55%)]/40; 
+  }
+  .rank-emerald { 
+    @apply bg-[hsl(155,70%,45%)]/15 text-[hsl(155,70%,60%)] border-[hsl(155,70%,45%)]/40; 
+  }
+  .rank-diamond { 
+    @apply bg-[hsl(195,90%,60%)]/15 text-[hsl(195,90%,75%)] border-[hsl(195,90%,60%)]/40; 
+  }
+  .rank-master { 
+    @apply bg-[hsl(275,70%,55%)]/15 text-[hsl(275,70%,70%)] border-[hsl(275,70%,55%)]/40; 
+  }
+  .rank-grandmaster { 
+    @apply bg-destructive/15 text-destructive border-destructive/40; 
+  }
+  .rank-challenger { 
+    @apply bg-primary/25 text-primary border-primary/50; 
+  }
+
+  /* 3D Card Effect */
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-3d:hover {
+    transform: rotateX(2deg) rotateY(-2deg) translateZ(10px);
+  }
+
+  /* Modern Button Styles */
+  .btn-modern {
+    @apply relative overflow-hidden px-6 py-3 rounded-xl font-medium;
+    @apply transition-all duration-300 ease-out;
+    @apply bg-gradient-to-r from-primary to-gold-glow;
+    @apply text-primary-foreground;
+    box-shadow: 0 4px 20px -4px hsl(var(--gold) / 0.4);
+  }
+
+  .btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px -4px hsl(var(--gold) / 0.5);
+  }
+
+  .btn-modern:active {
+    transform: translateY(0);
+  }
+
+  /* Pill Navigation */
+  .pill-nav {
+    @apply relative flex items-center gap-1 p-1.5 rounded-2xl;
+    background: hsl(var(--secondary) / 0.8);
+  }
+
+  .pill-nav-item {
+    @apply relative z-10 flex items-center gap-2 px-4 py-2 rounded-xl;
+    @apply text-sm font-medium transition-colors duration-200;
+  }
+
+  .pill-nav-item[data-active="true"] {
+    @apply text-primary-foreground;
+  }
+
+  .pill-nav-item[data-active="false"] {
+    @apply text-muted-foreground hover:text-foreground;
+  }
+
+  .pill-nav-indicator {
+    @apply absolute rounded-xl;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--gold-glow)));
+    box-shadow: 0 4px 15px -3px hsl(var(--gold) / 0.4);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Progress Ring */
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring-circle {
+    transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Stat Badge */
+  .stat-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-xl;
+    @apply text-xs font-semibold uppercase tracking-wider;
+    background: hsl(var(--muted) / 0.5);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  /* Chart Styles */
+  .damage-bar {
+    @apply h-6 rounded-lg transition-all duration-500 ease-out;
+    background: linear-gradient(90deg, hsl(var(--destructive)), hsl(var(--destructive) / 0.7));
+  }
+
+  /* Timeline */
+  .timeline-line {
+    @apply absolute left-4 top-0 bottom-0 w-0.5;
+    background: linear-gradient(to bottom, hsl(var(--gold)), hsl(var(--neon-blue)));
+  }
+
+  .timeline-dot {
+    @apply absolute left-2.5 w-3 h-3 rounded-full;
+    @apply bg-gold border-2 border-background;
+    box-shadow: 0 0 10px hsl(var(--gold) / 0.5);
+  }
 }
 
 @layer utilities {
-  /* Text Gradient */
+  /* Text Gradients - Enhanced */
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-glow)) 100%);
@@ -184,13 +396,31 @@
     background-image: linear-gradient(135deg, hsl(var(--neon-blue)) 0%, hsl(var(--neon-blue-glow)) 100%);
   }
 
-  /* Hover Glow */
-  .hover-glow {
+  .text-gradient-mixed {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--neon-blue)) 100%);
+  }
+
+  /* Hover Effects */
+  .hover-lift {
     @apply transition-all duration-300;
   }
 
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hover-glow {
+    @apply transition-all duration-400;
+  }
+
   .hover-glow:hover {
-    box-shadow: 0 0 30px -5px hsl(var(--gold) / 0.4);
+    box-shadow: var(--shadow-glow-gold);
+  }
+
+  .hover-glow-blue:hover {
+    box-shadow: var(--shadow-glow-cyan);
   }
 
   /* KDA Colors */
@@ -198,4 +428,60 @@
   .kda-good { @apply text-primary; }
   .kda-average { @apply text-muted-foreground; }
   .kda-poor { @apply text-destructive; }
+
+  /* Animation Utilities */
+  .animate-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  .animate-in-scale {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Stagger Animation Delay Utilities */
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-150 { animation-delay: 0.15s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-250 { animation-delay: 0.25s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-350 { animation-delay: 0.35s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+
+  /* Fluid Typography */
+  .text-fluid-xl {
+    font-size: clamp(2.5rem, 5vw + 1rem, 5rem);
+  }
+
+  .text-fluid-lg {
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 3rem);
+  }
+
+  .text-fluid-md {
+    font-size: clamp(1rem, 2vw + 0.25rem, 1.5rem);
+  }
 }

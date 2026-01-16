@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import { KDADisplay } from "./ui/KDADisplay";
-import { ChevronDown, Clock, Sword, Eye, Coins, Target, Zap } from "lucide-react";
-import { useState } from "react";
-import type { TeamPlayer } from "@/lib/mockData";
+import { ChevronRight, Clock, Sword } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface MatchCardProps {
+  matchId: string;
   champion: string;
   championIcon: string;
   win: boolean;
@@ -19,14 +19,7 @@ interface MatchCardProps {
   items: number[];
   summonerSpells: string[];
   keystone: string;
-  secondaryTree?: string;
-  damage?: number;
-  visionScore?: number;
-  goldEarned?: number;
-  killParticipation?: number;
   largestMultikill?: number;
-  blueTeam?: TeamPlayer[];
-  redTeam?: TeamPlayer[];
   className?: string;
 }
 
@@ -46,47 +39,14 @@ const spellMap: Record<string, string> = {
 };
 
 const multikillLabels: Record<number, string> = {
-  2: "Double Kill",
-  3: "Triple Kill",
-  4: "Quadra Kill",
-  5: "Penta Kill"
+  2: "Double",
+  3: "Triple",
+  4: "Quadra",
+  5: "Penta"
 };
 
-function formatNumber(num: number): string {
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
-  }
-  return num.toString();
-}
-
-function TeamPlayerRow({ player, isCurrentPlayer }: { player: TeamPlayer; isCurrentPlayer?: boolean }) {
-  return (
-    <div className={cn(
-      "flex items-center gap-2 py-1.5 px-2 rounded transition-colors",
-      isCurrentPlayer ? "bg-gold/10 border border-gold/20" : "hover:bg-white/5"
-    )}>
-      <img 
-        src={player.championIcon} 
-        alt={player.champion}
-        className="w-6 h-6 rounded"
-      />
-      <span className={cn(
-        "flex-1 text-xs truncate",
-        isCurrentPlayer ? "text-gold font-semibold" : "text-foreground"
-      )}>
-        {player.summonerName}
-      </span>
-      <span className="text-xs text-muted-foreground whitespace-nowrap">
-        {player.kills}/{player.deaths}/{player.assists}
-      </span>
-      <span className="text-xs text-muted-foreground/60 w-14 text-right">
-        {formatNumber(player.damage)}
-      </span>
-    </div>
-  );
-}
-
 export function MatchCard({
+  matchId,
   champion,
   championIcon,
   win,
@@ -101,34 +61,27 @@ export function MatchCard({
   items,
   summonerSpells,
   keystone,
-  damage,
-  visionScore,
-  goldEarned,
-  killParticipation,
   largestMultikill,
-  blueTeam,
-  redTeam,
   className
 }: MatchCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
-    <div 
+    <Link 
+      to={`/match/${matchId}`}
       className={cn(
-        "glass-card overflow-hidden transition-all duration-300 cursor-pointer",
-        "hover:shadow-[0_0_30px_-10px_hsl(var(--gold)/0.2)]",
+        "group block glass-card overflow-hidden transition-all duration-400",
+        "hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_hsl(var(--gold)/0.3)]",
         className
       )}
-      onClick={() => setIsExpanded(!isExpanded)}
     >
       {/* Win/Loss Indicator Bar */}
       <div className={cn(
-        "h-1 w-full",
-        win ? "bg-success" : "bg-destructive"
+        "h-1.5 w-full",
+        win 
+          ? "bg-gradient-to-r from-success via-success/80 to-success/60" 
+          : "bg-gradient-to-r from-destructive via-destructive/80 to-destructive/60"
       )} />
 
-      {/* Main Content */}
-      <div className="p-4">
+      <div className="p-5">
         <div className="flex items-center gap-4">
           {/* Champion Icon + Spells */}
           <div className="relative flex items-center gap-2">
@@ -136,18 +89,18 @@ export function MatchCard({
               src={championIcon} 
               alt={champion}
               className={cn(
-                "w-14 h-14 rounded-xl border-2 transition-colors",
-                win ? "border-success/50" : "border-destructive/50"
+                "w-16 h-16 rounded-2xl border-2 transition-all",
+                win ? "border-success/50" : "border-destructive/50",
+                "group-hover:scale-105"
               )}
             />
-            {/* Summoner Spells */}
             <div className="flex flex-col gap-0.5">
               {summonerSpells.map((spell, index) => (
                 <img 
                   key={index}
                   src={`${spellBaseUrl}${spellMap[spell] || spell}.png`}
                   alt={spell}
-                  className="w-6 h-6 rounded border border-border/50"
+                  className="w-7 h-7 rounded-lg border border-border/50"
                 />
               ))}
             </div>
@@ -165,15 +118,12 @@ export function MatchCard({
               <span className="text-xs text-muted-foreground">•</span>
               <span className="text-xs text-muted-foreground">{gameMode}</span>
               {largestMultikill && largestMultikill >= 2 && (
-                <>
-                  <span className="text-xs text-muted-foreground">•</span>
-                  <span className="text-xs text-gold font-medium">
-                    {multikillLabels[largestMultikill]}
-                  </span>
-                </>
+                <span className="text-xs text-gold font-semibold px-2 py-0.5 rounded-full bg-gold/10">
+                  {multikillLabels[largestMultikill]}
+                </span>
               )}
             </div>
-            <p className="font-semibold text-foreground">{champion}</p>
+            <p className="font-semibold text-lg text-foreground">{champion}</p>
             <p className="text-xs text-muted-foreground">{keystone}</p>
           </div>
 
@@ -191,7 +141,7 @@ export function MatchCard({
           <div className="hidden md:flex items-center gap-4 text-sm">
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <Sword className="w-4 h-4" />
-              <span>{cs} <span className="text-xs">({csPerMin}/min)</span></span>
+              <span>{cs} <span className="text-xs">({csPerMin}/m)</span></span>
             </div>
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <Clock className="w-4 h-4" />
@@ -199,17 +149,29 @@ export function MatchCard({
             </div>
           </div>
 
-          {/* Time Ago & Expand */}
-          <div className="flex items-center gap-2">
+          {/* Items Preview */}
+          <div className="hidden lg:flex gap-1">
+            {items.filter(item => item > 0).slice(0, 3).map((item, index) => (
+              <img 
+                key={index}
+                src={`${itemBaseUrl}${item}.png`}
+                alt={`Item ${item}`}
+                className="w-8 h-8 rounded-lg border border-border/50"
+              />
+            ))}
+            {items.filter(item => item > 0).length > 3 && (
+              <div className="w-8 h-8 rounded-lg bg-muted/50 flex items-center justify-center text-xs text-muted-foreground">
+                +{items.filter(item => item > 0).length - 3}
+              </div>
+            )}
+          </div>
+
+          {/* Arrow & Time */}
+          <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground whitespace-nowrap">
               {timeAgo}
             </span>
-            <ChevronDown 
-              className={cn(
-                "w-5 h-5 text-muted-foreground transition-transform duration-300",
-                isExpanded && "rotate-180"
-              )} 
-            />
+            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
           </div>
         </div>
 
@@ -227,113 +189,7 @@ export function MatchCard({
             <span>{duration}</span>
           </div>
         </div>
-
-        {/* Expanded Content */}
-        {isExpanded && (
-          <div className="mt-4 pt-4 border-t border-border/50 animate-fade-in space-y-4">
-            {/* Items Row */}
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-xs text-muted-foreground uppercase tracking-wider">
-                Items:
-              </span>
-              <div className="flex gap-1.5">
-                {items.filter(item => item > 0).map((item, index) => (
-                  <img 
-                    key={index}
-                    src={`${itemBaseUrl}${item}.png`}
-                    alt={`Item ${item}`}
-                    className="w-8 h-8 rounded border border-border/50"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Stats Grid */}
-            {(damage || visionScore || goldEarned || killParticipation) && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {damage && (
-                  <div className="flex items-center gap-2 bg-white/5 rounded-lg p-2">
-                    <Target className="w-4 h-4 text-destructive" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Dano</p>
-                      <p className="text-sm font-semibold text-foreground">{formatNumber(damage)}</p>
-                    </div>
-                  </div>
-                )}
-                {visionScore !== undefined && (
-                  <div className="flex items-center gap-2 bg-white/5 rounded-lg p-2">
-                    <Eye className="w-4 h-4 text-cyan" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Vision</p>
-                      <p className="text-sm font-semibold text-foreground">{visionScore}</p>
-                    </div>
-                  </div>
-                )}
-                {goldEarned && (
-                  <div className="flex items-center gap-2 bg-white/5 rounded-lg p-2">
-                    <Coins className="w-4 h-4 text-gold" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Ouro</p>
-                      <p className="text-sm font-semibold text-foreground">{formatNumber(goldEarned)}</p>
-                    </div>
-                  </div>
-                )}
-                {killParticipation && (
-                  <div className="flex items-center gap-2 bg-white/5 rounded-lg p-2">
-                    <Zap className="w-4 h-4 text-gold" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">KP</p>
-                      <p className="text-sm font-semibold text-foreground">{killParticipation}%</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Teams */}
-            {blueTeam && redTeam && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Blue Team (Ally) */}
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-cyan uppercase tracking-wider">
-                      Time Azul
-                    </span>
-                    <span className="text-xs text-muted-foreground">DMG</span>
-                  </div>
-                  <div className="space-y-0.5">
-                    {blueTeam.map((player, index) => (
-                      <TeamPlayerRow 
-                        key={index} 
-                        player={player} 
-                        isCurrentPlayer={player.summonerName === "EtoH"}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Red Team (Enemy) */}
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-destructive uppercase tracking-wider">
-                      Time Vermelho
-                    </span>
-                    <span className="text-xs text-muted-foreground">DMG</span>
-                  </div>
-                  <div className="space-y-0.5">
-                    {redTeam.map((player, index) => (
-                      <TeamPlayerRow 
-                        key={index} 
-                        player={player}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </div>
-    </div>
+    </Link>
   );
 }
