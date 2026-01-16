@@ -169,16 +169,18 @@ export default function Profile() {
             <div className="flex items-center gap-3 mb-3">
               <div
                 className={cn(
-                  "w-24 h-24 rounded-xl flex items-center justify-center",
+                  "w-16 h-16 rounded-xl flex items-center justify-center",
                   "bg-muted/30 border border-border/50"
                 )}
               >
-                <img
-                  src={getRankEmblemUrl(ranks.solo.tier)}
-                  alt={`Emblema ${translateRank(ranks.solo.tier)}`}
-                  loading="lazy"
-                  className="w-20 h-20 object-contain"
-                />
+                <div className="w-14 h-14 overflow-hidden">
+                  <img
+                    src={getRankEmblemUrl(ranks.solo.tier)}
+                    alt={`Emblema ${translateRank(ranks.solo.tier)}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover scale-[1.4] origin-center"
+                  />
+                </div>
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.solo.tier, ranks.solo.division)}</p>
@@ -202,16 +204,18 @@ export default function Profile() {
             <div className="flex items-center gap-3 mb-3">
               <div
                 className={cn(
-                  "w-24 h-24 rounded-xl flex items-center justify-center",
+                  "w-16 h-16 rounded-xl flex items-center justify-center",
                   "bg-muted/30 border border-border/50"
                 )}
               >
-                <img
-                  src={getRankEmblemUrl(ranks.flex.tier)}
-                  alt={`Emblema ${translateRank(ranks.flex.tier)}`}
-                  loading="lazy"
-                  className="w-20 h-20 object-contain"
-                />
+                <div className="w-14 h-14 overflow-hidden">
+                  <img
+                    src={getRankEmblemUrl(ranks.flex.tier)}
+                    alt={`Emblema ${translateRank(ranks.flex.tier)}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover scale-[1.4] origin-center"
+                  />
+                </div>
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.flex.tier, ranks.flex.division)}</p>

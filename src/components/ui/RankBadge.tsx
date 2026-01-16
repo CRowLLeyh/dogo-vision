@@ -66,11 +66,13 @@ export function RankBadge({
         className
       )}
     >
-      <img 
-        src={getRankEmblemUrl(tier)} 
-        alt={tier}
-        className={cn(sizes.icon, "object-contain")}
-      />
+      <div className={cn(sizes.icon, "overflow-hidden")}> 
+        <img 
+          src={getRankEmblemUrl(tier)} 
+          alt={`Emblema ${tier}`} 
+          className="w-full h-full object-cover scale-[1.4] origin-center"
+        />
+      </div>
       <div className="flex flex-col">
         <span className={cn("font-bold font-display", sizes.text)}>
           {tier} {division}
