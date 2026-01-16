@@ -308,7 +308,7 @@ export default function Profile() {
             </div>
             <TooltipProvider>
               {/* Mobile: compact dots (no connectors) */}
-              <div className="flex flex-wrap items-center justify-center gap-2 md:hidden">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 md:hidden">
                 {last7Games.map((win, i) => (
                   <Tooltip key={i}>
                     <TooltipTrigger asChild>
@@ -363,7 +363,7 @@ export default function Profile() {
                       {!isLast && (
                         <div
                           className={cn(
-                            "h-px w-6 mx-2",
+                            "h-px w-5 mx-1.5",
                             win ? "bg-success/40" : "bg-destructive/40"
                           )}
                         />
