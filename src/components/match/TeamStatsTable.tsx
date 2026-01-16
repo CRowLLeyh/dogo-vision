@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { RankBadge } from "@/components/ui/RankBadge";
 import type { TeamPlayer } from "@/lib/mockData";
+import { Link } from "react-router-dom";
 
 interface TeamStatsTableProps {
   team: TeamPlayer[];
@@ -95,14 +96,16 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
               {/* Player Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 min-w-0">
-                  <p
+                  <Link
+                    to={`/profile/${encodeURIComponent(player.summonerName)}`}
                     className={cn(
                       "font-semibold truncate",
+                      "hover:underline underline-offset-2",
                       isCurrentPlayer ? "text-gold" : "text-foreground"
                     )}
                   >
                     {player.summonerName}
-                  </p>
+                  </Link>
 
                   {(() => {
                     const parsed = parseRankString(player.rank);
@@ -110,7 +113,10 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
                       <RankBadge
                         tier={parsed.tier}
                         division={parsed.division}
-                        size="sm"
+                        lp={player.lp}
+                        wins={player.wins}
+                        losses={player.losses}
+                        size="md"
                         showLp={false}
                         className="shrink-0"
                       />
