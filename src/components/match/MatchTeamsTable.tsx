@@ -52,10 +52,10 @@ function TeamBlock({
       <div className="flex items-center justify-between pt-2">
         <div className="flex items-center gap-2">
           <span
-            className={cn(
-              "text-xs font-semibold tracking-wider",
-              teamColor === "blue" ? "text-cyan" : "text-destructive"
-            )}
+              className={cn(
+                "text-xs font-semibold tracking-wider",
+                teamColor === "blue" ? "text-cyan" : "text-destructive"
+              )}
           >
             {label}
           </span>
@@ -114,17 +114,21 @@ function TeamBlock({
                   />
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 min-w-0">
-                      <p className={cn("text-sm font-semibold truncate", isMe ? "text-primary" : "text-foreground")}>
+                      <p
+                        className={cn(
+                          "text-sm font-semibold truncate",
+                          isMe ? "text-primary" : "text-foreground"
+                        )}
+                      >
                         {p.summonerName}
                       </p>
-                    </div>
-                    <div className="mt-0.5">
+
                       <RankBadge
                         tier={parsed.tier}
                         division={parsed.division}
                         size="sm"
                         showLp={false}
-                        className="border-border/40"
+                        className="shrink-0"
                       />
                     </div>
                   </div>

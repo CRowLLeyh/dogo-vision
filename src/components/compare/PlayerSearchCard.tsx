@@ -98,7 +98,7 @@ export function PlayerSearchCard({ side, player, onPlayerSelect, className }: Pl
                       losses={player.losses}
                       size="sm"
                       showLp={false}
-                      className="border-border/50"
+                      className=""
                     />
                   </div>
                 </div>

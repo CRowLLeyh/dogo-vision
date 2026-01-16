@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { translateRank } from "@/lib/gameAssets";
 import {
   Tooltip,
   TooltipContent,
@@ -34,23 +35,11 @@ export function getRankEmblemUrl(tier: string): string | undefined {
   return RANK_ICON_URLS[tier.toUpperCase()];
 }
 
-const rankColors: Record<string, string> = {
-  IRON: "rank-iron",
-  BRONZE: "rank-bronze",
-  SILVER: "rank-silver",
-  GOLD: "rank-gold",
-  PLATINUM: "rank-platinum",
-  EMERALD: "rank-emerald",
-  DIAMOND: "rank-diamond",
-  MASTER: "rank-master",
-  GRANDMASTER: "rank-grandmaster",
-  CHALLENGER: "rank-challenger",
-};
 
 const sizeClasses = {
-  sm: { container: "p-2", icon: "w-8 h-8", text: "text-xs" },
-  md: { container: "p-3", icon: "w-12 h-12", text: "text-sm" },
-  lg: { container: "p-4", icon: "w-16 h-16", text: "text-base" },
+  sm: { container: "", icon: "w-6 h-6", text: "text-xs" },
+  md: { container: "", icon: "w-10 h-10", text: "text-sm" },
+  lg: { container: "", icon: "w-14 h-14", text: "text-base" },
 };
 
 export function RankBadge({ 
@@ -64,14 +53,13 @@ export function RankBadge({
   className 
 }: RankBadgeProps) {
   const sizes = sizeClasses[size];
-  const colorClass = rankColors[tier.toUpperCase()] || "rank-iron";
+  const tierLabel = translateRank(tier);
 
   return (
-    <div 
+    <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-xl border transition-all duration-300",
-        "hover:scale-105",
-        colorClass,
+        "inline-flex items-center gap-2",
+        "transition-transform duration-300 hover:scale-105",
         sizes.container,
         className
       )}
@@ -82,14 +70,15 @@ export function RankBadge({
             <div className={cn(sizes.icon, "overflow-hidden cursor-default")}> 
               <img 
                 src={getRankEmblemUrl(tier)} 
-                alt={`Emblema ${tier}`} 
+                alt={`Emblema ${tierLabel}`} 
+                loading="lazy"
                 className="w-full h-full object-cover scale-[1.78] origin-center"
               />
             </div>
           </TooltipTrigger>
           <TooltipContent side="top" align="center">
             <div className="space-y-0.5">
-              <p className="font-semibold">{tier}{division ? ` ${division}` : ""}</p>
+              <p className="font-semibold">{tierLabel}{division ? ` ${division}` : ""}</p>
               {lp !== undefined && <p className="text-xs text-muted-foreground">{lp} LP</p>}
               {wins !== undefined && losses !== undefined && (
                 <p className="text-xs text-muted-foreground">{wins}V {losses}D</p>
@@ -100,8 +89,8 @@ export function RankBadge({
       </TooltipProvider>
 
       <div className="flex flex-col">
-        <span className={cn("font-bold font-display", sizes.text)}>
-          {tier} {division}
+        <span className={cn("font-bold font-display text-foreground", sizes.text)}>
+          {tierLabel} {division}
         </span>
         {showLp && lp !== undefined && (
           <span className={cn("text-muted-foreground", size === "sm" ? "text-[10px]" : "text-xs")}>

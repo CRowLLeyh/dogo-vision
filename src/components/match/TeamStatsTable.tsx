@@ -94,13 +94,16 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
 
               {/* Player Info */}
               <div className="flex-1 min-w-0">
-                <p className={cn(
-                  "font-semibold truncate",
-                  isCurrentPlayer ? "text-gold" : "text-foreground"
-                )}>
-                  {player.summonerName}
-                </p>
-                <div className="mt-1">
+                <div className="flex items-center gap-2 min-w-0">
+                  <p
+                    className={cn(
+                      "font-semibold truncate",
+                      isCurrentPlayer ? "text-gold" : "text-foreground"
+                    )}
+                  >
+                    {player.summonerName}
+                  </p>
+
                   {(() => {
                     const parsed = parseRankString(player.rank);
                     return (
@@ -109,7 +112,7 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
                         division={parsed.division}
                         size="sm"
                         showLp={false}
-                        className="border-border/40"
+                        className="shrink-0"
                       />
                     );
                   })()}
