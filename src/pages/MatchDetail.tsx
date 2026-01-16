@@ -185,12 +185,6 @@ export default function MatchDetail() {
           </TabsContent>
         </Tabs>
 
-        {/* Back to Profile Button */}
-        <div className="flex justify-center pt-6 animate-fade-in-up" style={{ animationDelay: "0.18s" }}>
-          <Link to={`/profile/${mockPlayerData.profile.gameName}`} className="btn-modern">
-            Ver Perfil Completo
-          </Link>
-        </div>
       </div>
     </div>
   );
