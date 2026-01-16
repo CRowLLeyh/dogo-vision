@@ -1,17 +1,30 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { mockPlayerData } from "@/lib/mockData";
+import { mockPlayerData, mockTierListData } from "@/lib/mockData";
 import { ProfileSkeleton } from "@/components/SkeletonLoaders";
 import { cn } from "@/lib/utils";
-import { 
-  RefreshCw, Target, Crosshair, Eye, Flame, TrendingUp, 
-  ChevronRight, Trophy, Sword, Shield, Users, Clock,
-  BarChart2, Star, Zap
+import {
+  RefreshCw,
+  Target,
+  Crosshair,
+  Eye,
+  Flame,
+  TrendingUp,
+  ChevronRight,
+  Trophy,
+  Sword,
+  Shield,
+  Users,
+  Clock,
+  BarChart2,
+  Star,
+  Zap,
 } from "lucide-react";
 import { WinrateBar } from "@/components/ui/WinrateBar";
 import { KDADisplay } from "@/components/ui/KDADisplay";
 import { MiniChart } from "@/components/ui/MiniChart";
 import { GameModeIcon } from "@/components/ui/GameModeIcon";
+import { RoleIcon } from "@/components/ui/RoleIcon";
 import { getRoleInfo, translateRank } from "@/lib/gameAssets";
 
 // Helper to get translated role label
@@ -116,7 +129,7 @@ export default function Profile() {
                       {stats.totalGames} jogos
                     </span>
                     <span className="flex items-center gap-1">
-                      <Shield className="w-3 h-3" />
+                      <RoleIcon role={stats.mostPlayedRole} size="sm" className="gap-0" />
                       {getRoleLabel(stats.mostPlayedRole)}
                     </span>
                     <span className="flex items-center gap-1">
@@ -355,16 +368,25 @@ export default function Profile() {
                 {/* Game Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className={cn(
-                      "text-xs font-semibold",
-                      match.win ? "text-success" : "text-destructive"
-                    )}>
+                    <span
+                      className={cn(
+                        "text-xs font-semibold",
+                        match.win ? "text-success" : "text-destructive"
+                      )}
+                    >
                       {match.win ? "Vitória" : "Derrota"}
                     </span>
                     <GameModeIcon mode={match.gameMode} size="sm" />
                     <span className="text-xs text-muted-foreground">{match.duration}</span>
                   </div>
-                  <p className="text-sm font-medium text-foreground">{match.champion}</p>
+                  <div className="flex items-center gap-1.5">
+                    <RoleIcon
+                      role={mockTierListData.find((c) => c.name === match.champion)?.role ?? stats.mostPlayedRole}
+                      size="sm"
+                      className="gap-0"
+                    />
+                    <p className="text-sm font-medium text-foreground">{match.champion}</p>
+                  </div>
                 </div>
 
                 {/* KDA */}
