@@ -9,7 +9,7 @@ interface RankBadgeProps {
   className?: string;
 }
 
-const rankIcons: Record<string, string> = {
+export const RANK_ICON_URLS: Record<string, string> = {
   IRON: "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-iron.png",
   BRONZE: "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-bronze.png",
   SILVER: "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-silver.png",
@@ -21,6 +21,10 @@ const rankIcons: Record<string, string> = {
   GRANDMASTER: "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-grandmaster.png",
   CHALLENGER: "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-challenger.png",
 };
+
+export function getRankEmblemUrl(tier: string): string | undefined {
+  return RANK_ICON_URLS[tier.toUpperCase()];
+}
 
 const rankColors: Record<string, string> = {
   IRON: "rank-iron",
@@ -63,7 +67,7 @@ export function RankBadge({
       )}
     >
       <img 
-        src={rankIcons[tier.toUpperCase()]} 
+        src={getRankEmblemUrl(tier)} 
         alt={tier}
         className={cn(sizes.icon, "object-contain")}
       />

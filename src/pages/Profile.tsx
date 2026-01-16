@@ -25,6 +25,7 @@ import { KDADisplay } from "@/components/ui/KDADisplay";
 import { MiniChart } from "@/components/ui/MiniChart";
 import { GameModeIcon } from "@/components/ui/GameModeIcon";
 import { RoleIcon } from "@/components/ui/RoleIcon";
+import { getRankEmblemUrl } from "@/components/ui/RankBadge";
 import { getRoleInfo, translateRank } from "@/lib/gameAssets";
 
 // Helper to get translated role label
@@ -166,12 +167,18 @@ export default function Profile() {
               <span className="text-xs text-accent">{ranks.solo.lp} LP</span>
             </div>
             <div className="flex items-center gap-3 mb-3">
-              <div className={cn(
-                "w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold",
-                `rank-${ranks.solo.tier.toLowerCase()}`,
-                "border"
-              )}>
-                {ranks.solo.tier.charAt(0)}
+              <div
+                className={cn(
+                  "w-14 h-14 rounded-xl flex items-center justify-center",
+                  "bg-muted/30 border border-border/50"
+                )}
+              >
+                <img
+                  src={getRankEmblemUrl(ranks.solo.tier)}
+                  alt={`Emblema ${translateRank(ranks.solo.tier)}`}
+                  loading="lazy"
+                  className="w-12 h-12 object-contain"
+                />
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.solo.tier, ranks.solo.division)}</p>
@@ -193,12 +200,18 @@ export default function Profile() {
               <span className="text-xs text-success">{ranks.flex.lp} LP</span>
             </div>
             <div className="flex items-center gap-3 mb-3">
-              <div className={cn(
-                "w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold",
-                `rank-${ranks.flex.tier.toLowerCase()}`,
-                "border"
-              )}>
-                {ranks.flex.tier.charAt(0)}
+              <div
+                className={cn(
+                  "w-14 h-14 rounded-xl flex items-center justify-center",
+                  "bg-muted/30 border border-border/50"
+                )}
+              >
+                <img
+                  src={getRankEmblemUrl(ranks.flex.tier)}
+                  alt={`Emblema ${translateRank(ranks.flex.tier)}`}
+                  loading="lazy"
+                  className="w-12 h-12 object-contain"
+                />
               </div>
               <div>
                 <p className="text-lg font-bold text-foreground">{formatRank(ranks.flex.tier, ranks.flex.division)}</p>
