@@ -21,11 +21,11 @@ export function BuildOrder({ items, className }: BuildOrderProps) {
         Ordem de Build
       </h3>
 
-      <div className="relative pt-3">
+      <div className="relative pt-4">
         {/* Connection line */}
-        <div className="absolute top-[34px] left-0 right-0 h-0.5 bg-gradient-to-r from-muted via-gold/30 to-muted" />
+        <div className="absolute top-[52px] left-0 right-0 h-0.5 bg-gradient-to-r from-muted via-gold/30 to-muted" />
 
-        <div className="flex items-start gap-4 overflow-x-auto pt-1 pb-4 scrollbar-hide">
+        <div className="flex items-start gap-4 overflow-x-auto pt-2 pb-4 scrollbar-hide">
           {items.map((item, index) => (
             <div
               key={index}
