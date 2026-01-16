@@ -232,23 +232,33 @@
     @apply relative;
   }
 
+  /* MVP Border "running" rainbow (not spinning) */
   .mvp-rainbow-card::before {
     content: "";
     position: absolute;
-    inset: -2px;
-    border-radius: calc(var(--radius) * 0.9);
-    background: conic-gradient(
-      from 0deg,
+    inset: 0;
+    padding: 2px; /* border thickness */
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
       hsl(var(--primary)),
       hsl(var(--accent)),
       hsl(var(--success)),
       hsl(var(--destructive)),
       hsl(var(--primary))
     );
-    opacity: 0.8;
-    animation: mvpSpin 2.2s linear infinite;
-    filter: blur(10px);
+    background-size: 300% 100%;
+    animation: mvpBorderRun 2.8s linear infinite;
+    opacity: 0.95;
     pointer-events: none;
+
+    /* show ONLY the border area */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    /* subtle glow */
+    filter: drop-shadow(0 0 14px hsl(var(--primary) / 0.22));
     z-index: 0;
   }
 
@@ -259,6 +269,11 @@
 
   .mvp-shadow {
     box-shadow: var(--shadow-xl), 0 0 70px -24px hsl(var(--primary) / 0.55);
+  }
+
+  @keyframes mvpBorderRun {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
   }
 
   @keyframes mvpSpin {
