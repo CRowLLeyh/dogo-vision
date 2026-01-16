@@ -180,6 +180,14 @@ export const KEYSTONE_ICONS: Record<string, { icon: string; tree: string }> = {
   "First Strike": { icon: "perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png", tree: "Inspiration" },
 };
 
+// Rune trees (para árvore secundária)
+export const RUNE_TREE_ICONS: Record<string, string> = {
+  Precision: "perk-images/Styles/Precision/Precision.png",
+  Domination: "perk-images/Styles/Domination/Domination.png",
+  Sorcery: "perk-images/Styles/Sorcery/Sorcery.png",
+  Resolve: "perk-images/Styles/Resolve/Resolve.png",
+  Inspiration: "perk-images/Styles/Inspiration/Inspiration.png",
+};
 // Helper functions
 export function getChampionIcon(championName: string): string {
   return `${CHAMPION_ICON_URL}${championName.replace(/['\s]/g, "")}.png`;

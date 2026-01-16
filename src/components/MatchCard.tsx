@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
+import { KEYSTONE_ICONS, RUNE_ICON_URL, RUNE_TREE_ICONS } from "@/lib/gameAssets";
 
 interface MatchCardProps {
   matchId: string;
@@ -26,6 +27,7 @@ interface MatchCardProps {
   items: number[];
   summonerSpells: string[];
   keystone: string;
+  secondaryTree?: string;
   largestMultikill?: number;
   isMvp?: boolean;
   className?: string;
@@ -63,6 +65,7 @@ export function MatchCard({
   items,
   summonerSpells,
   keystone,
+  secondaryTree,
   largestMultikill,
   isMvp,
   className
@@ -143,7 +146,41 @@ export function MatchCard({
               )}
             </div>
             <p className="font-semibold text-lg text-foreground">{champion}</p>
-            <p className="text-xs text-muted-foreground">{keystone}</p>
+            <div className="mt-1 flex items-center gap-1.5">
+              {KEYSTONE_ICONS[keystone] ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <img
+                      src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
+                      alt={`Runa: ${keystone}`}
+                      loading="lazy"
+                      className="w-6 h-6 rounded-md border border-border/50 bg-muted/20"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="start">
+                    <p className="text-xs">{keystone}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <p className="text-xs text-muted-foreground truncate">{keystone}</p>
+              )}
+
+              {secondaryTree && RUNE_TREE_ICONS[secondaryTree] && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <img
+                      src={`${RUNE_ICON_URL}${RUNE_TREE_ICONS[secondaryTree]}`}
+                      alt={`Árvore secundária: ${secondaryTree}`}
+                      loading="lazy"
+                      className="w-6 h-6 rounded-md border border-border/50 bg-muted/20 opacity-90"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="start">
+                    <p className="text-xs">{secondaryTree}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
           </div>
 
           {/* KDA */}

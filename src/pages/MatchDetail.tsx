@@ -131,6 +131,7 @@ export default function MatchDetail() {
             goldEarned={matchData.goldEarned || 0}
             killParticipation={matchData.killParticipation || 0}
             keystone={matchData.keystone}
+            secondaryTree={matchData.secondaryTree}
             summonerSpells={matchData.summonerSpells}
             largestMultikill={matchData.largestMultikill}
             isMvp={matchData.isMvp}
