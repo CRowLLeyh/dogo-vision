@@ -44,6 +44,13 @@ function formatRank(tier: string, division: string): string {
   return `${translateRank(tier)} ${division}`;
 }
 
+const multikillLabels: Record<number, string> = {
+  2: "Double",
+  3: "Triple",
+  4: "Quadra",
+  5: "Penta",
+};
+
 type PlayerData = typeof mockPlayerData;
 
 export default function Profile() {
@@ -454,7 +461,9 @@ export default function Profile() {
                 to={`/match/${match.matchId}`}
                 className={cn(
                   "glass-card p-3 flex items-center gap-4 transition-all",
-                  "hover:-translate-y-0.5 hover:shadow-lg group",
+                  "hover:-translate-y-1 hover:shadow-xl",
+                  "hover:shadow-[0_0_40px_-12px_hsl(var(--gold)/0.35)]",
+                  "group",
                   "animate-fade-in-up"
                 )}
                 style={{ animationDelay: `${0.4 + i * 0.05}s` }}
@@ -466,15 +475,21 @@ export default function Profile() {
                 )} />
                 
                 {/* Champion */}
-                <img 
-                  src={match.championIcon}
-                  alt={match.champion}
-                  className="w-10 h-10 rounded-xl border border-border/50"
-                />
+                <div className={cn("relative", match.isMvp && "mvp-rainbow")}> 
+                  <img 
+                    src={match.championIcon}
+                    alt={match.champion}
+                    className={cn(
+                      "w-10 h-10 rounded-xl border border-border/50",
+                      "transition-transform duration-200",
+                      "group-hover:scale-105"
+                    )}
+                  />
+                </div>
                 
                 {/* Game Info */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
+                  <div className="flex flex-wrap items-center gap-2 mb-0.5">
                     <span
                       className={cn(
                         "text-xs font-semibold",
@@ -485,6 +500,18 @@ export default function Profile() {
                     </span>
                     <GameModeIcon mode={match.gameMode} size="sm" />
                     <span className="text-xs text-muted-foreground">{match.duration}</span>
+
+                    {match.largestMultikill >= 2 && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                        {multikillLabels[match.largestMultikill]}
+                      </span>
+                    )}
+
+                    {match.isMvp && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+                        MVP
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-1.5">
                     <RoleIcon
