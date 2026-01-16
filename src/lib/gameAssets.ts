@@ -127,31 +127,37 @@ export const ROLE_ICONS: Record<
     icon: "🛡️",
     iconUrl:
       "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-top.png",
-    label: "Top",
+    label: "Topo",
   },
   JNG: {
     icon: "🌲",
     iconUrl:
       "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-jungle.png",
-    label: "Jungle",
+    label: "Selva",
   },
   MID: {
     icon: "⚡",
     iconUrl:
       "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-middle.png",
-    label: "Mid",
+    label: "Meio",
   },
   ADC: {
     icon: "🎯",
     iconUrl:
       "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-bottom.png",
-    label: "Bottom",
+    label: "Atirador",
+  },
+  BOTTOM: {
+    icon: "🎯",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-bottom.png",
+    label: "Atirador",
   },
   SUP: {
     icon: "💫",
     iconUrl:
       "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-utility.png",
-    label: "Support",
+    label: "Suporte",
   },
 };
 
@@ -206,4 +212,22 @@ export function formatDuration(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Rank tier translation to Portuguese
+const RANK_TRANSLATION: Record<string, string> = {
+  IRON: "Ferro",
+  BRONZE: "Bronze",
+  SILVER: "Prata",
+  GOLD: "Ouro",
+  PLATINUM: "Platina",
+  EMERALD: "Esmeralda",
+  DIAMOND: "Diamante",
+  MASTER: "Mestre",
+  GRANDMASTER: "Grão-Mestre",
+  CHALLENGER: "Desafiante",
+};
+
+export function translateRank(tier: string): string {
+  return RANK_TRANSLATION[tier.toUpperCase()] || tier;
 }
