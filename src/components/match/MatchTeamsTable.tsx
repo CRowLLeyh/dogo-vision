@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { TeamPlayer } from "@/lib/mockData";
 import { RankBadge } from "@/components/ui/RankBadge";
+import { Link } from "react-router-dom";
 
 interface MatchTeamsTableProps {
   blueTeam: TeamPlayer[];
@@ -114,19 +115,24 @@ function TeamBlock({
                   />
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 min-w-0">
-                      <p
+                      <Link
+                        to={`/profile/${encodeURIComponent(p.summonerName)}`}
                         className={cn(
                           "text-sm font-semibold truncate",
+                          "hover:underline underline-offset-2",
                           isMe ? "text-primary" : "text-foreground"
                         )}
                       >
                         {p.summonerName}
-                      </p>
+                      </Link>
 
                       <RankBadge
                         tier={parsed.tier}
                         division={parsed.division}
-                        size="sm"
+                        lp={p.lp}
+                        wins={p.wins}
+                        losses={p.losses}
+                        size="md"
                         showLp={false}
                         className="shrink-0"
                       />

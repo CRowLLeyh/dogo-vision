@@ -37,9 +37,9 @@ export function getRankEmblemUrl(tier: string): string | undefined {
 
 
 const sizeClasses = {
-  sm: { container: "", icon: "w-6 h-6", text: "text-xs" },
-  md: { container: "", icon: "w-10 h-10", text: "text-sm" },
-  lg: { container: "", icon: "w-14 h-14", text: "text-base" },
+  sm: { container: "", icon: "w-7 h-7", text: "text-sm" },
+  md: { container: "", icon: "w-11 h-11", text: "text-base" },
+  lg: { container: "", icon: "w-16 h-16", text: "text-lg" },
 };
 
 export function RankBadge({ 
@@ -54,6 +54,10 @@ export function RankBadge({
 }: RankBadgeProps) {
   const sizes = sizeClasses[size];
   const tierLabel = translateRank(tier);
+  const winrate =
+    wins !== undefined && losses !== undefined && wins + losses > 0
+      ? Math.round((wins / (wins + losses)) * 100)
+      : undefined;
 
   return (
     <div
@@ -78,10 +82,16 @@ export function RankBadge({
           </TooltipTrigger>
           <TooltipContent side="top" align="center">
             <div className="space-y-0.5">
-              <p className="font-semibold">{tierLabel}{division ? ` ${division}` : ""}</p>
+              <p className="font-semibold">
+                {tierLabel}
+                {division ? ` ${division}` : ""}
+              </p>
               {lp !== undefined && <p className="text-xs text-muted-foreground">{lp} LP</p>}
               {wins !== undefined && losses !== undefined && (
-                <p className="text-xs text-muted-foreground">{wins}V {losses}D</p>
+                <p className="text-xs text-muted-foreground">
+                  {wins}V {losses}D
+                  {winrate !== undefined ? ` • ${winrate}% WR` : ""}
+                </p>
               )}
             </div>
           </TooltipContent>
