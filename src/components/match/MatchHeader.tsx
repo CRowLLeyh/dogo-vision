@@ -99,18 +99,6 @@ export function MatchHeader({
                   "shadow-lg"
                 )}
               />
-              {/* Summoner Spells */}
-              <div className="absolute -right-2 top-1/2 -translate-y-1/2 flex flex-col gap-1">
-                {summonerSpells.map((spell, index) => (
-                  <img
-                    key={index}
-                    src={`${spellBaseUrl}${spellMap[spell] || spell}.png`}
-                    alt={spell}
-                    loading="lazy"
-                    className="w-8 h-8 rounded-lg border border-border/50 shadow-md"
-                  />
-                ))}
-              </div>
             </div>
 
             <div className="min-w-0">
@@ -154,10 +142,23 @@ export function MatchHeader({
               <h1 className="text-3xl font-display font-bold text-foreground mb-1 truncate">
                 {champion}
               </h1>
+
+              <div className="flex items-center gap-2 mb-1">
+                {summonerSpells.map((spell, index) => (
+                  <img
+                    key={index}
+                    src={`${spellBaseUrl}${spellMap[spell] || spell}.png`}
+                    alt={`Feitiço: ${spell}`}
+                    loading="lazy"
+                    className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
+                  />
+                ))}
+              </div>
+
               <p className="text-sm text-muted-foreground truncate">{keystone}</p>
             </div>
           </div>
-
+ 
           {/* Col 2: KDA (center) */}
           <div className="flex flex-col items-center md:items-center justify-center">
             <div className="text-4xl font-display font-bold text-foreground tabular-nums">
