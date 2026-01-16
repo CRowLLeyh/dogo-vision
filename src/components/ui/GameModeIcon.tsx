@@ -36,21 +36,8 @@ export function GameModeIcon({ mode, size = "md", showLabel = false, className }
           sizeClasses[size]
         )}
       >
-        {modeInfo.iconUrl && imgOk ? (
-          <img
-            src={modeInfo.iconUrl}
-            alt={`${modeInfo.label} (LoL)`}
-            loading="lazy"
-            className={cn(
-              "object-contain",
-              size === "sm" && "w-4 h-4",
-              size === "md" && "w-5 h-5",
-              size === "lg" && "w-7 h-7"
-            )}
-            onLoad={() => setImgOk(true)}
-            onError={() => setImgOk(false)}
-          />
-        ) : null}
+        {/** imagem removida a pedido — mantendo apenas fallback por emoji */}
+        {null}
 
         {showEmojiFallback ? <span>{modeInfo.icon}</span> : null}
       </div>
