@@ -153,12 +153,12 @@ export function MatchHeader({
                 )}
               </div>
 
-              <div className="flex items-center gap-3 mb-1">
-                <h1 className="text-3xl font-display font-bold text-foreground flex-1 min-w-0 truncate">
+              <div className="flex items-center gap-2 mb-1 min-w-0">
+                <h1 className="text-3xl font-display font-bold text-foreground min-w-0 truncate">
                   {champion}
                 </h1>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2">
                   {KEYSTONE_ICONS[keystone] ? (
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -172,7 +172,7 @@ export function MatchHeader({
                           className="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-border/50 bg-muted/20"
                         />
                       </TooltipTrigger>
-                      <TooltipContent side="top" align="end">
+                      <TooltipContent side="top" align="start">
                         <p className="text-xs">{keystone}</p>
                       </TooltipContent>
                     </Tooltip>
@@ -193,7 +193,7 @@ export function MatchHeader({
                           className="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-border/50 bg-muted/20 opacity-90"
                         />
                       </TooltipTrigger>
-                      <TooltipContent side="top" align="end">
+                      <TooltipContent side="top" align="start">
                         <p className="text-xs">{normalizedSecondaryTree}</p>
                       </TooltipContent>
                     </Tooltip>
