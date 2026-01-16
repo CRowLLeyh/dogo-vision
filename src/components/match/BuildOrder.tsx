@@ -210,13 +210,13 @@ export function SkillOrder({ skills, className }: SkillOrderProps) {
         Ordem de Skills
       </h3>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {(["Q", "W", "E", "R"] as const).map((skill) => (
-          <div key={skill} className="flex items-start gap-3">
+          <div key={skill} className="flex items-center gap-3">
             {/* Skill label */}
             <div
               className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center font-display font-bold text-sm",
+                "w-9 h-9 rounded-xl flex items-center justify-center font-display font-bold text-sm",
                 "border",
                 skillStyles[skill]
               )}
@@ -224,47 +224,26 @@ export function SkillOrder({ skills, className }: SkillOrderProps) {
               {skill}
             </div>
 
-            <div className="flex-1">
-              {/* Level pills */}
-              <div className="grid grid-cols-9 gap-1.5">
-                {Array.from({ length: 18 }, (_, i) => i + 1).map((level) => {
-                  const isLeveled = skillRows[skill].some((s) => s.level === level);
-                  const isUltLevel = skill === "R" && (level === 6 || level === 11 || level === 16);
-
-                  return (
-                    <div
-                      key={level}
-                      className={cn(
-                        "h-7 rounded-lg border flex items-center justify-center",
-                        "text-[11px] font-mono transition-all duration-300",
-                        isLeveled
-                          ? cn(skillStyles[skill], "shadow-sm")
-                          : "bg-muted/25 border-border/40 text-muted-foreground",
-                        isUltLevel && "ring-1 ring-primary/40"
-                      )}
-                      title={isLeveled ? `Level ${level}: ${skill}` : `Level ${level}`}
-                    >
-                      {level}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Picked levels row */}
-              <div className="mt-2 flex flex-wrap gap-1.5">
+            {/* Leveled chips (compact) */}
+            <div className="min-w-0 flex-1 overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-2 min-w-max py-0.5 pr-1">
                 {skillRows[skill].map((s) => (
                   <span
                     key={`${skill}-${s.level}`}
                     className={cn(
-                      "inline-flex items-center gap-1 rounded-lg border px-2 py-1",
-                      "text-[11px] font-mono",
+                      "inline-flex items-center rounded-full border px-3 py-1",
+                      "text-xs font-mono leading-none",
                       skillStyles[skill]
                     )}
                   >
                     <span className="opacity-80">lvl</span>
-                    <span className="font-bold">{s.level}</span>
+                    <span className="ml-1 font-bold">{s.level}</span>
                   </span>
                 ))}
+
+                {skillRows[skill].length === 0 && (
+                  <span className="text-xs text-muted-foreground">—</span>
+                )}
               </div>
             </div>
           </div>
