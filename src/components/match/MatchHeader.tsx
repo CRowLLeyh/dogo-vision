@@ -85,13 +85,14 @@ export function MatchHeader({
       )} />
 
       <div className="p-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-          {/* Champion + Spells */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          {/* Col 1: Champion + Result */}
           <div className="flex items-center gap-4">
             <div className="relative">
               <img
                 src={championIcon}
                 alt={champion}
+                loading="lazy"
                 className={cn(
                   "w-24 h-24 rounded-2xl border-4",
                   win ? "border-success/50" : "border-destructive/50",
@@ -105,24 +106,29 @@ export function MatchHeader({
                     key={index}
                     src={`${spellBaseUrl}${spellMap[spell] || spell}.png`}
                     alt={spell}
+                    loading="lazy"
                     className="w-8 h-8 rounded-lg border border-border/50 shadow-md"
                   />
                 ))}
               </div>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className={cn(
-                  "text-2xl font-display font-bold",
-                  win ? "text-success" : "text-destructive"
-                )}>
+                <span
+                  className={cn(
+                    "text-2xl font-display font-bold",
+                    win ? "text-success" : "text-destructive"
+                  )}
+                >
                   {win ? "VITÓRIA" : "DERROTA"}
                 </span>
-                <Trophy className={cn(
-                  "w-6 h-6",
-                  win ? "text-success" : "text-destructive"
-                )} />
+                <Trophy
+                  className={cn(
+                    "w-6 h-6",
+                    win ? "text-success" : "text-destructive"
+                  )}
+                />
 
                 {largestMultikill && largestMultikill >= 2 && (
                   <Tooltip>
@@ -144,43 +150,48 @@ export function MatchHeader({
                   </span>
                 )}
               </div>
-              <h1 className="text-3xl font-display font-bold text-foreground mb-1">
+
+              <h1 className="text-3xl font-display font-bold text-foreground mb-1 truncate">
                 {champion}
               </h1>
-              <p className="text-sm text-muted-foreground">{keystone}</p>
+              <p className="text-sm text-muted-foreground truncate">{keystone}</p>
             </div>
           </div>
 
-          {/* KDA Display */}
-          <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl font-display font-bold text-foreground">
+          {/* Col 2: KDA (center) */}
+          <div className="flex flex-col items-center md:items-center justify-center">
+            <div className="text-4xl font-display font-bold text-foreground tabular-nums">
               <span className="text-foreground">{kills}</span>
               <span className="text-muted-foreground mx-1">/</span>
               <span className="text-destructive">{deaths}</span>
               <span className="text-muted-foreground mx-1">/</span>
               <span className="text-foreground">{assists}</span>
             </div>
-            <div className={cn(
-              "text-lg font-semibold mt-1",
-              parseFloat(kda) >= 4 ? "text-success" 
-                : parseFloat(kda) >= 2.5 ? "text-primary" 
-                : "text-muted-foreground"
-            )}>
+            <div
+              className={cn(
+                "text-lg font-semibold mt-1",
+                parseFloat(kda) >= 4
+                  ? "text-success"
+                  : parseFloat(kda) >= 2.5
+                    ? "text-primary"
+                    : "text-muted-foreground"
+              )}
+            >
               {kda} KDA
             </div>
           </div>
 
-          {/* Meta Info */}
-          <div className="flex flex-wrap gap-3 text-sm">
+          {/* Col 3: Meta */}
+          <div className="grid grid-cols-2 md:grid-cols-1 gap-3 text-sm">
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30">
               <Clock className="w-4 h-4 text-muted-foreground" />
-              <span className="text-foreground font-medium">{duration}</span>
+              <span className="text-foreground font-medium tabular-nums">{duration}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30">
               <Calendar className="w-4 h-4 text-muted-foreground" />
               <span className="text-foreground font-medium">{timeAgo}</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-primary/10 text-primary font-medium">
+            <div className="col-span-2 md:col-span-1 px-4 py-2 rounded-xl bg-primary/10 text-primary font-medium text-center">
               {gameMode}
             </div>
           </div>
