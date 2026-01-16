@@ -116,12 +116,17 @@ export default function Champions() {
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   )}
                 >
-                  {role.id === "Todas" ? (
-                    <span>{role.icon}</span>
-                  ) : (
+                  {role.id === "Todas" ? null : (
                     <RoleIcon role={role.id} size="sm" className="gap-0" />
                   )}
-                  <span className="hidden sm:inline">{role.label}</span>
+                  <span
+                    className={cn(
+                      "hidden sm:inline",
+                      role.id === "Todas" && "text-sm font-semibold"
+                    )}
+                  >
+                    {role.label}
+                  </span>
                 </button>
               ))}
             </div>
