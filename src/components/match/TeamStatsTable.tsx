@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { RankBadge } from "@/components/ui/RankBadge";
 import type { TeamPlayer } from "@/lib/mockData";
 import { Link } from "react-router-dom";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface TeamStatsTableProps {
   team: TeamPlayer[];
@@ -83,29 +84,53 @@ export function TeamStatsTable({ team, teamColor, currentPlayer, className }: Te
             >
               {/* Champion */}
               <div className="relative">
-                <img
-                  src={player.championIcon}
-                  alt={player.champion}
-                  className={cn(
-                    "w-12 h-12 rounded-xl border-2",
-                    isCurrentPlayer ? "border-gold" : "border-border/50"
-                  )}
-                />
+                <Link
+                  to={`/profile/${encodeURIComponent(player.summonerName)}`}
+                  aria-label={`Abrir perfil de ${player.summonerName}`}
+                  className="shrink-0"
+                >
+                  <img
+                    src={player.championIcon}
+                    alt={player.champion}
+                    className={cn(
+                      "w-12 h-12 rounded-xl border-2",
+                      "hover:opacity-90 transition-opacity",
+                      isCurrentPlayer ? "border-gold" : "border-border/50"
+                    )}
+                  />
+                </Link>
               </div>
 
               {/* Player Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 min-w-0">
-                  <Link
-                    to={`/profile/${encodeURIComponent(player.summonerName)}`}
-                    className={cn(
-                      "font-semibold truncate",
-                      "hover:underline underline-offset-2",
-                      isCurrentPlayer ? "text-gold" : "text-foreground"
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link
+                        to={`/profile/${encodeURIComponent(player.summonerName)}`}
+                        className={cn(
+                          "font-semibold truncate",
+                          "hover:underline underline-offset-2",
+                          isCurrentPlayer ? "text-gold" : "text-foreground"
+                        )}
+                      >
+                        {player.summonerName}
+                      </Link>
+                    </TooltipTrigger>
+                    {(player.tagLine || player.level !== undefined) && (
+                      <TooltipContent side="top" align="start">
+                        <div className="text-xs">
+                          <span className="font-semibold">
+                            {player.summonerName}
+                            {player.tagLine ? `#${player.tagLine}` : ""}
+                          </span>
+                          {player.level !== undefined && (
+                            <span className="text-muted-foreground"> • Nível {player.level}</span>
+                          )}
+                        </div>
+                      </TooltipContent>
                     )}
-                  >
-                    {player.summonerName}
-                  </Link>
+                  </Tooltip>
 
                   {(() => {
                     const parsed = parseRankString(player.rank);

@@ -1,5 +1,7 @@
 export interface TeamPlayer {
   summonerName: string;
+  tagLine?: string;
+  level?: number;
   champion: string;
   championIcon: string;
   kills: number;
@@ -92,18 +94,18 @@ export const mockPlayerData = {
         largestMultikill: 2,
         isMvp: true,
         blueTeam: [
-          { summonerName: "EtoH", champion: "Jinx", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Jinx.png", kills: 8, deaths: 3, assists: 12, rank: "Gold IV", lp: 45, wins: 120, losses: 98, damage: 28450 },
-          { summonerName: "ThreshGod", champion: "Thresh", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Thresh.png", kills: 2, deaths: 4, assists: 18, rank: "Gold II", lp: 62, wins: 88, losses: 74, damage: 8200 },
-          { summonerName: "MidDiff", champion: "Ahri", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Ahri.png", kills: 6, deaths: 2, assists: 8, rank: "Plat IV", lp: 12, wins: 54, losses: 49, damage: 22100 },
-          { summonerName: "JungleMaster", champion: "Lee Sin", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/LeeSin.png", kills: 5, deaths: 5, assists: 14, rank: "Gold III", lp: 18, wins: 101, losses: 96, damage: 15800 },
-          { summonerName: "TopChad", champion: "Garen", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Garen.png", kills: 3, deaths: 6, assists: 7, rank: "Gold IV", lp: 73, wins: 67, losses: 62, damage: 18500 }
+          { summonerName: "EtoH", tagLine: "BR1", level: 245, champion: "Jinx", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Jinx.png", kills: 8, deaths: 3, assists: 12, rank: "Gold IV", lp: 45, wins: 120, losses: 98, damage: 28450 },
+          { summonerName: "ThreshGod", tagLine: "BR1", level: 198, champion: "Thresh", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Thresh.png", kills: 2, deaths: 4, assists: 18, rank: "Gold II", lp: 62, wins: 88, losses: 74, damage: 8200 },
+          { summonerName: "MidDiff", tagLine: "BR1", level: 221, champion: "Ahri", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Ahri.png", kills: 6, deaths: 2, assists: 8, rank: "Plat IV", lp: 12, wins: 54, losses: 49, damage: 22100 },
+          { summonerName: "JungleMaster", tagLine: "BR1", level: 176, champion: "Lee Sin", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/LeeSin.png", kills: 5, deaths: 5, assists: 14, rank: "Gold III", lp: 18, wins: 101, losses: 96, damage: 15800 },
+          { summonerName: "TopChad", tagLine: "BR1", level: 154, champion: "Garen", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Garen.png", kills: 3, deaths: 6, assists: 7, rank: "Gold IV", lp: 73, wins: 67, losses: 62, damage: 18500 }
         ],
         redTeam: [
-          { summonerName: "ADC Smurf", champion: "Caitlyn", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Caitlyn.png", kills: 5, deaths: 6, assists: 8, rank: "Gold II", lp: 22, wins: 140, losses: 121, damage: 21200 },
-          { summonerName: "HookCity", champion: "Nautilus", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Nautilus.png", kills: 3, deaths: 5, assists: 15, rank: "Gold III", lp: 58, wins: 92, losses: 80, damage: 9100 },
-          { summonerName: "ZedMain", champion: "Zed", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Zed.png", kills: 7, deaths: 4, assists: 5, rank: "Plat IV", lp: 5, wins: 63, losses: 57, damage: 24500 },
-          { summonerName: "GravesOP", champion: "Graves", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Graves.png", kills: 4, deaths: 6, assists: 10, rank: "Gold I", lp: 94, wins: 156, losses: 139, damage: 19800 },
-          { summonerName: "TopDiff", champion: "Darius", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Darius.png", kills: 8, deaths: 3, assists: 4, rank: "Gold II", lp: 40, wins: 77, losses: 70, damage: 25100 }
+          { summonerName: "ADC Smurf", tagLine: "BR1", level: 301, champion: "Caitlyn", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Caitlyn.png", kills: 5, deaths: 6, assists: 8, rank: "Gold II", lp: 22, wins: 140, losses: 121, damage: 21200 },
+          { summonerName: "HookCity", tagLine: "BR1", level: 209, champion: "Nautilus", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Nautilus.png", kills: 3, deaths: 5, assists: 15, rank: "Gold III", lp: 58, wins: 92, losses: 80, damage: 9100 },
+          { summonerName: "ZedMain", tagLine: "BR1", level: 187, champion: "Zed", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Zed.png", kills: 7, deaths: 4, assists: 5, rank: "Plat IV", lp: 5, wins: 63, losses: 57, damage: 24500 },
+          { summonerName: "GravesOP", tagLine: "BR1", level: 266, champion: "Graves", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Graves.png", kills: 4, deaths: 6, assists: 10, rank: "Gold I", lp: 94, wins: 156, losses: 139, damage: 19800 },
+          { summonerName: "TopDiff", tagLine: "BR1", level: 173, champion: "Darius", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Darius.png", kills: 8, deaths: 3, assists: 4, rank: "Gold II", lp: 40, wins: 77, losses: 70, damage: 25100 }
         ]
       },
       {
