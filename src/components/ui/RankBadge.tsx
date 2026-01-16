@@ -70,7 +70,7 @@ export function RankBadge({
         <img 
           src={getRankEmblemUrl(tier)} 
           alt={`Emblema ${tier}`} 
-          className="w-full h-full object-cover scale-[1.55] origin-center"
+          className="w-full h-full object-cover scale-[1.78] origin-center"
         />
       </div>
       <div className="flex flex-col">
