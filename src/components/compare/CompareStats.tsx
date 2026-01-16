@@ -47,12 +47,12 @@ export function CompareStats({ player1, player2 }: CompareStatsProps) {
   };
 
   const comparisons = [
-    { label: "KDA", icon: Target, p1: p1Stats.kda, p2: p2Stats.kda, format: (v: number) => v.toFixed(2) },
+    { label: "KDA", icon: Target, p1: p1Stats.kda, p2: p2Stats.kda, format: (v: number) => v.toFixed(1) },
     { label: "CS/min", icon: Sword, p1: p1Stats.cs, p2: p2Stats.cs, format: (v: number) => v.toFixed(1) },
     { label: "Visão/min", icon: Eye, p1: p1Stats.vision, p2: p2Stats.vision, format: (v: number) => v.toFixed(1) },
-    { label: "Winrate", icon: TrendingUp, p1: p1Stats.winrate, p2: p2Stats.winrate, format: (v: number) => `${v}%` },
+    { label: "Winrate", icon: TrendingUp, p1: p1Stats.winrate, p2: p2Stats.winrate, format: (v: number) => `${Math.round(v)}%` },
     { label: "Dano/min (K)", icon: Zap, p1: p1Stats.damage, p2: p2Stats.damage, format: (v: number) => v.toFixed(1) },
-    { label: "Gold/min (K)", icon: Coins, p1: p1Stats.gold, p2: p2Stats.gold, format: (v: number) => v.toFixed(1) }
+    { label: "Gold/min (K)", icon: Coins, p1: p1Stats.gold, p2: p2Stats.gold, format: (v: number) => v.toFixed(1) },
   ];
 
   const radarData1 = [
