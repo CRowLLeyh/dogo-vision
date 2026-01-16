@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import Champions from "./pages/Champions";
 import LiveGame from "./pages/LiveGame";
 import MatchDetail from "./pages/MatchDetail";
+import Compare from "./pages/Compare";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,14 +22,17 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-background">
           <Header />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/profile/:summonerName" element={<Profile />} />
-            <Route path="/match/:matchId" element={<MatchDetail />} />
-            <Route path="/champions" element={<Champions />} />
-            <Route path="/live" element={<LiveGame />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/profile/:summonerName" element={<Profile />} />
+              <Route path="/champions" element={<Champions />} />
+              <Route path="/live" element={<LiveGame />} />
+              <Route path="/match/:matchId" element={<MatchDetail />} />
+              <Route path="/compare" element={<Compare />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
         </div>
       </BrowserRouter>
     </TooltipProvider>
