@@ -169,7 +169,7 @@ export default function Profile() {
             <div className="flex items-center gap-3 mb-3">
               <div
                 className={cn(
-                  "w-16 h-16 rounded-xl flex items-center justify-center",
+                  "w-24 h-24 rounded-xl flex items-center justify-center",
                   "bg-muted/30 border border-border/50"
                 )}
               >
@@ -177,7 +177,7 @@ export default function Profile() {
                   src={getRankEmblemUrl(ranks.solo.tier)}
                   alt={`Emblema ${translateRank(ranks.solo.tier)}`}
                   loading="lazy"
-                  className="w-14 h-14 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <div>
@@ -202,7 +202,7 @@ export default function Profile() {
             <div className="flex items-center gap-3 mb-3">
               <div
                 className={cn(
-                  "w-16 h-16 rounded-xl flex items-center justify-center",
+                  "w-24 h-24 rounded-xl flex items-center justify-center",
                   "bg-muted/30 border border-border/50"
                 )}
               >
@@ -210,7 +210,7 @@ export default function Profile() {
                   src={getRankEmblemUrl(ranks.flex.tier)}
                   alt={`Emblema ${translateRank(ranks.flex.tier)}`}
                   loading="lazy"
-                  className="w-14 h-14 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <div>
