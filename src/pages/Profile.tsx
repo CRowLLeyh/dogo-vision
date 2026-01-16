@@ -178,7 +178,7 @@ export default function Profile() {
                     src={getRankEmblemUrl(ranks.solo.tier)}
                     alt={`Emblema ${translateRank(ranks.solo.tier)}`}
                     loading="lazy"
-                    className="w-full h-full object-cover scale-[1.4] origin-center"
+                    className="w-full h-full object-cover scale-[1.55] origin-center"
                   />
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function Profile() {
                     src={getRankEmblemUrl(ranks.flex.tier)}
                     alt={`Emblema ${translateRank(ranks.flex.tier)}`}
                     loading="lazy"
-                    className="w-full h-full object-cover scale-[1.4] origin-center"
+                    className="w-full h-full object-cover scale-[1.55] origin-center"
                   />
                 </div>
               </div>
