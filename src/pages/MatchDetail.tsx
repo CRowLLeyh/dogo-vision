@@ -7,8 +7,9 @@ import { MatchHeader } from "@/components/match/MatchHeader";
 import { DamageChart } from "@/components/match/DamageChart";
 import { MatchTimeline, type TimelineEvent } from "@/components/match/MatchTimeline";
 import { BuildOrder, SkillOrder, type BuildItem, type SkillLevel } from "@/components/match/BuildOrder";
-import { TeamStatsTable } from "@/components/match/TeamStatsTable";
+import { MatchTeamsTable } from "@/components/match/MatchTeamsTable";
 import { MatchDetailSkeleton } from "@/components/ui/ModernSkeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Mock timeline data
 const mockTimelineEvents: TimelineEvent[] = [
@@ -98,7 +99,7 @@ export default function MatchDetail() {
 
   return (
     <div className="min-h-screen mesh-background">
-      <div className="container py-8 space-y-8">
+      <div className="container py-6 space-y-5">
         {/* Back Button */}
         <Link
           to={`/profile/${mockPlayerData.profile.gameName}`}
@@ -112,8 +113,8 @@ export default function MatchDetail() {
           Voltar ao Perfil
         </Link>
 
-        {/* Match Header */}
-        <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+        {/* Match Header (compact + Blitz-like) */}
+        <div className="animate-fade-in-up" style={{ animationDelay: "0.08s" }}>
           <MatchHeader
             win={matchData.win}
             champion={matchData.champion}
@@ -136,57 +137,57 @@ export default function MatchDetail() {
           />
         </div>
 
-        {/* Build Order & Skill Order */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            <BuildOrder items={mockBuildOrder} />
-          </div>
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-            <SkillOrder skills={mockSkillOrder} />
-          </div>
-        </div>
+        {/* Blitz-like Tabs */}
+        <Tabs defaultValue="overview" className="animate-fade-in-up" style={{ animationDelay: "0.12s" }}>
+          <TabsList className="w-full justify-start bg-muted/20 border border-border/40 rounded-2xl p-1.5">
+            <TabsTrigger value="overview" className="rounded-xl">Visão geral</TabsTrigger>
+            <TabsTrigger value="stats" className="rounded-xl">Estatísticas</TabsTrigger>
+            <TabsTrigger value="timeline" className="rounded-xl">Linha do tempo</TabsTrigger>
+            <TabsTrigger value="gold" className="rounded-xl">Gráfico de ouro</TabsTrigger>
+          </TabsList>
 
-        {/* Damage Chart */}
-        <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-          <DamageChart
-            blueTeam={matchData.blueTeam || []}
-            redTeam={matchData.redTeam || []}
-            currentPlayer="EtoH"
-          />
-        </div>
+          <TabsContent value="overview" className="mt-4">
+            <div className="space-y-6">
+              <MatchTeamsTable
+                blueTeam={matchData.blueTeam || []}
+                redTeam={matchData.redTeam || []}
+                currentPlayer="EtoH"
+              />
 
-        {/* Timeline */}
-        <div className="animate-fade-in-up" style={{ animationDelay: "0.35s" }}>
-          <MatchTimeline
-            events={mockTimelineEvents}
-            duration={matchData.duration}
-          />
-        </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <BuildOrder items={mockBuildOrder} />
+                <SkillOrder skills={mockSkillOrder} />
+              </div>
+            </div>
+          </TabsContent>
 
-        {/* Teams */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            <TeamStatsTable
-              team={matchData.blueTeam || []}
-              teamColor="blue"
-              currentPlayer="EtoH"
-            />
-          </div>
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
-            <TeamStatsTable
-              team={matchData.redTeam || []}
-              teamColor="red"
-              currentPlayer="EtoH"
-            />
-          </div>
-        </div>
+          <TabsContent value="stats" className="mt-4">
+            <div className="space-y-6">
+              <DamageChart
+                blueTeam={matchData.blueTeam || []}
+                redTeam={matchData.redTeam || []}
+                currentPlayer="EtoH"
+              />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="timeline" className="mt-4">
+            <MatchTimeline events={mockTimelineEvents} duration={matchData.duration} />
+          </TabsContent>
+
+          <TabsContent value="gold" className="mt-4">
+            <div className="bento-card p-6">
+              <h2 className="text-lg font-display font-bold text-foreground mb-2">Gráfico de Ouro</h2>
+              <p className="text-sm text-muted-foreground">
+                Em breve: diferença de ouro ao longo do tempo (vamos plugar nesse mock depois).
+              </p>
+            </div>
+          </TabsContent>
+        </Tabs>
 
         {/* Back to Profile Button */}
-        <div className="flex justify-center pt-8 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-          <Link
-            to={`/profile/${mockPlayerData.profile.gameName}`}
-            className="btn-modern"
-          >
+        <div className="flex justify-center pt-6 animate-fade-in-up" style={{ animationDelay: "0.18s" }}>
+          <Link to={`/profile/${mockPlayerData.profile.gameName}`} className="btn-modern">
             Ver Perfil Completo
           </Link>
         </div>
