@@ -26,23 +26,11 @@ export function GameModeIcon({ mode, size = "md", showLabel = false, className }
 
   const showEmojiFallback = !modeInfo.iconUrl || !imgOk;
 
+  if (!showLabel) return null;
+
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div
-        className={cn(
-          "flex items-center justify-center rounded-lg overflow-hidden",
-          "ring-1 ring-border/50",
-          `bg-gradient-to-br ${modeInfo.color}`,
-          sizeClasses[size]
-        )}
-      >
-        {/** imagem removida a pedido — mantendo apenas fallback por emoji */}
-        {null}
-
-        {showEmojiFallback ? <span>{modeInfo.icon}</span> : null}
-      </div>
-
-      {showLabel ? <span className="text-sm font-medium text-foreground">{modeInfo.label}</span> : null}
+      <span className="text-sm font-medium text-foreground">{modeInfo.label}</span>
     </div>
   );
 }
