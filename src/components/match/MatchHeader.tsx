@@ -72,7 +72,7 @@ export function MatchHeader({
     <TooltipProvider>
       <div className={cn(
         "bento-card overflow-hidden",
-        isMvp && "mvp-rainbow-card mvp-shadow",
+        isMvp && "glow-border",
         className
       )}
       >
