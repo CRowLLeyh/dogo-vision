@@ -70,7 +70,13 @@ export function MatchHeader({
   className,
 }: MatchHeaderProps) {
   const kda = deaths === 0 ? "Perfect" : ((kills + assists) / deaths).toFixed(2);
-
+  const normalizedSecondaryTree = secondaryTree?.trim();
+  const secondaryTreeIcon = normalizedSecondaryTree
+    ? RUNE_TREE_ICONS[normalizedSecondaryTree] ||
+      RUNE_TREE_ICONS[
+        normalizedSecondaryTree.charAt(0).toUpperCase() + normalizedSecondaryTree.slice(1).toLowerCase()
+      ]
+    : undefined;
   return (
     <TooltipProvider>
       <div className={cn(
@@ -162,12 +168,15 @@ export function MatchHeader({
                 {KEYSTONE_ICONS[keystone] ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <img
-                        src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
-                        alt={`Runa: ${keystone}`}
-                        loading="lazy"
-                        className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
-                      />
+                    <img
+                      src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
+                      alt={`Runa: ${keystone}`}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = "/placeholder.svg";
+                      }}
+                      className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
+                    />
                     </TooltipTrigger>
                     <TooltipContent side="top" align="start">
                       <p className="text-xs">{keystone}</p>
@@ -177,18 +186,21 @@ export function MatchHeader({
                   <p className="text-sm text-muted-foreground truncate">{keystone}</p>
                 )}
 
-                {secondaryTree && RUNE_TREE_ICONS[secondaryTree] && (
+                {secondaryTreeIcon && (
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <img
-                        src={`${RUNE_ICON_URL}${RUNE_TREE_ICONS[secondaryTree]}`}
-                        alt={`Árvore secundária: ${secondaryTree}`}
+                        src={`${RUNE_ICON_URL}${secondaryTreeIcon}`}
+                        alt={`Árvore secundária: ${normalizedSecondaryTree}`}
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
                         className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20 opacity-90"
                       />
                     </TooltipTrigger>
                     <TooltipContent side="top" align="start">
-                      <p className="text-xs">{secondaryTree}</p>
+                      <p className="text-xs">{normalizedSecondaryTree}</p>
                     </TooltipContent>
                   </Tooltip>
                 )}
