@@ -118,7 +118,7 @@ export const RANK_EMBLEMS: Record<string, string> = {
 };
 
 // Role icons - CDN + fallback
-// Using CommunityDragon ranked position icons.
+// Using CommunityDragon lobby/party position icons.
 export const ROLE_ICONS: Record<
   string,
   { icon: string; iconUrl?: string; label: string }
@@ -126,31 +126,31 @@ export const ROLE_ICONS: Record<
   TOP: {
     icon: "🛡️",
     iconUrl:
-      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-top.png",
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-top.png",
     label: "Top",
   },
   JNG: {
     icon: "🌲",
     iconUrl:
-      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-jungle.png",
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-jungle.png",
     label: "Jungle",
   },
   MID: {
     icon: "⚡",
     iconUrl:
-      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-middle.png",
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-middle.png",
     label: "Mid",
   },
   ADC: {
     icon: "🎯",
     iconUrl:
-      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-bottom.png",
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-bottom.png",
     label: "Bottom",
   },
   SUP: {
     icon: "💫",
     iconUrl:
-      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-utility.png",
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-parties/global/default/icon-position-utility.png",
     label: "Support",
   },
 };
