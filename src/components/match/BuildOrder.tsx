@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export interface BuildItem {
   itemId: number;
@@ -14,6 +16,54 @@ interface BuildOrderProps {
 const itemBaseUrl = "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/item/";
 
 export function BuildOrder({ items, className }: BuildOrderProps) {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const scrollState = useMemo(() => {
+    const el = scrollerRef.current;
+    if (!el) return { left: false, right: false };
+
+    const left = el.scrollLeft > 0;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
+    return { left, right };
+  }, [items]);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      setCanScrollLeft(el.scrollLeft > 0);
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+    };
+
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+    };
+  }, [items]);
+
+  useEffect(() => {
+    // sync initial state after mount
+    setCanScrollLeft(scrollState.left);
+    setCanScrollRight(scrollState.right);
+  }, [scrollState.left, scrollState.right]);
+
+  const scrollByAmount = (direction: "left" | "right") => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const amount = Math.max(240, Math.floor(el.clientWidth * 0.6));
+    el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
+  };
+
   return (
     <div className={cn("bento-card", className)}>
       <h3 className="text-lg font-display font-bold text-foreground mb-6 flex items-center gap-2">
@@ -25,7 +75,60 @@ export function BuildOrder({ items, className }: BuildOrderProps) {
         {/* Connection line */}
         <div className="absolute top-[52px] left-0 right-0 h-0.5 bg-gradient-to-r from-muted via-gold/30 to-muted" />
 
-        <div className="flex items-start gap-4 overflow-x-auto pt-2 pb-4 scrollbar-hide">
+        {/* Desktop scroll arrows */}
+        <button
+          type="button"
+          onClick={() => scrollByAmount("left")}
+          aria-label="Rolar build para a esquerda"
+          className={cn(
+            "hidden md:flex absolute left-1 top-7 z-20",
+            "h-9 w-9 items-center justify-center rounded-xl",
+            "bg-background/70 backdrop-blur border border-border/60",
+            "transition-all",
+            canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+          )}
+        >
+          <ChevronLeft className="h-4 w-4 text-foreground" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => scrollByAmount("right")}
+          aria-label="Rolar build para a direita"
+          className={cn(
+            "hidden md:flex absolute right-1 top-7 z-20",
+            "h-9 w-9 items-center justify-center rounded-xl",
+            "bg-background/70 backdrop-blur border border-border/60",
+            "transition-all",
+            canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+          )}
+        >
+          <ChevronRight className="h-4 w-4 text-foreground" />
+        </button>
+
+        {/* Edge hints on desktop */}
+        <div
+          className={cn(
+            "hidden md:block pointer-events-none absolute inset-y-0 left-0 w-10 z-10",
+            "bg-gradient-to-r from-background to-transparent",
+            canScrollLeft ? "opacity-100" : "opacity-0"
+          )}
+        />
+        <div
+          className={cn(
+            "hidden md:block pointer-events-none absolute inset-y-0 right-0 w-10 z-10",
+            "bg-gradient-to-l from-background to-transparent",
+            canScrollRight ? "opacity-100" : "opacity-0"
+          )}
+        />
+
+        <div
+          ref={scrollerRef}
+          className={cn(
+            "flex items-start gap-4 overflow-x-auto pt-2 pb-4 scrollbar-hide",
+            "scroll-smooth"
+          )}
+        >
           {items.map((item, index) => (
             <div
               key={index}
@@ -34,15 +137,18 @@ export function BuildOrder({ items, className }: BuildOrderProps) {
             >
               {/* Item icon */}
               <div className="relative z-10 group">
-                <div className={cn(
-                  "w-14 h-14 rounded-xl border-2 overflow-hidden transition-all duration-300",
-                  "bg-gradient-to-br from-card to-background",
-                  "border-border/50 group-hover:border-gold/50",
-                  "group-hover:shadow-[0_0_20px_-5px_hsl(var(--gold)/0.4)]"
-                )}>
+                <div
+                  className={cn(
+                    "w-14 h-14 rounded-xl border-2 overflow-hidden transition-all duration-300",
+                    "bg-gradient-to-br from-card to-background",
+                    "border-border/50 group-hover:border-gold/50",
+                    "group-hover:shadow-[0_0_20px_-5px_hsl(var(--gold)/0.4)]"
+                  )}
+                >
                   <img
                     src={`${itemBaseUrl}${item.itemId}.png`}
                     alt={item.name}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -81,11 +187,11 @@ interface SkillOrderProps {
   className?: string;
 }
 
-const skillColors = {
-  Q: "bg-blue-500/80 border-blue-400",
-  W: "bg-green-500/80 border-green-400",
-  E: "bg-orange-500/80 border-orange-400",
-  R: "bg-purple-500/80 border-purple-400",
+const skillStyles = {
+  Q: "bg-accent/20 border-accent/40 text-foreground",
+  W: "bg-success/15 border-success/40 text-foreground",
+  E: "bg-primary/15 border-primary/40 text-foreground",
+  R: "bg-destructive/15 border-destructive/40 text-foreground",
 };
 
 export function SkillOrder({ skills, className }: SkillOrderProps) {
@@ -104,48 +210,65 @@ export function SkillOrder({ skills, className }: SkillOrderProps) {
         Ordem de Skills
       </h3>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         {(["Q", "W", "E", "R"] as const).map((skill) => (
-          <div key={skill} className="flex items-center gap-2">
+          <div key={skill} className="flex items-start gap-3">
             {/* Skill label */}
-            <div className={cn(
-              "w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white",
-              skillColors[skill].split(" ")[0]
-            )}>
+            <div
+              className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center font-display font-bold text-sm",
+                "border",
+                skillStyles[skill]
+              )}
+            >
               {skill}
             </div>
 
-            {/* Level markers */}
-            <div className="flex gap-1 flex-1">
-              {Array.from({ length: 18 }, (_, i) => i + 1).map((level) => {
-                const isLeveled = skillRows[skill].some(s => s.level === level);
-                return (
-                  <div
-                    key={level}
+            <div className="flex-1">
+              {/* Level pills */}
+              <div className="grid grid-cols-9 gap-1.5">
+                {Array.from({ length: 18 }, (_, i) => i + 1).map((level) => {
+                  const isLeveled = skillRows[skill].some((s) => s.level === level);
+                  const isUltLevel = skill === "R" && (level === 6 || level === 11 || level === 16);
+
+                  return (
+                    <div
+                      key={level}
+                      className={cn(
+                        "h-7 rounded-lg border flex items-center justify-center",
+                        "text-[11px] font-mono transition-all duration-300",
+                        isLeveled
+                          ? cn(skillStyles[skill], "shadow-sm")
+                          : "bg-muted/25 border-border/40 text-muted-foreground",
+                        isUltLevel && "ring-1 ring-primary/40"
+                      )}
+                      title={isLeveled ? `Level ${level}: ${skill}` : `Level ${level}`}
+                    >
+                      {level}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Picked levels row */}
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {skillRows[skill].map((s) => (
+                  <span
+                    key={`${skill}-${s.level}`}
                     className={cn(
-                      "flex-1 h-6 rounded transition-all duration-300",
-                      isLeveled
-                        ? cn(skillColors[skill], "border")
-                        : "bg-muted/30"
+                      "inline-flex items-center gap-1 rounded-lg border px-2 py-1",
+                      "text-[11px] font-mono",
+                      skillStyles[skill]
                     )}
-                  />
-                );
-              })}
+                  >
+                    <span className="opacity-80">lvl</span>
+                    <span className="font-bold">{s.level}</span>
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         ))}
-
-        {/* Level numbers */}
-        <div className="flex items-center gap-2 mt-2">
-          <div className="w-8" />
-          <div className="flex gap-1 flex-1">
-            {Array.from({ length: 18 }, (_, i) => i + 1).map((level) => (
-              <div key={level} className="flex-1 text-center text-[10px] text-muted-foreground">
-                {level}
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
