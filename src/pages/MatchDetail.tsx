@@ -131,6 +131,8 @@ export default function MatchDetail() {
             killParticipation={matchData.killParticipation || 0}
             keystone={matchData.keystone}
             summonerSpells={matchData.summonerSpells}
+            largestMultikill={matchData.largestMultikill}
+            isMvp={matchData.isMvp}
           />
         </div>
 
