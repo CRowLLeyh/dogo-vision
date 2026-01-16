@@ -77,6 +77,11 @@ export function MatchHeader({
         normalizedSecondaryTree.charAt(0).toUpperCase() + normalizedSecondaryTree.slice(1).toLowerCase()
       ]
     : undefined;
+  const secondaryTreeSrc = secondaryTreeIcon
+    ? secondaryTreeIcon.startsWith("http")
+      ? secondaryTreeIcon
+      : `${RUNE_ICON_URL}${secondaryTreeIcon}`
+    : undefined;
   return (
     <TooltipProvider>
       <div className={cn(
@@ -186,11 +191,11 @@ export function MatchHeader({
                   <p className="text-sm text-muted-foreground truncate">{keystone}</p>
                 )}
 
-                {secondaryTreeIcon && (
+                {secondaryTreeSrc && (
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <img
-                        src={`${RUNE_ICON_URL}${secondaryTreeIcon}`}
+                        src={secondaryTreeSrc}
                         alt={`Árvore secundária: ${normalizedSecondaryTree}`}
                         loading="lazy"
                         onError={(e) => {
