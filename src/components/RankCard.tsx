@@ -59,6 +59,8 @@ export function RankCard({
             tier={tier} 
             division={division} 
             lp={lp}
+            wins={wins}
+            losses={losses}
             size="lg"
           />
         </div>

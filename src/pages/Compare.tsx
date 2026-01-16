@@ -11,6 +11,9 @@ interface PlayerData {
   profileIconUrl: string;
   tier: string;
   division: string;
+  lp: number;
+  wins: number;
+  losses: number;
 }
 
 export default function Compare() {
