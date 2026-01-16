@@ -153,9 +153,53 @@ export function MatchHeader({
                 )}
               </div>
 
-              <h1 className="text-3xl font-display font-bold text-foreground mb-1 truncate">
-                {champion}
-              </h1>
+              <div className="flex items-center gap-3 mb-1">
+                <h1 className="text-3xl font-display font-bold text-foreground flex-1 min-w-0 truncate">
+                  {champion}
+                </h1>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  {KEYSTONE_ICONS[keystone] ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <img
+                          src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
+                          alt={`Runa: ${keystone}`}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = "/placeholder.svg";
+                          }}
+                          className="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-border/50 bg-muted/20"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent side="top" align="end">
+                        <p className="text-xs">{keystone}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <p className="text-sm text-muted-foreground truncate max-w-[10rem]">{keystone}</p>
+                  )}
+
+                  {secondaryTreeSrc && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <img
+                          src={secondaryTreeSrc}
+                          alt={`Árvore secundária: ${normalizedSecondaryTree}`}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = "/placeholder.svg";
+                          }}
+                          className="w-8 h-8 md:w-9 md:h-9 rounded-lg border border-border/50 bg-muted/20 opacity-90"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent side="top" align="end">
+                        <p className="text-xs">{normalizedSecondaryTree}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+              </div>
 
               <div className="flex items-center gap-2 mb-1">
                 {summonerSpells.map((spell, index) => (
@@ -167,48 +211,6 @@ export function MatchHeader({
                     className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
                   />
                 ))}
-              </div>
-
-              <div className="flex items-center gap-2">
-                {KEYSTONE_ICONS[keystone] ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                    <img
-                      src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
-                      alt={`Runa: ${keystone}`}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = "/placeholder.svg";
-                      }}
-                      className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
-                    />
-                    </TooltipTrigger>
-                    <TooltipContent side="top" align="start">
-                      <p className="text-xs">{keystone}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <p className="text-sm text-muted-foreground truncate">{keystone}</p>
-                )}
-
-                {secondaryTreeSrc && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <img
-                        src={secondaryTreeSrc}
-                        alt={`Árvore secundária: ${normalizedSecondaryTree}`}
-                        loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.src = "/placeholder.svg";
-                        }}
-                        className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20 opacity-90"
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent side="top" align="start">
-                      <p className="text-xs">{normalizedSecondaryTree}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
               </div>
             </div>
           </div>
