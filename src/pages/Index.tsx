@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { mockTierListData, mockPlayerData } from "@/lib/mockData";
 import { GAME_MODE_ICONS } from "@/lib/gameAssets";
+import { GameModeIcon } from "@/components/ui/GameModeIcon";
 
 const RECENT_SEARCHES_KEY = "dogo_recent_searches";
 const MAX_RECENT_SEARCHES = 5;
@@ -46,7 +47,7 @@ export default function Index() {
 
   // Top champions for quick stats
   const topChamps = mockTierListData.slice(0, 5);
-  const gameModes = Object.entries(GAME_MODE_ICONS).slice(0, 6);
+  const gameModes = Object.keys(GAME_MODE_ICONS).slice(0, 6);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] mesh-background relative overflow-hidden">
@@ -247,21 +248,20 @@ export default function Index() {
           </div>
           
           <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-            {gameModes.map(([mode, info]) => (
-              <div 
+            {gameModes.map((mode) => (
+              <div
                 key={mode}
                 className={cn(
                   "flex flex-col items-center p-3 rounded-xl transition-all cursor-pointer",
                   "bg-muted/20 hover:bg-muted/40 group"
                 )}
               >
-                <div className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-2 transition-transform group-hover:scale-110",
-                  `bg-gradient-to-br ${info.color}`
-                )}>
-                  {info.icon}
-                </div>
-                <span className="text-xs font-medium text-foreground text-center">{mode}</span>
+                <GameModeIcon
+                  mode={mode}
+                  size="lg"
+                  className="gap-0 transition-transform group-hover:scale-110"
+                />
+                <span className="mt-2 text-xs font-medium text-foreground text-center">{mode}</span>
               </div>
             ))}
           </div>
