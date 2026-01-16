@@ -225,14 +225,22 @@ export function SkillOrder({ skills, className }: SkillOrderProps) {
             </div>
 
             {/* Leveled chips (compact) */}
-            <div className="min-w-0 flex-1 overflow-x-auto scrollbar-hide">
-              <div className="flex items-center gap-2 min-w-max py-0.5 pr-1">
+            <div className="min-w-0 flex-1 overflow-x-auto md:overflow-visible scrollbar-hide">
+              <div
+                className={cn(
+                  "flex items-center gap-2 min-w-max py-0.5 pr-1",
+                  "md:min-w-0 md:pr-0",
+                  "md:grid md:gap-2 md:w-full",
+                  "md:[grid-template-columns:repeat(auto-fit,minmax(84px,1fr))]"
+                )}
+              >
                 {skillRows[skill].map((s) => (
                   <span
                     key={`${skill}-${s.level}`}
                     className={cn(
-                      "inline-flex items-center rounded-lg border px-3 h-9",
+                      "inline-flex items-center justify-center rounded-lg border px-3 h-9",
                       "text-sm font-mono leading-none",
+                      "w-full",
                       skillStyles[skill]
                     )}
                   >
