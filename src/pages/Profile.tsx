@@ -96,9 +96,11 @@ export default function Profile() {
 
   const { profile, ranks, stats, topChampions, recentMatches } = playerData;
 
-  // Mock performance data
-  const last7Games = [1, 0, 1, 1, 0, 1, 1]; // 1 = win, 0 = loss
-  const kdaHistory = [2.8, 3.2, 1.9, 4.1, 2.5, 3.8, 2.2];
+  // Derived recent performance (UI only)
+  const last20Matches = recentMatches.slice(0, 20);
+  const last20Results = last20Matches.map((m) => m.win);
+  const last20Wins = last20Results.filter(Boolean).length;
+  const last20Losses = last20Results.length - last20Wins;
 
   return (
     <div className="min-h-[calc(100vh-4rem)] mesh-background">
@@ -310,16 +312,17 @@ export default function Profile() {
               <TrendingUp className="w-4 h-4 text-success" />
               <span className="text-xs text-muted-foreground uppercase tracking-wider">Últimas 20</span>
             </div>
+
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-2xl font-bold text-success">{stats.last20.wins}W</span>
+              <span className="text-2xl font-bold text-success">{last20Wins}W</span>
               <span className="text-muted-foreground">/</span>
-              <span className="text-2xl font-bold text-destructive">{stats.last20.losses}L</span>
+              <span className="text-2xl font-bold text-destructive">{last20Losses}L</span>
             </div>
+
             <TooltipProvider>
-              {/* Mobile: compact dots (no connectors) */}
-              <div className="flex flex-wrap items-center justify-center gap-1.5 md:hidden">
-                {last7Games.map((win, i) => (
-                  <Tooltip key={i}>
+              <div className="flex flex-wrap items-center justify-center gap-1.5">
+                {last20Matches.map((match, i) => (
+                  <Tooltip key={match.matchId}>
                     <TooltipTrigger asChild>
                       <div
                         className={cn(
@@ -327,62 +330,26 @@ export default function Profile() {
                           "w-6 h-6 rounded-full border",
                           "transition-transform duration-200",
                           "hover:scale-110",
-                          win
+                          match.win
                             ? "bg-success/15 border-success/40 text-success"
                             : "bg-destructive/15 border-destructive/40 text-destructive"
                         )}
+                        aria-label={`Jogo ${i + 1}: ${match.win ? "Vitória" : "Derrota"}`}
                       >
-                        <span className="text-[10px] font-bold leading-none">{win ? "W" : "L"}</span>
+                        <span className="text-[10px] font-bold leading-none">{match.win ? "W" : "L"}</span>
                       </div>
                     </TooltipTrigger>
                     <TooltipContent side="top" align="center">
-                      <p className="text-xs">Jogo {i + 1}: {win ? "Vitória" : "Derrota"}</p>
+                      <p className="text-xs">
+                        Jogo {i + 1}: {match.win ? "Vitória" : "Derrota"} • {match.champion} • {match.timeAgo}
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                 ))}
               </div>
-
-              {/* Desktop: connected timeline */}
-              <div className="hidden md:flex items-center justify-center">
-                {last7Games.map((win, i) => {
-                  const isLast = i === last7Games.length - 1;
-                  return (
-                    <div key={i} className="flex items-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div
-                            className={cn(
-                              "grid place-items-center",
-                              "w-7 h-7 rounded-full border",
-                              "transition-transform duration-200",
-                              "hover:scale-110",
-                              win
-                                ? "bg-success/15 border-success/40 text-success"
-                                : "bg-destructive/15 border-destructive/40 text-destructive"
-                            )}
-                          >
-                            <span className="text-[10px] font-bold leading-none">{win ? "W" : "L"}</span>
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent side="top" align="center">
-                          <p className="text-xs">Jogo {i + 1}: {win ? "Vitória" : "Derrota"}</p>
-                        </TooltipContent>
-                      </Tooltip>
-
-                      {!isLast && (
-                        <div
-                          className={cn(
-                            "h-px w-5 mx-1.5",
-                            win ? "bg-success/40" : "bg-destructive/40"
-                          )}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
             </TooltipProvider>
-            <p className="text-[10px] text-muted-foreground mt-2 text-center">Últimos 7 jogos</p>
+
+            <p className="text-[10px] text-muted-foreground mt-2 text-center">Últimos 20 jogos</p>
           </div>
         </div>
 
