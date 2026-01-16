@@ -7,7 +7,7 @@ export const CHAMPION_ICON_URL = `${DDRAGON_CDN}/img/champion/`;
 export const ITEM_ICON_URL = `${DDRAGON_CDN}/img/item/`;
 export const SPELL_ICON_URL = `${DDRAGON_CDN}/img/spell/`;
 export const PROFILE_ICON_URL = `${DDRAGON_CDN}/img/profileicon/`;
-export const RUNE_ICON_URL = "https://ddragon.canisback.com/img/";
+export const RUNE_ICON_URL = "https://ddragon.leagueoflegends.com/cdn/img/";
 
 // Game Mode Icons - CDN + fallback
 // Using CommunityDragon for up-to-date League client assets.
