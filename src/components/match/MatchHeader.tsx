@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
-import { KEYSTONE_ICONS, RUNE_ICON_URL } from "@/lib/gameAssets";
+import { KEYSTONE_ICONS, RUNE_ICON_URL, RUNE_TREE_ICONS } from "@/lib/gameAssets";
 
 interface MatchHeaderProps {
   win: boolean;
@@ -26,6 +26,7 @@ interface MatchHeaderProps {
   goldEarned: number;
   killParticipation: number;
   keystone: string;
+  secondaryTree?: string;
   summonerSpells: string[];
   largestMultikill?: number;
   isMvp?: boolean;
@@ -62,6 +63,7 @@ export function MatchHeader({
   goldEarned,
   killParticipation,
   keystone,
+  secondaryTree,
   summonerSpells,
   largestMultikill,
   isMvp,
@@ -156,23 +158,41 @@ export function MatchHeader({
                 ))}
               </div>
 
-              {KEYSTONE_ICONS[keystone] ? (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <img
-                      src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
-                      alt={`Runa: ${keystone}`}
-                      loading="lazy"
-                      className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent side="top" align="start">
-                    <p className="text-xs">{keystone}</p>
-                  </TooltipContent>
-                </Tooltip>
-              ) : (
-                <p className="text-sm text-muted-foreground truncate">{keystone}</p>
-              )}
+              <div className="flex items-center gap-2">
+                {KEYSTONE_ICONS[keystone] ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <img
+                        src={`${RUNE_ICON_URL}${KEYSTONE_ICONS[keystone].icon}`}
+                        alt={`Runa: ${keystone}`}
+                        loading="lazy"
+                        className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side="top" align="start">
+                      <p className="text-xs">{keystone}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
+                  <p className="text-sm text-muted-foreground truncate">{keystone}</p>
+                )}
+
+                {secondaryTree && RUNE_TREE_ICONS[secondaryTree] && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <img
+                        src={`${RUNE_ICON_URL}${RUNE_TREE_ICONS[secondaryTree]}`}
+                        alt={`Árvore secundária: ${secondaryTree}`}
+                        loading="lazy"
+                        className="w-7 h-7 rounded-lg border border-border/50 bg-muted/20 opacity-90"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent side="top" align="start">
+                      <p className="text-xs">{secondaryTree}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </div>
             </div>
           </div>
  
