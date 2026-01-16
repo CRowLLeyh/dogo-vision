@@ -3,15 +3,15 @@ import { TierBadge } from "@/components/TierBadge";
 import { mockTierListData } from "@/lib/mockData";
 import { Search, Filter, ChevronDown, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ROLE_ICONS } from "@/lib/gameAssets";
+import { RoleIcon } from "@/components/ui/RoleIcon";
 
 const roles = [
   { id: "Todas", label: "Todas", icon: "🎮" },
-  { id: "TOP", label: "Top", icon: ROLE_ICONS.TOP },
-  { id: "JNG", label: "Jungle", icon: ROLE_ICONS.JNG },
-  { id: "MID", label: "Mid", icon: ROLE_ICONS.MID },
-  { id: "ADC", label: "ADC", icon: ROLE_ICONS.ADC },
-  { id: "SUP", label: "Support", icon: ROLE_ICONS.SUP }
+  { id: "TOP", label: "Top" },
+  { id: "JNG", label: "Jungle" },
+  { id: "MID", label: "Mid" },
+  { id: "ADC", label: "ADC" },
+  { id: "SUP", label: "Support" },
 ];
 
 const tiers = ["Todas", "S", "A", "B", "C", "D"];
@@ -116,7 +116,11 @@ export default function Champions() {
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   )}
                 >
-                  <span>{role.icon}</span>
+                  {role.id === "Todas" ? (
+                    <span>{role.icon}</span>
+                  ) : (
+                    <RoleIcon role={role.id} size="sm" className="gap-0" />
+                  )}
                   <span className="hidden sm:inline">{role.label}</span>
                 </button>
               ))}
@@ -246,7 +250,7 @@ function ChampionRow({ champion, index, delay }: ChampionRowProps) {
         <div>
           <h3 className="font-semibold text-foreground text-sm">{champion.name}</h3>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px]">{ROLE_ICONS[champion.role as keyof typeof ROLE_ICONS]}</span>
+            <RoleIcon role={champion.role} size="sm" className="gap-0" />
             <span className="text-[10px] text-muted-foreground uppercase">{champion.role}</span>
           </div>
         </div>

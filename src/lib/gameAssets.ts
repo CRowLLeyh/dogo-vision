@@ -117,13 +117,42 @@ export const RANK_EMBLEMS: Record<string, string> = {
   CHALLENGER: `${DDRAGON_CDN}/img/ranked-emblem/CHALLENGER.png`,
 };
 
-// Role icons
-export const ROLE_ICONS: Record<string, string> = {
-  TOP: "🛡️",
-  JNG: "🌲",
-  MID: "⚡",
-  ADC: "🎯",
-  SUP: "💫"
+// Role icons - CDN + fallback
+// Using CommunityDragon ranked position icons.
+export const ROLE_ICONS: Record<
+  string,
+  { icon: string; iconUrl?: string; label: string }
+> = {
+  TOP: {
+    icon: "🛡️",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-top.png",
+    label: "Top",
+  },
+  JNG: {
+    icon: "🌲",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-jungle.png",
+    label: "Jungle",
+  },
+  MID: {
+    icon: "⚡",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-middle.png",
+    label: "Mid",
+  },
+  ADC: {
+    icon: "🎯",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-bottom.png",
+    label: "Bottom",
+  },
+  SUP: {
+    icon: "💫",
+    iconUrl:
+      "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/position-utility.png",
+    label: "Support",
+  },
 };
 
 // Keystone runes
@@ -161,6 +190,10 @@ export function getSpellIcon(spellName: string): string {
 
 export function getGameModeInfo(gameMode: string) {
   return GAME_MODE_ICONS[gameMode] || GAME_MODE_ICONS["Normal Draft"];
+}
+
+export function getRoleInfo(role: string) {
+  return ROLE_ICONS[role] || ROLE_ICONS.MID;
 }
 
 export function formatNumber(num: number): string {
