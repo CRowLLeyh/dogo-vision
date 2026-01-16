@@ -306,17 +306,50 @@ export default function Profile() {
               <span className="text-muted-foreground">/</span>
               <span className="text-2xl font-bold text-destructive">{stats.last20.losses}L</span>
             </div>
-            <div className="flex gap-1">
-              {last7Games.map((win, i) => (
-                <div 
-                  key={i}
-                  className={cn(
-                    "flex-1 h-6 rounded-md transition-all",
-                    win ? "bg-success/80" : "bg-destructive/80"
-                  )}
-                />
-              ))}
-            </div>
+            <TooltipProvider>
+              <div className="flex items-center">
+                {last7Games.map((win, i) => {
+                  const isLast = i === last7Games.length - 1;
+                  return (
+                    <div key={i} className="flex items-center flex-1">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div
+                            className={cn(
+                              "mx-auto grid place-items-center",
+                              "w-7 h-7 rounded-full border",
+                              "transition-transform duration-200",
+                              "hover:scale-110",
+                              win
+                                ? "bg-success/15 border-success/40 text-success"
+                                : "bg-destructive/15 border-destructive/40 text-destructive"
+                            )}
+                          >
+                            <span className="text-[10px] font-bold leading-none">
+                              {win ? "W" : "L"}
+                            </span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" align="center">
+                          <p className="text-xs">
+                            Jogo {i + 1}: {win ? "Vitória" : "Derrota"}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+
+                      {!isLast && (
+                        <div
+                          className={cn(
+                            "h-px flex-1 mx-2",
+                            win ? "bg-success/40" : "bg-destructive/40"
+                          )}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </TooltipProvider>
             <p className="text-[10px] text-muted-foreground mt-2 text-center">Últimos 7 jogos</p>
           </div>
         </div>
