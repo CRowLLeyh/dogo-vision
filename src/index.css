@@ -198,6 +198,42 @@
       var(--shadow-glow-cyan);
   }
 
+  /* MVP Rainbow Ring */
+  .mvp-rainbow {
+    @apply rounded-xl;
+  }
+
+  .mvp-rainbow::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--radius) * 0.8);
+    background: conic-gradient(
+      from 0deg,
+      hsl(var(--primary)),
+      hsl(var(--accent)),
+      hsl(var(--success)),
+      hsl(var(--destructive)),
+      hsl(var(--primary))
+    );
+    filter: blur(6px);
+    opacity: 0.85;
+    animation: mvpSpin 2.2s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .mvp-rainbow > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes mvpSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   /* Win/Loss Indicators */
   .win-indicator {
     @apply bg-success/15 border-success/40;

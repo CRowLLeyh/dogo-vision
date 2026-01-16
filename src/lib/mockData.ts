@@ -31,6 +31,8 @@ export interface MatchData {
   goldEarned: number;
   killParticipation: number;
   largestMultikill: number;
+  /** Highlight match where player was MVP (mock/UI only) */
+  isMvp?: boolean;
   blueTeam: TeamPlayer[];
   redTeam: TeamPlayer[];
 }
@@ -83,6 +85,7 @@ export const mockPlayerData = {
       goldEarned: 14200,
       killParticipation: 62,
       largestMultikill: 2,
+      isMvp: true,
       blueTeam: [
         { summonerName: "EtoH", champion: "Jinx", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Jinx.png", kills: 8, deaths: 3, assists: 12, rank: "Gold IV", damage: 28450 },
         { summonerName: "ThreshGod", champion: "Thresh", championIcon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Thresh.png", kills: 2, deaths: 4, assists: 18, rank: "Gold II", damage: 8200 },
