@@ -1,6 +1,13 @@
 import { cn } from "@/lib/utils";
-import { Clock, Calendar, Trophy, Target, Eye, Coins } from "lucide-react";
+import { Clock, Calendar, Trophy, Target, Eye, Coins, Crown } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
 
 interface MatchHeaderProps {
   win: boolean;
@@ -19,6 +26,8 @@ interface MatchHeaderProps {
   killParticipation: number;
   keystone: string;
   summonerSpells: string[];
+  largestMultikill?: number;
+  isMvp?: boolean;
   className?: string;
 }
 
@@ -53,15 +62,20 @@ export function MatchHeader({
   killParticipation,
   keystone,
   summonerSpells,
+  largestMultikill,
+  isMvp,
   className,
 }: MatchHeaderProps) {
   const kda = deaths === 0 ? "Perfect" : ((kills + assists) / deaths).toFixed(2);
 
   return (
-    <div className={cn(
-      "bento-card overflow-hidden",
-      className
-    )}>
+    <TooltipProvider>
+      <div className={cn(
+        "bento-card overflow-hidden",
+        isMvp && "mvp-rainbow-card mvp-shadow",
+        className
+      )}
+      >
       {/* Win/Loss Banner */}
       <div className={cn(
         "h-2 w-full",
@@ -98,7 +112,7 @@ export function MatchHeader({
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className={cn(
                   "text-2xl font-display font-bold",
                   win ? "text-success" : "text-destructive"
@@ -109,6 +123,26 @@ export function MatchHeader({
                   "w-6 h-6",
                   win ? "text-success" : "text-destructive"
                 )} />
+
+                {largestMultikill && largestMultikill >= 2 && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                        {getMultikillLabelPt(largestMultikill)}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" align="center">
+                      <p className="text-xs">{getMultikillTooltipPt(largestMultikill)}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+
+                {isMvp && (
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+                    <Crown className="w-4 h-4" />
+                    MVP
+                  </span>
+                )}
               </div>
               <h1 className="text-3xl font-display font-bold text-foreground mb-1">
                 {champion}
@@ -189,7 +223,8 @@ export function MatchHeader({
           />
         </div>
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
 

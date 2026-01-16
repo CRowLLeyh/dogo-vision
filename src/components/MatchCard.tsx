@@ -1,7 +1,14 @@
 import { cn } from "@/lib/utils";
 import { KDADisplay } from "./ui/KDADisplay";
-import { ChevronRight, Clock, Sword } from "lucide-react";
+import { ChevronRight, Clock, Sword, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
 
 interface MatchCardProps {
   matchId: string;
@@ -20,6 +27,7 @@ interface MatchCardProps {
   summonerSpells: string[];
   keystone: string;
   largestMultikill?: number;
+  isMvp?: boolean;
   className?: string;
 }
 
@@ -38,12 +46,6 @@ const spellMap: Record<string, string> = {
   "Smite": "SummonerSmite",
 };
 
-const multikillLabels: Record<number, string> = {
-  2: "Double",
-  3: "Triple",
-  4: "Quadra",
-  5: "Penta"
-};
 
 export function MatchCard({
   matchId,
@@ -62,17 +64,20 @@ export function MatchCard({
   summonerSpells,
   keystone,
   largestMultikill,
+  isMvp,
   className
 }: MatchCardProps) {
   return (
-    <Link 
-      to={`/match/${matchId}`}
-      className={cn(
-        "group block glass-card overflow-hidden transition-all duration-400",
-        "hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_hsl(var(--gold)/0.3)]",
-        className
-      )}
-    >
+    <TooltipProvider>
+      <Link 
+        to={`/match/${matchId}`}
+        className={cn(
+          "group block glass-card overflow-hidden transition-all duration-400",
+          "hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_hsl(var(--gold)/0.3)]",
+          isMvp && "mvp-rainbow-card mvp-shadow",
+          className
+        )}
+      >
       {/* Win/Loss Indicator Bar */}
       <div className={cn(
         "h-1.5 w-full",
@@ -118,8 +123,22 @@ export function MatchCard({
               <span className="text-xs text-muted-foreground">•</span>
               <span className="text-xs text-muted-foreground">{gameMode}</span>
               {largestMultikill && largestMultikill >= 2 && (
-                <span className="text-xs text-gold font-semibold px-2 py-0.5 rounded-full bg-gold/10">
-                  {multikillLabels[largestMultikill]}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="text-xs text-primary font-semibold px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                      {getMultikillLabelPt(largestMultikill)}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="center">
+                    <p className="text-xs">{getMultikillTooltipPt(largestMultikill)}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+
+              {isMvp && (
+                <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+                  <Crown className="w-3.5 h-3.5" />
+                  MVP
                 </span>
               )}
             </div>
@@ -191,5 +210,6 @@ export function MatchCard({
         </div>
       </div>
     </Link>
+    </TooltipProvider>
   );
 }

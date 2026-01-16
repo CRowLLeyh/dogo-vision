@@ -9,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getMultikillLabelPt, getMultikillTooltipPt } from "@/lib/multikill";
 import {
   RefreshCw,
   Target,
@@ -25,6 +26,7 @@ import {
   BarChart2,
   Star,
   Zap,
+  Crown,
 } from "lucide-react";
 import { WinrateBar } from "@/components/ui/WinrateBar";
 import { KDADisplay } from "@/components/ui/KDADisplay";
@@ -455,7 +457,7 @@ export default function Profile() {
             </Link>
           </div>
           <div className="space-y-2">
-            {recentMatches.slice(0, 5).map((match, i) => (
+            {recentMatches.slice(0, 20).map((match, i) => (
               <Link
                 key={match.matchId}
                 to={`/match/${match.matchId}`}
@@ -464,9 +466,10 @@ export default function Profile() {
                   "hover:-translate-y-1 hover:shadow-xl",
                   "hover:shadow-[0_0_40px_-12px_hsl(var(--gold)/0.35)]",
                   "group",
+                  match.isMvp && "mvp-rainbow-card mvp-shadow",
                   "animate-fade-in-up"
                 )}
-                style={{ animationDelay: `${0.4 + i * 0.05}s` }}
+                style={{ animationDelay: `${0.2 + (i % 10) * 0.04}s` }}
               >
                 {/* Win/Loss Indicator */}
                 <div className={cn(
@@ -502,13 +505,21 @@ export default function Profile() {
                     <span className="text-xs text-muted-foreground">{match.duration}</span>
 
                     {match.largestMultikill >= 2 && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                        {multikillLabels[match.largestMultikill]}
-                      </span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                            {getMultikillLabelPt(match.largestMultikill)}
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" align="center">
+                          <p className="text-xs">{getMultikillTooltipPt(match.largestMultikill)}</p>
+                        </TooltipContent>
+                      </Tooltip>
                     )}
 
                     {match.isMvp && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+                        <Crown className="w-3 h-3" />
                         MVP
                       </span>
                     )}
