@@ -231,7 +231,7 @@ export function SkillOrder({ skills, className }: SkillOrderProps) {
                   <span
                     key={`${skill}-${s.level}`}
                     className={cn(
-                      "inline-flex items-center rounded-full border px-4 py-1.5",
+                      "inline-flex items-center rounded-lg border px-3 h-9",
                       "text-sm font-mono leading-none",
                       skillStyles[skill]
                     )}
