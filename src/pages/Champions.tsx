@@ -223,7 +223,7 @@ function ChampionRow({ champion, index, delay }: ChampionRowProps) {
   return (
     <div 
       className={cn(
-        "glass-card p-3 grid grid-cols-12 gap-4 items-center transition-all",
+        "glass-card px-2.5 py-3 grid grid-cols-12 gap-3 items-center transition-all",
         "hover:scale-[1.01] hover:-translate-y-0.5 cursor-pointer group",
         "animate-fade-in-up"
       )}
