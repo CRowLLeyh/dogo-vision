@@ -181,12 +181,19 @@ export const KEYSTONE_ICONS: Record<string, { icon: string; tree: string }> = {
 };
 
 // Rune trees (para árvore secundária)
+// Data Dragon vem retornando 403 em alguns paths de "Styles/*/*.png".
+// Usamos CommunityDragon (LCU assets) para os ícones das árvores.
 export const RUNE_TREE_ICONS: Record<string, string> = {
-  Precision: "perk-images/Styles/Precision/Precision.png",
-  Domination: "perk-images/Styles/Domination/Domination.png",
-  Sorcery: "perk-images/Styles/Sorcery/Sorcery.png",
-  Resolve: "perk-images/Styles/Resolve/Resolve.png",
-  Inspiration: "perk-images/Styles/Inspiration/Inspiration.png",
+  Precision:
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7201_precision.png",
+  Domination:
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7200_domination.png",
+  Sorcery:
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/sorcery/sorcery_icon.svg",
+  Resolve:
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7204_resolve.png",
+  Inspiration:
+    "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7203_whimsy.png",
 };
 // Helper functions
 export function getChampionIcon(championName: string): string {
