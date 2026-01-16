@@ -240,7 +240,7 @@ function ChampionRow({ champion, index, delay }: ChampionRowProps) {
           <img 
             src={champion.icon} 
             alt={champion.name}
-            className="w-10 h-10 rounded-xl border border-border/50 group-hover:border-primary/50 transition-colors"
+            className="w-11 h-11 rounded-xl border border-border/50 group-hover:border-primary/50 transition-colors"
           />
           <TierBadge 
             tier={champion.tier as "S" | "A" | "B" | "C" | "D"} 
