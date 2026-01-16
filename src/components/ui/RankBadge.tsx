@@ -99,7 +99,7 @@ export function RankBadge({
       </TooltipProvider>
 
       <div className="flex flex-col">
-        <span className={cn("font-bold font-display text-foreground", sizes.text)}>
+        <span className={cn("font-semibold font-display text-foreground", sizes.text)}>
           {tierLabel} {division}
         </span>
         {showLp && lp !== undefined && (

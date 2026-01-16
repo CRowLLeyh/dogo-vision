@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import type { TeamPlayer } from "@/lib/mockData";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { Link } from "react-router-dom";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface MatchTeamsTableProps {
   blueTeam: TeamPlayer[];
@@ -104,27 +105,51 @@ function TeamBlock({
 
                 {/* Player */}
                 <div className="flex items-center gap-3 min-w-0">
-                  <img
-                    src={p.championIcon}
-                    alt={p.champion}
-                    loading="lazy"
-                    className={cn(
-                      "w-10 h-10 rounded-xl border",
-                      isMe ? "border-primary/40" : "border-border/50"
-                    )}
-                  />
+                  <Link
+                    to={`/profile/${encodeURIComponent(p.summonerName)}`}
+                    aria-label={`Abrir perfil de ${p.summonerName}`}
+                    className="shrink-0"
+                  >
+                    <img
+                      src={p.championIcon}
+                      alt={p.champion}
+                      loading="lazy"
+                      className={cn(
+                        "w-10 h-10 rounded-xl border",
+                        "hover:opacity-90 transition-opacity",
+                        isMe ? "border-primary/40" : "border-border/50"
+                      )}
+                    />
+                  </Link>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 min-w-0">
-                      <Link
-                        to={`/profile/${encodeURIComponent(p.summonerName)}`}
-                        className={cn(
-                          "text-sm font-semibold truncate",
-                          "hover:underline underline-offset-2",
-                          isMe ? "text-primary" : "text-foreground"
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            to={`/profile/${encodeURIComponent(p.summonerName)}`}
+                            className={cn(
+                              "text-sm font-semibold truncate",
+                              "hover:underline underline-offset-2",
+                              isMe ? "text-primary" : "text-foreground"
+                            )}
+                          >
+                            {p.summonerName}
+                          </Link>
+                        </TooltipTrigger>
+                        {(p.tagLine || p.level !== undefined) && (
+                          <TooltipContent side="top" align="start">
+                            <div className="text-xs">
+                              <span className="font-semibold">
+                                {p.summonerName}
+                                {p.tagLine ? `#${p.tagLine}` : ""}
+                              </span>
+                              {p.level !== undefined && (
+                                <span className="text-muted-foreground"> • Nível {p.level}</span>
+                              )}
+                            </div>
+                          </TooltipContent>
                         )}
-                      >
-                        {p.summonerName}
-                      </Link>
+                      </Tooltip>
 
                       <RankBadge
                         tier={parsed.tier}
