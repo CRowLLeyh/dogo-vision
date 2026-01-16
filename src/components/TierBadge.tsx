@@ -17,7 +17,7 @@ export function TierBadge({ tier, className }: TierBadgeProps) {
   return (
     <span 
       className={cn(
-        "inline-flex items-center justify-center w-8 h-8 rounded-lg font-bold font-display text-sm",
+        "inline-flex items-center justify-center w-6 h-6 rounded-md font-bold font-display text-[11px] leading-none",
         tierColors[tier],
         className
       )}
