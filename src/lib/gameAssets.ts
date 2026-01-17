@@ -1,4 +1,5 @@
 // League of Legends Data Dragon CDN URLs - Season 2026
+// Updated: getKeystoneIcon & getSecondaryTreeIcon helpers added
 const DDRAGON_VERSION = "14.1.1";
 const DDRAGON_CDN = `https://ddragon.leagueoflegends.com/cdn/${DDRAGON_VERSION}`;
 
