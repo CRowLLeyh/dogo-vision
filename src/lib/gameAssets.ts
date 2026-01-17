@@ -162,28 +162,30 @@ export const ROLE_ICONS: Record<
   },
 };
 
-// Keystone runes
+// Keystone runes - Using CommunityDragon paths for colored PNGs
+// Format: https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/{tree}/{keystone}/{keystone}.png
 export const KEYSTONE_ICONS: Record<string, { icon: string; tree: string }> = {
-  "Lethal Tempo": { icon: "perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png", tree: "Precision" },
-  "Fleet Footwork": { icon: "perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png", tree: "Precision" },
-  "Conqueror": { icon: "perk-images/Styles/Precision/Conqueror/Conqueror.png", tree: "Precision" },
-  "Press the Attack": { icon: "perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png", tree: "Precision" },
-  "Hail of Blades": { icon: "perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png", tree: "Domination" },
-  "Electrocute": { icon: "perk-images/Styles/Domination/Electrocute/Electrocute.png", tree: "Domination" },
-  "Dark Harvest": { icon: "perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png", tree: "Domination" },
-  "Summon Aery": { icon: "perk-images/Styles/Sorcery/SummonAery/SummonAery.png", tree: "Sorcery" },
-  "Arcane Comet": { icon: "perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png", tree: "Sorcery" },
-  "Phase Rush": { icon: "perk-images/Styles/Sorcery/PhaseRush/PhaseRush.png", tree: "Sorcery" },
-  "Grasp of the Undying": { icon: "perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png", tree: "Resolve" },
-  "Aftershock": { icon: "perk-images/Styles/Resolve/VeteranAftershock/VeteranAftershock.png", tree: "Resolve" },
-  "Guardian": { icon: "perk-images/Styles/Resolve/Guardian/Guardian.png", tree: "Resolve" },
-  "Glacial Augment": { icon: "perk-images/Styles/Inspiration/GlacialAugment/GlacialAugment.png", tree: "Inspiration" },
-  "First Strike": { icon: "perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png", tree: "Inspiration" },
+  "Lethal Tempo": { icon: "precision/lethaltempo/lethaltempotemp.png", tree: "Precision" },
+  "Fleet Footwork": { icon: "precision/fleetfootwork/fleetfootwork.png", tree: "Precision" },
+  "Conqueror": { icon: "precision/conqueror/conqueror.png", tree: "Precision" },
+  "Press the Attack": { icon: "precision/presstheattack/presstheattack.png", tree: "Precision" },
+  "Hail of Blades": { icon: "domination/hailofblades/hailofblades.png", tree: "Domination" },
+  "Electrocute": { icon: "domination/electrocute/electrocute.png", tree: "Domination" },
+  "Dark Harvest": { icon: "domination/darkharvest/darkharvest.png", tree: "Domination" },
+  "Predator": { icon: "domination/predator/predator.png", tree: "Domination" },
+  "Summon Aery": { icon: "sorcery/summonaery/summonaery.png", tree: "Sorcery" },
+  "Arcane Comet": { icon: "sorcery/arcanecomet/arcanecomet.png", tree: "Sorcery" },
+  "Phase Rush": { icon: "sorcery/phaserush/phaserush.png", tree: "Sorcery" },
+  "Grasp of the Undying": { icon: "resolve/graspoftheundying/graspoftheundying.png", tree: "Resolve" },
+  "Aftershock": { icon: "resolve/veteranaftershock/veteranaftershock.png", tree: "Resolve" },
+  "Guardian": { icon: "resolve/guardian/guardian.png", tree: "Resolve" },
+  "Glacial Augment": { icon: "inspiration/glacialaugment/glacialaugment.png", tree: "Inspiration" },
+  "First Strike": { icon: "inspiration/firststrike/firststrike.png", tree: "Inspiration" },
+  "Unsealed Spellbook": { icon: "inspiration/unsealedspellbook/unsealedspellbook.png", tree: "Inspiration" },
 };
 
 // Rune trees (para árvore secundária)
-// Data Dragon vem retornando 403 em alguns paths de "Styles/*/*.png".
-// Usamos CommunityDragon (LCU assets) para os ícones das árvores.
+// CommunityDragon LCU assets - lowercase paths
 export const RUNE_TREE_ICONS: Record<string, string> = {
   Precision:
     "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7201_precision.png",
@@ -201,10 +203,10 @@ export const RUNE_TREE_ICONS: Record<string, string> = {
 export function getKeystoneIcon(keystoneName: string): string {
   const keystone = KEYSTONE_ICONS[keystoneName];
   if (!keystone) {
-    return "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7201_precision.png";
+    // Fallback to Precision tree icon
+    return RUNE_TREE_ICONS.Precision;
   }
-  const iconPath = keystone.icon.replace("perk-images/", "");
-  return `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/${iconPath}`;
+  return `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/${keystone.icon}`;
 }
 
 // Helper function for Secondary Tree icons
