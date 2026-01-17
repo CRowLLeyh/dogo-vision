@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChampionMeta, mockChampionsMeta } from "@/lib/championSelectMockData";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ interface EnemyCounterPickerProps {
   selectedRole: string;
   champions: ChampionMeta[];
   onSelectChampion: (champion: ChampionMeta) => void;
+  onEnemyTeamChange?: (enemies: ChampionMeta[]) => void;
 }
 
 interface TeamSlot {
@@ -61,7 +62,7 @@ const SparkleIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }: EnemyCounterPickerProps) {
+export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion, onEnemyTeamChange }: EnemyCounterPickerProps) {
   const [enemyTeam, setEnemyTeam] = useState<TeamSlot[]>(
     ROLES.map((r) => ({ role: r.id, champion: null }))
   );
@@ -70,6 +71,12 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
   );
   const [activeSlot, setActiveSlot] = useState<{ team: "enemy" | "ally"; role: string } | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Notify parent of enemy team changes
+  useEffect(() => {
+    const enemies = enemyTeam.map(s => s.champion).filter(Boolean) as ChampionMeta[];
+    onEnemyTeamChange?.(enemies);
+  }, [enemyTeam, onEnemyTeamChange]);
 
   const handleSelectChampion = (champion: ChampionMeta) => {
     if (!activeSlot) return;
