@@ -5,6 +5,7 @@ import { RoleTabs } from "@/components/championselect/RoleTabs";
 import { TierList } from "@/components/championselect/TierList";
 import { ChampionBuildCard } from "@/components/championselect/ChampionBuildCard";
 import { ProBuildsPanel } from "@/components/championselect/ProBuildsPanel";
+import { EnemyCounterPicker } from "@/components/championselect/EnemyCounterPicker";
 import { Search, Zap, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -105,8 +106,9 @@ export default function ChampionSelect() {
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Tier List */}
-          <motion.div variants={itemVariants} className="lg:col-span-5">
+          {/* Left Column - Tier List + Enemy Counter */}
+          <motion.div variants={itemVariants} className="lg:col-span-5 space-y-6">
+            {/* Tier List */}
             <div className="bg-card border border-border rounded-xl p-4">
               <h2 className="font-semibold mb-4 text-sm text-muted-foreground uppercase tracking-wide">
                 Tier List - Patch 14.24
@@ -117,6 +119,13 @@ export default function ChampionSelect() {
                 onSelectChampion={setSelectedChampion}
               />
             </div>
+
+            {/* Enemy Counter Picker */}
+            <EnemyCounterPicker
+              selectedRole={selectedRole}
+              champions={filteredChampions}
+              onSelectChampion={setSelectedChampion}
+            />
           </motion.div>
 
           {/* Champion Build */}
@@ -133,7 +142,7 @@ export default function ChampionSelect() {
                     <h3 className="font-semibold text-sm text-red-400 mb-3">
                       ⚠️ Cuidado contra
                     </h3>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {selectedChampion.counters.map((counter) => {
                         const counterChamp = mockChampionsMeta.find(
                           (c) => c.name === counter
@@ -144,7 +153,8 @@ export default function ChampionSelect() {
                             src={counterChamp.icon}
                             alt={counter}
                             title={counter}
-                            className="w-10 h-10 rounded-lg border border-red-500/30"
+                            className="w-10 h-10 rounded-lg border border-red-500/30 hover:scale-110 transition-transform cursor-pointer"
+                            onClick={() => setSelectedChampion(counterChamp)}
                           />
                         ) : (
                           <div
@@ -163,7 +173,7 @@ export default function ChampionSelect() {
                     <h3 className="font-semibold text-sm text-emerald-400 mb-3">
                       ✓ Combina com
                     </h3>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {selectedChampion.synergies.map((synergy) => {
                         const synergyChamp = mockChampionsMeta.find(
                           (c) => c.name === synergy
@@ -174,7 +184,8 @@ export default function ChampionSelect() {
                             src={synergyChamp.icon}
                             alt={synergy}
                             title={synergy}
-                            className="w-10 h-10 rounded-lg border border-emerald-500/30"
+                            className="w-10 h-10 rounded-lg border border-emerald-500/30 hover:scale-110 transition-transform cursor-pointer"
+                            onClick={() => setSelectedChampion(synergyChamp)}
                           />
                         ) : (
                           <div
