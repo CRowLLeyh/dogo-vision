@@ -60,11 +60,10 @@ export const PlayerSearchCard = React.forwardRef<HTMLDivElement, PlayerSearchCar
     };
 
     return (
-      <div ref={ref} className={cn("relative flex-1 min-w-0", className)}>
+      <div ref={ref} className={cn("relative flex-1 min-w-0 w-full", className)}>
         <div
           className={cn(
-            "h-full rounded-2xl border-2 border-dashed transition-all duration-300",
-            "transition-[border-radius,transform]",
+            "rounded-2xl border-2 border-dashed transition-all duration-300",
             player
               ? "border-transparent bg-card animate-enter"
               : "border-border/50 hover:border-primary/30 bg-card/50 hover:rounded-3xl",
