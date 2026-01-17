@@ -11,6 +11,7 @@ import LiveGame from "./pages/LiveGame";
 import MatchDetail from "./pages/MatchDetail";
 import Compare from "./pages/Compare";
 import PostGame from "./pages/PostGame";
+import ChampionSelect from "./pages/ChampionSelect";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/live" element={<LiveGame />} />
               <Route path="/match/:matchId" element={<MatchDetail />} />
               <Route path="/post-game/:matchId" element={<PostGame />} />
+              <Route path="/champion-select" element={<ChampionSelect />} />
               <Route path="/compare" element={<Compare />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
