@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
-import { LiveGameData } from "@/lib/liveGameMockData";
+import { LiveGameData, BannedChampion } from "@/lib/liveGameMockData";
 import { LiveGameTeamTable } from "./LiveGameTeamTable";
-import { Clock, Swords, Trophy, TrendingUp } from "lucide-react";
+import { Clock, Swords, Trophy, TrendingUp, Ban } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface LiveGameViewProps {
   data: LiveGameData;
@@ -58,6 +59,29 @@ export function LiveGameView({ data, searchedPlayer }: LiveGameViewProps) {
             blueWins={blueStats.avgChampWR > redStats.avgChampWR}
             className="hidden md:flex"
           />
+        </div>
+      </div>
+
+      {/* Bans Section */}
+      <div className="glass-card p-4">
+        <div className="flex items-center justify-between gap-4">
+          {/* Blue Team Bans */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 text-blue-400">
+              <Ban className="w-4 h-4" />
+              <span className="text-xs font-medium uppercase tracking-wide">Bans</span>
+            </div>
+            <BansList bans={data.blueBans} side="blue" />
+          </div>
+
+          {/* Red Team Bans */}
+          <div className="flex items-center gap-3">
+            <BansList bans={data.redBans} side="red" />
+            <div className="flex items-center gap-1.5 text-red-400">
+              <span className="text-xs font-medium uppercase tracking-wide">Bans</span>
+              <Ban className="w-4 h-4" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -125,5 +149,41 @@ function QuickStatComparison({ label, blueValue, redValue, blueWins, className }
         </span>
       </div>
     </div>
+  );
+}
+
+interface BansListProps {
+  bans: BannedChampion[];
+  side: "blue" | "red";
+}
+
+function BansList({ bans, side }: BansListProps) {
+  return (
+    <TooltipProvider>
+      <div className={cn("flex items-center gap-1.5", side === "red" && "flex-row-reverse")}>
+        {bans.map((ban, index) => (
+          <Tooltip key={index}>
+            <TooltipTrigger asChild>
+              <div className="relative group">
+                <img
+                  src={ban.icon}
+                  alt={ban.name}
+                  className="w-8 h-8 rounded-md grayscale opacity-60 group-hover:opacity-80 transition-opacity"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder.svg";
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-full h-0.5 bg-red-500/80 rotate-45" />
+                </div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="text-xs">
+              {ban.name}
+            </TooltipContent>
+          </Tooltip>
+        ))}
+      </div>
+    </TooltipProvider>
   );
 }

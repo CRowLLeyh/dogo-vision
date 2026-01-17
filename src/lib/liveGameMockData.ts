@@ -15,16 +15,37 @@ export interface LiveGamePlayer {
   role: "top" | "jungle" | "mid" | "adc" | "support";
 }
 
+export interface BannedChampion {
+  name: string;
+  icon: string;
+}
+
 export interface LiveGameData {
   gameMode: string;
   gameTime: number; // seconds since start
   blueTeam: LiveGamePlayer[];
   redTeam: LiveGamePlayer[];
+  blueBans: BannedChampion[];
+  redBans: BannedChampion[];
 }
 
 export const mockLiveGameData: LiveGameData = {
   gameMode: "Ranked Solo/Duo",
   gameTime: 0, // Loading screen
+  blueBans: [
+    { name: "Yone", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Yone.png" },
+    { name: "Yasuo", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Yasuo.png" },
+    { name: "Vayne", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Vayne.png" },
+    { name: "Viego", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Viego.png" },
+    { name: "Kayn", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Kayn.png" },
+  ],
+  redBans: [
+    { name: "Ksante", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/KSante.png" },
+    { name: "Ambessa", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Ambessa.png" },
+    { name: "Aurora", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Aurora.png" },
+    { name: "Senna", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Senna.png" },
+    { name: "Draven", icon: "https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/Draven.png" },
+  ],
   blueTeam: [
     {
       summonerName: "TopChad",
