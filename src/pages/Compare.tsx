@@ -47,7 +47,7 @@ export default function Compare() {
         </div>
 
         {/* Player Selection */}
-        <div className="flex flex-col lg:flex-row items-stretch gap-4 mb-8">
+        <div className="flex flex-col lg:flex-row items-start gap-4 mb-8">
           <PlayerSearchCard 
             side="left"
             player={player1}
