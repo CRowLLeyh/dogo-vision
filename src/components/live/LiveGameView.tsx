@@ -33,19 +33,55 @@ export function LiveGameView({ data, searchedPlayer }: LiveGameViewProps) {
   const blueStats = calcTeamStats(data.blueTeam);
   const redStats = calcTeamStats(data.redTeam);
 
+  const isLoadingScreen = gameTime < 10;
+
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Loading Screen Indicator */}
+      {isLoadingScreen && (
+        <div className="glass-card p-4 border-l-4 border-l-yellow-500 bg-yellow-500/5">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-10 h-10 rounded-full border-2 border-yellow-500/30 border-t-yellow-500 animate-spin" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-yellow-500">Tela de Carregamento</h3>
+              <p className="text-sm text-muted-foreground">
+                A partida iniciará em {10 - gameTime} segundos...
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Game Info Header */}
       <div className="glass-card p-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+          <div className={cn(
+            "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+            isLoadingScreen 
+              ? "bg-gradient-to-br from-yellow-500/80 to-orange-500/80" 
+              : "bg-gradient-to-br from-primary to-accent"
+          )}>
             <Swords className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="font-semibold text-foreground">{data.gameMode}</h2>
+            <h2 className="font-semibold text-foreground">
+              {data.gameMode}
+              {isLoadingScreen && (
+                <span className="ml-2 text-xs font-normal text-yellow-500 animate-pulse">
+                  • Carregando
+                </span>
+              )}
+            </h2>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="w-3.5 h-3.5" />
-              <span className="tabular-nums font-medium">{formatDuration(gameTime)}</span>
+              <Clock className={cn("w-3.5 h-3.5", isLoadingScreen && "text-yellow-500")} />
+              <span className={cn(
+                "tabular-nums font-medium",
+                isLoadingScreen && "text-yellow-500"
+              )}>
+                {formatDuration(gameTime)}
+              </span>
             </div>
           </div>
         </div>
