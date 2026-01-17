@@ -1,13 +1,61 @@
 import { useParams, useSearchParams } from "react-router-dom";
+import { motion, Variants } from "framer-motion";
 import { mockPostGameData } from "@/lib/postGameMockData";
 import { PostGameHeader } from "@/components/postgame/PostGameHeader";
 import { PostGameTeamTable } from "@/components/postgame/PostGameTeamTable";
 import { PostGameTimeline } from "@/components/postgame/PostGameTimeline";
 import { PostGameDamageChart } from "@/components/postgame/PostGameDamageChart";
 import { PostGamePerformance } from "@/components/postgame/PostGamePerformance";
-import { ArrowLeft, Share2, Download } from "lucide-react";
+import { ArrowLeft, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+
+// Animation variants for staggered reveal
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+    scale: 0.95,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 15,
+      mass: 0.8,
+    },
+  },
+};
+
+const headerVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: -20,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 120,
+      damping: 20,
+    },
+  },
+};
 
 export default function PostGame() {
   const { matchId } = useParams();
@@ -20,10 +68,18 @@ export default function PostGame() {
   const player = [...data.blueTeam, ...data.redTeam].find(p => p.summonerName === currentPlayer);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6 max-w-7xl">
+    <div className="min-h-screen bg-background overflow-hidden">
+      <motion.div 
+        className="container mx-auto px-4 py-6 max-w-7xl"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
         {/* Navigation */}
-        <div className="flex items-center justify-between mb-6">
+        <motion.div 
+          className="flex items-center justify-between mb-6"
+          variants={headerVariants}
+        >
           <Link 
             to={`/profile/${currentPlayer}`}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -37,45 +93,56 @@ export default function PostGame() {
               Compartilhar
             </Button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Main Content */}
         <div className="space-y-6">
           {/* Header with Result */}
-          <PostGameHeader data={data} currentPlayer={currentPlayer} />
+          <motion.div variants={itemVariants}>
+            <PostGameHeader data={data} currentPlayer={currentPlayer} />
+          </motion.div>
 
           {/* Performance Section */}
           {player && (
-            <PostGamePerformance player={player} data={data} />
+            <motion.div variants={itemVariants}>
+              <PostGamePerformance player={player} data={data} />
+            </motion.div>
           )}
 
           {/* Damage Chart */}
-          <PostGameDamageChart 
-            blueTeam={data.blueTeam} 
-            redTeam={data.redTeam} 
-            currentPlayer={currentPlayer}
-          />
+          <motion.div variants={itemVariants}>
+            <PostGameDamageChart 
+              blueTeam={data.blueTeam} 
+              redTeam={data.redTeam} 
+              currentPlayer={currentPlayer}
+            />
+          </motion.div>
 
           {/* Timeline */}
-          <PostGameTimeline events={data.events} gameDuration={data.gameDuration} />
+          <motion.div variants={itemVariants}>
+            <PostGameTimeline events={data.events} gameDuration={data.gameDuration} />
+          </motion.div>
 
           {/* Teams Tables */}
-          <div className="space-y-4">
+          <motion.div className="space-y-4" variants={itemVariants}>
             <PostGameTeamTable 
               team={data.blueTeam} 
               side="blue" 
               currentPlayer={currentPlayer}
               isWinner={data.winner === "blue"}
             />
+          </motion.div>
+          
+          <motion.div variants={itemVariants}>
             <PostGameTeamTable 
               team={data.redTeam} 
               side="red" 
               currentPlayer={currentPlayer}
               isWinner={data.winner === "red"}
             />
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
