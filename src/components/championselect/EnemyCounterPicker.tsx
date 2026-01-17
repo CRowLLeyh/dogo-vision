@@ -116,11 +116,14 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
     const scored = champions.map((champ) => {
       let score = 0;
       let reasons: string[] = [];
+      let counterCount = 0;
+      let synergyCount = 0;
 
       // Counter enemy analysis
       enemyChampions.forEach((enemy) => {
         if (enemy.counters.includes(champ.name)) {
           score += 20;
+          counterCount++;
           reasons.push(`Countera ${enemy.name}`);
         }
         if (champ.counters.includes(enemy.name)) {
@@ -132,9 +135,14 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
       allyChampions.forEach((ally) => {
         if (ally.synergies.includes(champ.name) || champ.synergies.includes(ally.name)) {
           score += 18;
+          synergyCount++;
           reasons.push(`Sinergia com ${ally.name}`);
         }
       });
+
+      // Multi-counter bonus
+      if (counterCount >= 2) score += 25;
+      if (synergyCount >= 2) score += 20;
 
       // Tier bonus
       if (champ.tier === "S+") score += 10;
@@ -149,8 +157,9 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
       const hasCounter = reasons.some(r => r.startsWith("Countera"));
       const hasSynergy = reasons.some(r => r.startsWith("Sinergia"));
       const reasonType = hasCounter && hasSynergy ? "both" : hasCounter ? "counter" : hasSynergy ? "synergy" : "meta";
+      const isMultiCounter = counterCount >= 2;
 
-      return { champion: champ, score, reasons, reasonType };
+      return { champion: champ, score, reasons, reasonType, isMultiCounter, counterCount };
     });
 
     return scored
@@ -170,7 +179,7 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
 
   // Render team slots
   const renderTeamSlots = (team: TeamSlot[], teamType: "enemy" | "ally") => (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between gap-1 pb-5">
       {team.map((slot) => {
         const roleInfo = ROLES.find((r) => r.id === slot.role);
         const isActive = activeSlot?.team === teamType && activeSlot?.role === slot.role;
@@ -305,23 +314,62 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
             )}
           </h3>
           <div className="grid grid-cols-3 gap-2">
-            {suggestions.map(({ champion, score, reasons, reasonType }) => (
+            {suggestions.map(({ champion, score, reasons, reasonType, isMultiCounter, counterCount }) => (
               <motion.button
                 key={champion.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  boxShadow: isMultiCounter 
+                    ? ["0 0 0 rgba(239,68,68,0)", "0 0 20px rgba(239,68,68,0.4)", "0 0 0 rgba(239,68,68,0)"]
+                    : "none"
+                }}
+                transition={{
+                  boxShadow: isMultiCounter ? {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  } : undefined
+                }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onSelectChampion(champion)}
-                className="relative p-2 bg-card/80 border border-border rounded-lg hover:border-emerald-500/50 transition-colors text-left"
+                className={cn(
+                  "relative p-2 bg-card/80 border rounded-lg transition-colors text-left overflow-hidden",
+                  isMultiCounter 
+                    ? "border-red-500/50 hover:border-red-500" 
+                    : "border-border hover:border-emerald-500/50"
+                )}
               >
-                <div className="flex items-center gap-2">
-                  <div className="relative">
+                {/* Multi-counter glow background */}
+                {isMultiCounter && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 pointer-events-none"
+                    animate={{ opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                )}
+                
+                <div className="relative flex items-center gap-2">
+                  <div className="relative shrink-0">
                     <img
                       src={champion.icon}
                       alt={champion.name}
                       className="w-10 h-10 rounded-lg border border-border/50 bg-muted"
                     />
-                    {/* Reason type indicator */}
-                    {reasonType === "both" && (
+                    {/* Multi-counter badge */}
+                    {isMultiCounter && (
+                      <motion.div 
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg"
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <span className="text-[10px] font-bold text-white">{counterCount}x</span>
+                      </motion.div>
+                    )}
+                    {/* Synergy + counter badge */}
+                    {!isMultiCounter && reasonType === "both" && (
                       <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full flex items-center justify-center shadow-sm">
                         <SparkleIcon className="w-2.5 h-2.5 text-amber-900" />
                       </div>
@@ -329,12 +377,17 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{champion.name}</p>
-                    <p className="text-xs text-emerald-400 tabular-nums">{champion.winRate}% WR</p>
+                    <p className={cn(
+                      "text-xs tabular-nums",
+                      isMultiCounter ? "text-red-400" : "text-emerald-400"
+                    )}>
+                      {champion.winRate}% WR
+                    </p>
                   </div>
                   <TierBadge tier={champion.tier as "S+" | "S" | "A" | "B" | "C" | "D"} size="sm" />
                 </div>
                 {reasons.length > 0 && (
-                  <div className="mt-1.5 flex flex-wrap gap-1">
+                  <div className="relative mt-1.5 flex flex-wrap gap-1">
                     {reasons.slice(0, 2).map((reason, i) => (
                       <span 
                         key={i} 
