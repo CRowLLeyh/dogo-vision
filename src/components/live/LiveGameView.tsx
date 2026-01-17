@@ -3,6 +3,8 @@ import { LiveGameData, BannedChampion } from "@/lib/liveGameMockData";
 import { LiveGameTeamTable } from "./LiveGameTeamTable";
 import { Clock, Swords, Trophy, TrendingUp, Ban } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useState, useEffect } from "react";
+import { formatDuration } from "@/lib/gameAssets";
 
 interface LiveGameViewProps {
   data: LiveGameData;
@@ -10,6 +12,16 @@ interface LiveGameViewProps {
 }
 
 export function LiveGameView({ data, searchedPlayer }: LiveGameViewProps) {
+  const [gameTime, setGameTime] = useState(data.gameTime);
+
+  // Increment game time every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGameTime((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
   // Calculate team averages
   const calcTeamStats = (team: LiveGameData["blueTeam"]) => {
     const avgWinrate = team.reduce((sum, p) => sum + (p.wins / (p.wins + p.losses)) * 100, 0) / team.length;
@@ -33,7 +45,7 @@ export function LiveGameView({ data, searchedPlayer }: LiveGameViewProps) {
             <h2 className="font-semibold text-foreground">{data.gameMode}</h2>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="w-3.5 h-3.5" />
-              <span>Carregando...</span>
+              <span className="tabular-nums font-medium">{formatDuration(gameTime)}</span>
             </div>
           </div>
         </div>
