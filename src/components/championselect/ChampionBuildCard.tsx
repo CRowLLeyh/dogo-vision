@@ -17,15 +17,33 @@ export function ChampionBuildCard({ champion }: ChampionBuildCardProps) {
   const [importedBuild, setImportedBuild] = useState(false);
   const [buildSource, setBuildSource] = useState<BuildSource>("winrate");
 
-  const hasProBuilds = champion.proBuilds.length > 0;
+  const hasProBuilds = champion.proBuilds && champion.proBuilds.length > 0;
   const proBuild = hasProBuilds ? champion.proBuilds[0] : null;
 
+  // Default skill order if not defined
+  const defaultSkillOrder = {
+    maxOrder: ["Q", "W", "E"] as ["Q" | "W" | "E", "Q" | "W" | "E", "Q" | "W" | "E"],
+    firstThree: ["Q", "W", "E"] as ["Q" | "W" | "E", "Q" | "W" | "E", "Q" | "W" | "E"],
+    winRate: 50.0,
+  };
+
   // Use pro build data if selected and available
-  const mainRune = buildSource === "pro" && proBuild ? proBuild.runes : champion.runes[0];
-  const mainBuild = champion.builds[0];
-  const mainSpells = buildSource === "pro" && proBuild ? proBuild.spells : champion.spells[0];
-  const skillOrder = buildSource === "pro" && proBuild ? proBuild.skillOrder : champion.skillOrder;
+  const mainRune = buildSource === "pro" && proBuild?.runes ? proBuild.runes : champion.runes?.[0];
+  const mainBuild = champion.builds?.[0];
+  const mainSpells = buildSource === "pro" && proBuild?.spells ? proBuild.spells : champion.spells?.[0];
+  const skillOrder = buildSource === "pro" && proBuild?.skillOrder 
+    ? proBuild.skillOrder 
+    : (champion.skillOrder || defaultSkillOrder);
   const proItems = buildSource === "pro" && proBuild ? proBuild.items : null;
+
+  // Guard against missing data
+  if (!mainRune || !mainBuild || !mainSpells) {
+    return (
+      <div className="bg-card border border-border rounded-xl p-6 text-center text-muted-foreground">
+        Dados do campeão não disponíveis
+      </div>
+    );
+  }
 
   const handleImportRunes = () => {
     setImportedRunes(true);
