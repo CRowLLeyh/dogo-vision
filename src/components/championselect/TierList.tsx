@@ -43,20 +43,21 @@ export function TierList({ champions, selectedChampion, onSelectChampion }: Tier
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onSelectChampion(champion)}
                   className={cn(
-                    "relative group",
+                    "relative group z-0",
                     selectedChampion?.id === champion.id && "ring-2 ring-primary ring-offset-2 ring-offset-background rounded-lg"
                   )}
                 >
                   <img
                     src={champion.icon}
                     alt={champion.name}
-                    className="w-12 h-12 rounded-lg border border-border/50 group-hover:border-primary transition-all group-hover:shadow-lg group-hover:shadow-primary/20"
+                    className="w-12 h-12 rounded-lg border border-border/50 group-hover:border-primary transition-all group-hover:shadow-lg group-hover:shadow-primary/20 bg-muted"
+                    loading="lazy"
                   />
-                  {/* Winrate tooltip */}
-                  <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                  {/* Winrate tooltip - higher z-index */}
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
                     <span className={cn(
                       "text-xs font-semibold px-2 py-1 rounded-md whitespace-nowrap",
-                      "bg-popover border border-border shadow-lg",
+                      "bg-popover border border-border shadow-xl",
                       champion.winRate >= 52 ? "text-emerald-400" :
                       champion.winRate >= 50 ? "text-blue-400" :
                       "text-red-400"
