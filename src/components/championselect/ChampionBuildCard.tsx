@@ -1,7 +1,7 @@
-import { ChampionMeta, ChampionItems } from "@/lib/championSelectMockData";
+import { ChampionMeta } from "@/lib/championSelectMockData";
 import { getItemIcon, getKeystoneIcon, getSecondaryTreeIcon, getSpellIcon } from "@/lib/gameAssets";
 import { motion } from "framer-motion";
-import { Trophy, TrendingUp, Users, Download, Check } from "lucide-react";
+import { Trophy, TrendingUp, Users, Download, Check, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -10,13 +10,22 @@ interface ChampionBuildCardProps {
   champion: ChampionMeta;
 }
 
+type BuildSource = "winrate" | "pro";
+
 export function ChampionBuildCard({ champion }: ChampionBuildCardProps) {
   const [importedRunes, setImportedRunes] = useState(false);
   const [importedBuild, setImportedBuild] = useState(false);
+  const [buildSource, setBuildSource] = useState<BuildSource>("winrate");
 
-  const mainRune = champion.runes[0];
+  const hasProBuilds = champion.proBuilds.length > 0;
+  const proBuild = hasProBuilds ? champion.proBuilds[0] : null;
+
+  // Use pro build data if selected and available
+  const mainRune = buildSource === "pro" && proBuild ? proBuild.runes : champion.runes[0];
   const mainBuild = champion.builds[0];
-  const mainSpells = champion.spells[0];
+  const mainSpells = buildSource === "pro" && proBuild ? proBuild.spells : champion.spells[0];
+  const skillOrder = buildSource === "pro" && proBuild ? proBuild.skillOrder : champion.skillOrder;
+  const proItems = buildSource === "pro" && proBuild ? proBuild.items : null;
 
   const handleImportRunes = () => {
     setImportedRunes(true);
@@ -69,7 +78,103 @@ export function ChampionBuildCard({ champion }: ChampionBuildCardProps) {
         </div>
       </div>
 
+      {/* Build Source Toggle */}
+      <div className="p-3 border-b border-border bg-muted/30">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setBuildSource("winrate")}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
+              buildSource === "winrate" 
+                ? "bg-primary text-primary-foreground" 
+                : "bg-background hover:bg-muted text-muted-foreground"
+            )}
+          >
+            <TrendingUp className="w-4 h-4" />
+            Maior Winrate
+          </button>
+          <button
+            onClick={() => hasProBuilds && setBuildSource("pro")}
+            disabled={!hasProBuilds}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
+              buildSource === "pro" 
+                ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-white" 
+                : hasProBuilds 
+                  ? "bg-background hover:bg-muted text-muted-foreground"
+                  : "bg-background text-muted-foreground/50 cursor-not-allowed"
+            )}
+          >
+            <Star className="w-4 h-4" />
+            Build de Pró
+            {!hasProBuilds && <span className="text-xs">(N/A)</span>}
+          </button>
+        </div>
+        {buildSource === "pro" && proBuild && (
+          <div className="mt-2 text-xs text-center text-muted-foreground">
+            Build de <span className="text-primary font-medium">{proBuild.proName}</span> ({proBuild.team}) • {proBuild.date}
+          </div>
+        )}
+      </div>
+
       <div className="p-4 space-y-6">
+        {/* Skill Order Section */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+              Ordem de Skills
+            </h3>
+            <span className="text-xs text-emerald-400 font-medium">
+              {skillOrder.winRate}% WR
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-4 p-3 bg-background/50 rounded-lg">
+            {/* First 3 levels */}
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-muted-foreground mr-1">1-3:</span>
+              {skillOrder.firstThree.map((skill, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "w-7 h-7 rounded flex items-center justify-center font-bold text-sm",
+                    skill === "Q" && "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+                    skill === "W" && "bg-green-500/20 text-green-400 border border-green-500/30",
+                    skill === "E" && "bg-orange-500/20 text-orange-400 border border-orange-500/30"
+                  )}
+                >
+                  {skill}
+                </div>
+              ))}
+            </div>
+
+            <div className="w-px h-6 bg-border" />
+
+            {/* Max Order */}
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-muted-foreground mr-1">Max:</span>
+              {skillOrder.maxOrder.map((skill, i) => (
+                <div key={i} className="flex items-center">
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded flex items-center justify-center font-bold text-sm",
+                      skill === "Q" && "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+                      skill === "W" && "bg-green-500/20 text-green-400 border border-green-500/30",
+                      skill === "E" && "bg-orange-500/20 text-orange-400 border border-orange-500/30"
+                    )}
+                  >
+                    {skill}
+                  </div>
+                  {i < 2 && <span className="text-muted-foreground mx-1">→</span>}
+                </div>
+              ))}
+              <div className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm bg-purple-500/20 text-purple-400 border border-purple-500/30 ml-1">
+                R
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Runes Section */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -157,62 +262,82 @@ export function ChampionBuildCard({ champion }: ChampionBuildCardProps) {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-              Build Principal
+              {buildSource === "pro" && proBuild ? `Build de ${proBuild.proName}` : "Build Principal"}
             </h3>
             <span className="text-xs text-emerald-400 font-medium">
               {mainBuild.winRate}% WR
             </span>
           </div>
 
-          {/* Starter Items */}
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground">Iniciais</p>
-            <div className="flex items-center gap-2">
-              {mainBuild.starter.map((itemId, i) => (
-                <img
-                  key={i}
-                  src={getItemIcon(itemId)}
-                  alt={`Item ${itemId}`}
-                  className="w-8 h-8 rounded border border-border"
-                />
-              ))}
+          {buildSource === "pro" && proItems ? (
+            // Pro build - show full items
+            <div className="space-y-2">
+              <p className="text-xs text-muted-foreground">Build Completa</p>
+              <div className="flex items-center gap-2">
+                {proItems.map((itemId, i) => (
+                  <img
+                    key={i}
+                    src={getItemIcon(itemId)}
+                    alt={`Item ${itemId}`}
+                    className="w-10 h-10 rounded-lg border border-border"
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            // Winrate build - show starter, core, situational
+            <>
+              {/* Starter Items */}
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground">Iniciais</p>
+                <div className="flex items-center gap-2">
+                  {mainBuild.starter.map((itemId, i) => (
+                    <img
+                      key={i}
+                      src={getItemIcon(itemId)}
+                      alt={`Item ${itemId}`}
+                      className="w-8 h-8 rounded border border-border"
+                    />
+                  ))}
+                </div>
+              </div>
 
-          {/* Core Items */}
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground">Core</p>
-            <div className="flex items-center gap-2">
-              <img
-                src={getItemIcon(mainBuild.boots)}
-                alt="Boots"
-                className="w-10 h-10 rounded-lg border border-border"
-              />
-              {mainBuild.core.map((itemId, i) => (
-                <img
-                  key={i}
-                  src={getItemIcon(itemId)}
-                  alt={`Item ${itemId}`}
-                  className="w-10 h-10 rounded-lg border border-border"
-                />
-              ))}
-            </div>
-          </div>
+              {/* Core Items */}
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground">Core</p>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={getItemIcon(mainBuild.boots)}
+                    alt="Boots"
+                    className="w-10 h-10 rounded-lg border border-border"
+                  />
+                  {mainBuild.core.map((itemId, i) => (
+                    <img
+                      key={i}
+                      src={getItemIcon(itemId)}
+                      alt={`Item ${itemId}`}
+                      className="w-10 h-10 rounded-lg border border-border"
+                    />
+                  ))}
+                </div>
+              </div>
 
-          {/* Situational Items */}
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground">Situacionais</p>
-            <div className="flex items-center gap-2">
-              {mainBuild.situational.map((itemId, i) => (
-                <img
-                  key={i}
-                  src={getItemIcon(itemId)}
-                  alt={`Item ${itemId}`}
-                  className="w-8 h-8 rounded border border-border opacity-70"
-                />
-              ))}
-            </div>
-          </div>
+              {/* Situational Items */}
+              <div className="space-y-2">
+                <p className="text-xs text-muted-foreground">Situacionais</p>
+                <div className="flex items-center gap-2">
+                  {mainBuild.situational.map((itemId, i) => (
+                    <img
+                      key={i}
+                      src={getItemIcon(itemId)}
+                      alt={`Item ${itemId}`}
+                      className="w-8 h-8 rounded border border-border opacity-70"
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Import Build Button */}
           <Button
