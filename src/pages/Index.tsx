@@ -6,7 +6,7 @@ import {
   ChevronRight, Star, Crown, Target, BarChart3
 } from "lucide-react";
 import { mockTierListData, mockPlayerData } from "@/lib/mockData";
-import dogoLogo from "@/assets/dogo-logo.ico";
+import dogoLogo from "@/assets/dogo-logo.png";
 import { GAME_MODE_ICONS } from "@/lib/gameAssets";
 import { GameModeIcon } from "@/components/ui/GameModeIcon";
 

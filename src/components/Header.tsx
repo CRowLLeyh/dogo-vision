@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Search, Trophy, Radio, Users, BarChart2 } from "lucide-react";
-import dogoLogo from "@/assets/dogo-logo.ico";
+import dogoLogo from "@/assets/dogo-logo.png";
 
 const navItems = [
   { path: "/", label: "Busca", icon: Search },
