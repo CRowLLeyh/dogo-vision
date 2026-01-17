@@ -6,7 +6,6 @@ import {
   ChevronRight, Star, Crown, Target, BarChart3
 } from "lucide-react";
 import { mockTierListData, mockPlayerData } from "@/lib/mockData";
-import dogoLogo from "@/assets/dogo-logo.png";
 import { GAME_MODE_ICONS } from "@/lib/gameAssets";
 import { GameModeIcon } from "@/components/ui/GameModeIcon";
 
@@ -60,15 +59,7 @@ export default function Index() {
         {/* Dense Header - Blitz Style */}
         <header className="text-center mb-10 animate-fade-in">
           <div className="inline-flex items-center gap-4 mb-4">
-            <img 
-              src={dogoLogo} 
-              alt="DOGO Logo"
-              className={cn(
-                "w-14 h-14 rounded-2xl shadow-[0_0_40px_-8px_hsl(var(--gold))]",
-                "animate-glow-pulse"
-              )}
-            />
-            <div className="text-left">
+            <div className="text-center">
               <h1 className="text-3xl md:text-4xl font-display font-black tracking-tight">
                 <span className="text-gradient-gold">DOGO</span>{" "}
                 <span className="text-foreground">STATS</span>
