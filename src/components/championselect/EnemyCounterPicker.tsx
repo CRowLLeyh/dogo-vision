@@ -179,50 +179,55 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
 
   // Render team slots
   const renderTeamSlots = (team: TeamSlot[], teamType: "enemy" | "ally") => (
-    <div className="flex items-center justify-between gap-1 pb-5">
+    <div className="flex flex-wrap items-start gap-2 w-full overflow-hidden">
       {team.map((slot) => {
         const roleInfo = ROLES.find((r) => r.id === slot.role);
         const isActive = activeSlot?.team === teamType && activeSlot?.role === slot.role;
         const borderColor = teamType === "enemy" ? "border-red-500/50" : "border-emerald-500/50";
         const hoverBorderColor = teamType === "enemy" ? "hover:border-red-500/50" : "hover:border-emerald-500/50";
         const ringColor = teamType === "enemy" ? "ring-red-500" : "ring-emerald-500";
-        
+
         return (
-          <div key={slot.role} className="relative group">
-            <button
-              onClick={() => setActiveSlot({ team: teamType, role: slot.role })}
-              className={cn(
-                "w-12 h-12 rounded-lg border-2 border-dashed flex items-center justify-center transition-all",
-                slot.champion
-                  ? `${borderColor} p-0`
-                  : `border-border ${hoverBorderColor} bg-muted/30`,
-                isActive && `ring-2 ${ringColor}`
-              )}
-            >
-              {slot.champion ? (
-                <img
-                  src={slot.champion.icon}
-                  alt={slot.champion.name}
-                  className="w-full h-full rounded-lg object-cover bg-muted"
-                />
-              ) : (
-                <span className="text-xs text-muted-foreground font-medium">
-                  {roleInfo?.label.charAt(0)}
-                </span>
-              )}
-            </button>
-            {slot.champion && (
+          <div key={slot.role} className="group w-12 shrink-0">
+            <div className="relative">
               <button
-                onClick={() => handleRemoveChampion(teamType, slot.role)}
+                onClick={() => setActiveSlot({ team: teamType, role: slot.role })}
                 className={cn(
-                  "absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity",
-                  teamType === "enemy" ? "bg-red-500" : "bg-emerald-500"
+                  "w-12 h-12 rounded-lg border-2 border-dashed flex items-center justify-center transition-all",
+                  slot.champion
+                    ? `${borderColor} p-0`
+                    : `border-border ${hoverBorderColor} bg-muted/30`,
+                  isActive && `ring-2 ${ringColor}`
                 )}
               >
-                <X className="w-3 h-3 text-white" />
+                {slot.champion ? (
+                  <img
+                    src={slot.champion.icon}
+                    alt={slot.champion.name}
+                    className="w-full h-full rounded-lg object-cover bg-muted"
+                  />
+                ) : (
+                  <span className="text-xs text-muted-foreground font-medium">
+                    {roleInfo?.label.charAt(0)}
+                  </span>
+                )}
               </button>
-            )}
-            <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-muted-foreground">
+
+              {slot.champion && (
+                <button
+                  onClick={() => handleRemoveChampion(teamType, slot.role)}
+                  className={cn(
+                    "absolute top-0.5 right-0.5 w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity",
+                    teamType === "enemy" ? "bg-red-500" : "bg-emerald-500"
+                  )}
+                  aria-label="Remover campeão"
+                >
+                  <X className="w-3 h-3 text-white" />
+                </button>
+              )}
+            </div>
+
+            <span className="mt-1 block w-12 text-[9px] text-muted-foreground text-center leading-none truncate">
               {roleInfo?.label}
             </span>
           </div>
@@ -234,9 +239,9 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
   return (
     <div className="space-y-4">
       {/* Both Teams Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Enemy Team */}
-        <div className="p-4 bg-card border border-border rounded-xl">
+        <div className="p-4 bg-card border border-border rounded-xl min-w-0 overflow-hidden">
           <h3 className="font-semibold text-sm text-red-400 mb-3 flex items-center gap-2">
             <SwordsIcon className="w-4 h-4" />
             Time Inimigo
@@ -245,7 +250,7 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
         </div>
 
         {/* Ally Team */}
-        <div className="p-4 bg-card border border-border rounded-xl">
+        <div className="p-4 bg-card border border-border rounded-xl min-w-0 overflow-hidden">
           <h3 className="font-semibold text-sm text-emerald-400 mb-3 flex items-center gap-2">
             <ShieldIcon className="w-4 h-4" />
             Meu Time
