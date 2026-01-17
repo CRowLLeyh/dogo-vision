@@ -139,8 +139,14 @@ export default function ChampionSelect() {
                 <div className="grid grid-cols-2 gap-4">
                   {/* Counters */}
                   <div className="p-4 bg-card border border-border rounded-xl">
-                    <h3 className="font-semibold text-sm text-red-400 mb-3">
-                      ⚠️ Cuidado contra
+                    <h3 className="font-semibold text-sm text-red-400 mb-3 flex items-center gap-2">
+                      {/* Custom Danger SVG Icon */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                      </svg>
+                      Cuidado contra
                     </h3>
                     <div className="flex items-center gap-2 flex-wrap">
                       {selectedChampion.counters.map((counter) => {
@@ -153,13 +159,13 @@ export default function ChampionSelect() {
                             src={counterChamp.icon}
                             alt={counter}
                             title={counter}
-                            className="w-10 h-10 rounded-lg border border-red-500/30 hover:scale-110 transition-transform cursor-pointer"
+                            className="w-10 h-10 rounded-lg border border-red-500/30 hover:scale-110 transition-transform cursor-pointer bg-muted"
                             onClick={() => setSelectedChampion(counterChamp)}
                           />
                         ) : (
                           <div
                             key={counter}
-                            className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-xs"
+                            className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-xs text-muted-foreground font-medium"
                           >
                             {counter.charAt(0)}
                           </div>
@@ -170,8 +176,12 @@ export default function ChampionSelect() {
 
                   {/* Synergies */}
                   <div className="p-4 bg-card border border-border rounded-xl">
-                    <h3 className="font-semibold text-sm text-emerald-400 mb-3">
-                      ✓ Combina com
+                    <h3 className="font-semibold text-sm text-emerald-400 mb-3 flex items-center gap-2">
+                      {/* Custom Checkmark SVG Icon */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      Combina com
                     </h3>
                     <div className="flex items-center gap-2 flex-wrap">
                       {selectedChampion.synergies.map((synergy) => {
