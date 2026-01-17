@@ -195,6 +195,22 @@ export const RUNE_TREE_ICONS: Record<string, string> = {
   Inspiration:
     "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7203_whimsy.png",
 };
+
+// Helper function for Keystone icons using CommunityDragon (colored assets)
+export function getKeystoneIcon(keystoneName: string): string {
+  const keystone = KEYSTONE_ICONS[keystoneName];
+  if (!keystone) {
+    return "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/7201_precision.png";
+  }
+  const iconPath = keystone.icon.replace("perk-images/", "");
+  return `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/${iconPath}`;
+}
+
+// Helper function for Secondary Tree icons
+export function getSecondaryTreeIcon(treeName: string): string {
+  return RUNE_TREE_ICONS[treeName] || RUNE_TREE_ICONS.Precision;
+}
+
 // Helper functions
 export function getChampionIcon(championName: string): string {
   return `${CHAMPION_ICON_URL}${championName.replace(/['\s]/g, "")}.png`;
