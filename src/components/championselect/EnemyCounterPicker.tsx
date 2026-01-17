@@ -110,10 +110,30 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
   const allyChampions = allyTeam.map((s) => s.champion).filter(Boolean) as ChampionMeta[];
 
   // Calculate suggestions based on enemy team AND ally synergies
-  const getSuggestions = () => {
-    if (enemyChampions.length === 0 && allyChampions.length === 0) return [];
+  const getSuggestions = (filterByRole: boolean = false) => {
+    const baseChampions = filterByRole 
+      ? champions.filter(c => c.role === selectedRole)
+      : champions;
 
-    const scored = champions.map((champ) => {
+    if (enemyChampions.length === 0 && allyChampions.length === 0) {
+      // If no teams selected, just return top tier champions for the role
+      if (filterByRole) {
+        return baseChampions
+          .filter(c => c.tier === "S+" || c.tier === "S")
+          .slice(0, 3)
+          .map(champion => ({
+            champion,
+            score: champion.tier === "S+" ? 100 : 80,
+            reasons: ["Meta pick"],
+            reasonType: "meta" as const,
+            isMultiCounter: false,
+            counterCount: 0
+          }));
+      }
+      return [];
+    }
+
+    const scored = baseChampions.map((champ) => {
       let score = 0;
       let reasons: string[] = [];
       let counterCount = 0;
@@ -165,10 +185,14 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
     return scored
       .filter((s) => s.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 6);
+      .slice(0, filterByRole ? 3 : 6);
   };
 
-  const suggestions = getSuggestions();
+  const suggestions = getSuggestions(false);
+  const roleSuggestions = getSuggestions(true);
+  
+  // Get role label for display
+  const currentRoleLabel = ROLES.find(r => r.id === selectedRole)?.label || selectedRole;
 
   // Filter all champions for picker
   const filteredChamps = searchQuery
@@ -302,6 +326,83 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
         )}
       </AnimatePresence>
 
+      {/* Role-specific Recommendations */}
+      {roleSuggestions.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 bg-gradient-to-br from-primary/10 via-primary/5 to-violet-500/10 border border-primary/30 rounded-xl"
+        >
+          <h3 className="font-semibold text-sm text-primary mb-3 flex items-center gap-2">
+            {/* Role Icon */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <circle cx="12" cy="8" r="5" />
+              <path d="M20 21a8 8 0 1 0-16 0" />
+            </svg>
+            Pick Recomendado para {currentRoleLabel}
+            <span className="text-[10px] bg-primary/20 px-2 py-0.5 rounded-full ml-auto">
+              Sua Role
+            </span>
+          </h3>
+          <div className="grid grid-cols-3 gap-2">
+            {roleSuggestions.map(({ champion, score, reasons, reasonType, isMultiCounter }) => (
+              <motion.button
+                key={champion.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onSelectChampion(champion)}
+                className="relative p-2 bg-card/80 border border-primary/30 rounded-lg hover:border-primary/60 transition-colors text-left overflow-hidden"
+              >
+                <div className="relative flex items-center gap-2">
+                  <div className="relative shrink-0">
+                    <img
+                      src={champion.icon}
+                      alt={champion.name}
+                      className="w-10 h-10 rounded-lg border border-primary/30 bg-muted"
+                    />
+                    {isMultiCounter && (
+                      <motion.div 
+                        className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg"
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <span className="text-[8px] font-bold text-white">!</span>
+                      </motion.div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm truncate">{champion.name}</p>
+                    <p className="text-xs text-primary tabular-nums">{champion.winRate}% WR</p>
+                  </div>
+                  <TierBadge tier={champion.tier as "S+" | "S" | "A" | "B" | "C" | "D"} size="sm" />
+                </div>
+                {reasons.length > 0 && (
+                  <div className="relative mt-1.5 flex flex-wrap gap-1">
+                    {reasons.slice(0, 2).map((reason, i) => (
+                      <span 
+                        key={i} 
+                        className={cn(
+                          "text-[9px] px-1.5 py-0.5 rounded-full",
+                          reason.startsWith("Countera") 
+                            ? "bg-red-500/20 text-red-400" 
+                            : reason.startsWith("Sinergia")
+                            ? "bg-cyan-500/20 text-cyan-400"
+                            : "bg-primary/20 text-primary"
+                        )}
+                      >
+                        {reason}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
       {/* Suggestions Based on Both Teams */}
       {suggestions.length > 0 && (
         <motion.div
@@ -311,7 +412,7 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
         >
           <h3 className="font-semibold text-sm text-emerald-400 mb-3 flex items-center gap-2">
             <TargetIcon className="w-4 h-4" />
-            Sugestões Ideais
+            Sugestões Ideais (Todas as Roles)
             {enemyChampions.length > 0 && allyChampions.length > 0 && (
               <span className="text-[10px] bg-emerald-500/20 px-2 py-0.5 rounded-full ml-auto">
                 Counter + Sinergia
@@ -415,7 +516,7 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
       )}
 
       {/* Empty state */}
-      {enemyChampions.length === 0 && allyChampions.length === 0 && (
+      {enemyChampions.length === 0 && allyChampions.length === 0 && roleSuggestions.length === 0 && (
         <div className="p-4 bg-muted/30 border border-border rounded-xl text-center">
           <Users className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
           <p className="text-sm text-muted-foreground">
