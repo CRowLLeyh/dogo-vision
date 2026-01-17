@@ -71,27 +71,27 @@ export const PlayerSearchCard = React.forwardRef<HTMLDivElement, PlayerSearchCar
           )}
         >
           {player ? (
-            // Player Card
-            <div className="p-6 h-full flex flex-col animate-fade-in">
-              <div className="flex items-start justify-between mb-4">
+            // Player Card - compact, no extra space
+            <div className="p-5 animate-fade-in">
+              <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="relative">
+                  <div className="relative flex-shrink-0">
                     <img
                       src={player.profileIconUrl}
                       alt={player.gameName}
-                      className="w-16 h-16 rounded-2xl border-2 border-border"
+                      className="w-14 h-14 rounded-xl border-2 border-border"
                       loading="lazy"
                     />
-                    <div className="absolute -bottom-1 -right-1 bg-background px-2 py-0.5 rounded-lg text-xs font-bold border border-border tabular-nums">
+                    <div className="absolute -bottom-1 -right-1 bg-background px-1.5 py-0.5 rounded-md text-[10px] font-bold border border-border tabular-nums">
                       {player.level}
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-bold text-foreground truncate">
                       {player.gameName}
                       <span className="text-muted-foreground font-normal">#{player.tagLine}</span>
                     </h3>
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex items-center gap-2 mt-0.5">
                       <RankBadge
                         tier={player.tier}
                         division={player.division}
@@ -100,14 +100,13 @@ export const PlayerSearchCard = React.forwardRef<HTMLDivElement, PlayerSearchCar
                         losses={player.losses}
                         size="sm"
                         showLp={false}
-                        className=""
                       />
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={handleClear}
-                  className="p-2 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                  className="p-2 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors flex-shrink-0"
                   aria-label="Limpar jogador"
                 >
                   <X className="w-5 h-5" />
