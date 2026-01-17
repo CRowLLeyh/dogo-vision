@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion, Variants } from "framer-motion";
 import { mockChampionsMeta, ChampionMeta, getChampionsByRole } from "@/lib/championSelectMockData";
 import { RoleTabs } from "@/components/championselect/RoleTabs";
@@ -7,6 +7,7 @@ import { ChampionBuildCard } from "@/components/championselect/ChampionBuildCard
 import { ProBuildsPanel } from "@/components/championselect/ProBuildsPanel";
 import { EnemyCounterPicker } from "@/components/championselect/EnemyCounterPicker";
 import { BanSuggestions } from "@/components/championselect/BanSuggestions";
+import { MatchupBuildSuggestions } from "@/components/championselect/MatchupBuildSuggestions";
 import { Search, Zap, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -39,6 +40,11 @@ export default function ChampionSelect() {
   const [selectedRole, setSelectedRole] = useState("mid");
   const [selectedChampion, setSelectedChampion] = useState<ChampionMeta | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [enemyTeam, setEnemyTeam] = useState<ChampionMeta[]>([]);
+
+  const handleEnemyTeamChange = useCallback((enemies: ChampionMeta[]) => {
+    setEnemyTeam(enemies);
+  }, []);
 
   const filteredChampions = useMemo(() => {
     let champions = getChampionsByRole(selectedRole);
@@ -133,6 +139,7 @@ export default function ChampionSelect() {
               selectedRole={selectedRole}
               champions={filteredChampions}
               onSelectChampion={setSelectedChampion}
+              onEnemyTeamChange={handleEnemyTeamChange}
             />
           </motion.div>
 
@@ -141,6 +148,13 @@ export default function ChampionSelect() {
             {selectedChampion ? (
               <>
                 <ChampionBuildCard champion={selectedChampion} />
+                
+                {/* Matchup Build Suggestions - shows when enemies are selected */}
+                <MatchupBuildSuggestions 
+                  selectedChampion={selectedChampion}
+                  enemyTeam={enemyTeam}
+                />
+                
                 <ProBuildsPanel champion={selectedChampion} />
 
                 {/* Counters & Synergies */}
