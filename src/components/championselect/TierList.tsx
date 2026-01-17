@@ -43,17 +43,26 @@ export function TierList({ champions, selectedChampion, onSelectChampion }: Tier
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onSelectChampion(champion)}
                   className={cn(
-                    "relative group z-0",
-                    selectedChampion?.id === champion.id && "ring-2 ring-primary ring-offset-2 ring-offset-background rounded-lg"
+                    "relative group z-0 rounded-lg transition-all",
+                    selectedChampion?.id === champion.id && "ring-2 ring-primary ring-offset-2 ring-offset-background"
                   )}
                 >
+                  {/* Selection glow */}
+                  {selectedChampion?.id === champion.id && (
+                    <motion.div
+                      layoutId="champion-selection"
+                      className="absolute inset-0 bg-primary/20 rounded-lg -z-10"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
                   <img
                     src={champion.icon}
                     alt={champion.name}
                     className="w-12 h-12 rounded-lg border border-border/50 group-hover:border-primary transition-all group-hover:shadow-lg group-hover:shadow-primary/20 bg-muted"
                     loading="lazy"
                   />
-                  {/* Winrate tooltip - higher z-index */}
+                  {/* Winrate tooltip */}
                   <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
                     <span className={cn(
                       "text-xs font-semibold px-2 py-1 rounded-md whitespace-nowrap",

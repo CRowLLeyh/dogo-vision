@@ -6,6 +6,7 @@ import { TierList } from "@/components/championselect/TierList";
 import { ChampionBuildCard } from "@/components/championselect/ChampionBuildCard";
 import { ProBuildsPanel } from "@/components/championselect/ProBuildsPanel";
 import { EnemyCounterPicker } from "@/components/championselect/EnemyCounterPicker";
+import { BanSuggestions } from "@/components/championselect/BanSuggestions";
 import { Search, Zap, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -119,6 +120,13 @@ export default function ChampionSelect() {
                 onSelectChampion={setSelectedChampion}
               />
             </div>
+
+            {/* Ban Suggestions */}
+            <BanSuggestions
+              champions={filteredChampions}
+              selectedRole={selectedRole}
+              onSelectChampion={setSelectedChampion}
+            />
 
             {/* Enemy Counter Picker */}
             <EnemyCounterPicker

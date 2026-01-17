@@ -2,9 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChampionMeta, mockChampionsMeta } from "@/lib/championSelectMockData";
 import { cn } from "@/lib/utils";
-import { X, Target, Users, Search, Swords, Sparkles } from "lucide-react";
+import { X, Users, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { TierBadge } from "./TierBadge";
+import { ChampionSlotTooltip } from "./ChampionSlotTooltip";
 
 interface EnemyCounterPickerProps {
   selectedRole: string;
@@ -224,13 +225,15 @@ export function EnemyCounterPicker({ selectedRole, champions, onSelectChampion }
                   isActive && `ring-2 ${ringColor}`
                 )}
               >
-                {slot.champion ? (
+              {slot.champion ? (
+                <ChampionSlotTooltip champion={slot.champion}>
                   <img
                     src={slot.champion.icon}
                     alt={slot.champion.name}
                     className="w-full h-full rounded-lg object-cover bg-muted"
                   />
-                ) : (
+                </ChampionSlotTooltip>
+              ) : (
                   <span className="text-xs text-muted-foreground font-medium">
                     {roleInfo?.label.charAt(0)}
                   </span>
