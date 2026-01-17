@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Search, Trophy, Radio, Swords, Users, BarChart2 } from "lucide-react";
+import { Search, Trophy, Radio, Users, BarChart2 } from "lucide-react";
+import dogoLogo from "@/assets/dogo-logo.ico";
 
 const navItems = [
   { path: "/", label: "Busca", icon: Search },
@@ -18,15 +19,16 @@ export function Header() {
         <div className="floating-header flex items-center gap-2 max-w-fit mx-auto">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 px-3 group">
-            <div className={cn(
-              "w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-gold-glow",
-              "flex items-center justify-center",
-              "shadow-[0_0_20px_-5px_hsl(var(--gold))]",
-              "group-hover:shadow-[0_0_30px_-5px_hsl(var(--gold))]",
-              "transition-all duration-300 group-hover:scale-105"
-            )}>
-              <Swords className="w-4 h-4 text-primary-foreground" />
-            </div>
+            <img 
+              src={dogoLogo} 
+              alt="DOGO Logo"
+              className={cn(
+                "w-8 h-8 rounded-xl",
+                "shadow-[0_0_20px_-5px_hsl(var(--gold))]",
+                "group-hover:shadow-[0_0_30px_-5px_hsl(var(--gold))]",
+                "transition-all duration-300 group-hover:scale-105"
+              )}
+            />
             <span className="font-display font-bold text-gradient-gold hidden md:block">
               DOGO
             </span>
